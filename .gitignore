@@ -1,0 +1,7 @@
+/marketplace-server/node_modules/
+/marketplace-server/package-lock.json
+
+/marketplace-client/node_modules/
+/marketplace-client/package-lock.json
+
+
