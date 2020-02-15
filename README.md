@@ -1,6 +1,6 @@
 # R&B Marketplace
 
-##Application can be found at https://marketplace.drifter.studio
+## Application can be found at https://marketplace.drifter.studio
 
 ### Instructions For Setting Up the Project
 
