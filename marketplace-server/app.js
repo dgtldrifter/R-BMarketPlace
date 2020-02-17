@@ -1,8 +1,9 @@
-var createError = require('http-errors');
+var createError = require('http-errors'); // npm install http-errors
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var cookieParser = require('cookie-parser'); // npm install cookie-parser
+// cookie-parser is a middleware which parses cookies attached to the client request object. 
+var logger = require('morgan'); // npm install morgan
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
