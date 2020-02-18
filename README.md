@@ -1,5 +1,7 @@
 # R&B Marketplace
 
+Application can be found at https://rbmarketplace.herokuapp.com/
+
 ### Instructions For Setting Up the Project
 
 * `cd` into client and run `npm install`
