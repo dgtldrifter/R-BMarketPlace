@@ -4,9 +4,8 @@ Application can be found at https://rbmarketplace.herokuapp.com/
 
 ### Instructions For Setting Up the Project
 
+* run `npm install` in the root directory
 * `cd` into client and run `npm install`
-* `cd` into server and run `npm install`
-
 
 ### Running the Project
 
