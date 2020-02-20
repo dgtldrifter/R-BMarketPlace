@@ -4,10 +4,10 @@ Application can be found at https://rbmarketplace.herokuapp.com/
 
 ### Instructions For Setting Up the Project
 
-* run `npm install` in the root directory
-* `cd` into client and run `npm install`
+* run `npm ci` in the root directory
+* `cd` into client and run `npm ci`
 
-### Running the Project
+### Running the Project on Local
 
 You are going to need two command prompts, one in client and one in server.
 
