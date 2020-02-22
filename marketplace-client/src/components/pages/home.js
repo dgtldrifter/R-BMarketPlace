@@ -10,6 +10,7 @@ class home extends Component {
                 <Parallax bgImage={homeImage} strength={450} onScroll={this.handleScroll}>
                     <div id="scrollHeader">
                         <h1 style={title}>R&amp;B Market Place</h1>
+						<div>hello</div>
                     </div>
                 </Parallax>
                 <div class="container">
