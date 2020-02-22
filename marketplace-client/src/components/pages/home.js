@@ -12,10 +12,10 @@ class home extends Component {
                         <h1 style={title}>R&amp;B Market Place</h1>
                     </div>
                 </Parallax>
-                <div class="container">
-                    <h2 class="text-center">Real Estate</h2>
-                    <div class="row mt-2">
-                        <div class="col-sm-4 col-12">
+                <div className="container">
+                    <h2 className="text-center">Real Estate</h2>
+                    <div className="row mt-2">
+                        <div className="col-sm-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%"/>
                                 <div style={imageContainer}>
@@ -23,7 +23,7 @@ class home extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%" />
                                 <div style={imageContainer}>
@@ -31,7 +31,7 @@ class home extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%" />
                                 <div style={imageContainer}>
@@ -40,9 +40,9 @@ class home extends Component {
                             </div>
                         </div>
                     </div>
-                    <h2 class="text-center">Real Estate</h2>
-                    <div class="row mt-2">
-                        <div class="col-sm-4 col-12">
+                    <h2 className="text-center">Real Estate</h2>
+                    <div className="row mt-2">
+                        <div className="col-sm-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%"/>
                                 <div style={imageContainer}>
@@ -50,7 +50,7 @@ class home extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%" />
                                 <div style={imageContainer}>
@@ -58,7 +58,7 @@ class home extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="polaroid">
                                 <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="House" width="100%" />
                                 <div style={imageContainer}>
