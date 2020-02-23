@@ -9,7 +9,7 @@ class home extends Component {
             <React.Fragment>
                 <Parallax bgImage={homeImage} strength={450} onScroll={this.handleScroll}>
                     <div id="scrollHeader">
-                        <h1 style={title}>R&amp;B Market Place</h1>
+                        <h1 className="title">R&amp;B Market Place</h1>
                     </div>
                 </Parallax>
                 <div className="container">
@@ -75,18 +75,6 @@ class home extends Component {
 
 const imageContainer = {
     padding: '10px'
-}
-
-const title = {
-    textAlign: 'center',
-    margin: '0',
-    position: 'absolute',
-    transform: 'translate(-50%, -50%)',
-    top: '50%',
-    left: '50%',
-    fontSize: '50px',
-    color: '#fff',
-    fontFamily: 'cabin'
 }
 
 export default home;

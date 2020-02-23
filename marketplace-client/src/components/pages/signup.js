@@ -94,12 +94,6 @@ class signup extends React.Component {
                                 </form>
                             </div>
                             <hr/>
-                            {/*
-                            <a class="btnGoogle" href="">
-                                dfbjf<i class="fab fa-google"></i>
-                            </a>
-                            <a style={googleButton} href=""><img style={googleImage} src={google}/></a>
-                            */}
                         </div>
                     </div>
                 </div>

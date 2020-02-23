@@ -9,10 +9,10 @@ export default class navbar extends React.Component {
                 <nav className="navigation">
                     <ul id="nav-link">
                         <li>
-                            <Link style={linkStyle} className="text-black" to='./'>Home</Link>
+                            <Link style={linkStyle} to='/'>Home</Link>
                         </li>
                         <li>
-                            <Link style={linkStyle} className="text-black" to="./signup">Access Account</Link>
+                            <Link style={linkStyle} to="/signup">Access Account</Link>
                         </li>
                     </ul>
                     <div className="burger">

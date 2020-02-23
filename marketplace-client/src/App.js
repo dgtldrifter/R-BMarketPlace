@@ -10,8 +10,10 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <SignUp />
-      {/*<Home />*/}
+      <Route exact path="/" render={props => (
+        <Home />
+      )} />
+      <Route path="/signup" component={SignUp} />
       {/*<Footer />*/}
     </Router>
   );
