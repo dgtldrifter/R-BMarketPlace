@@ -7,7 +7,7 @@ body {
   overflow-y: scroll;
 }
 
-nav {
+.navigation {
   display: flex;
   justify-content: space-between;
   min-height: 8vh;
@@ -16,17 +16,25 @@ nav {
   background-color: #737373;
 }
 
-.nav-link {
+#nav-link {
   display: flex;
   justify-content: space-between;
   width: 30%;
   list-style: none;
 }
 
-@media only screen and (max-width: 600px) {
+.burger div{
+  width: 25px;
+  height: 5px;
+  margin: 5px;
+  color: white;
+}
+
+@media only screen and (max-width: 780px) {
   .lead {
     font-weight: bold !important;
     color: black;
+    font-family: 'Cabin'
   }
 }
 

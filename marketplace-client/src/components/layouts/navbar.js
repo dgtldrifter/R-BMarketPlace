@@ -6,8 +6,8 @@ export default class navbar extends React.Component {
     render() {
         return (
             <div>
-                <nav>
-                    <ul className="nav-link">
+                <nav className="navigation">
+                    <ul id="nav-link">
                         <li>
                             <Link style={linkStyle} className="text-black" to='./'>Home</Link>
                         </li>
@@ -15,6 +15,10 @@ export default class navbar extends React.Component {
                             <Link style={linkStyle} className="text-black" to="./signup">Access Account</Link>
                         </li>
                     </ul>
+                    <div className="burger">
+                        <div className="line1"></div>
+                        <div className="line2"></div>
+                    </div>
                 </nav>
             </div>
         )
@@ -23,5 +27,9 @@ export default class navbar extends React.Component {
 
 const linkStyle = {
     color: 'white',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    letterSpacing: '3px',
+    fontWeight: 'bold',
+    fontFamily: 'cabin',
+    fontSize: '14px'
 }
