@@ -9,7 +9,7 @@ import './App.css';
 function App() {
   return (
     <Router>
-      {/*<NavBar />*/}
+      <NavBar />
       <SignUp />
       {/*<Home />*/}
       {/*<Footer />*/}
