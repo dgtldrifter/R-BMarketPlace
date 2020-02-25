@@ -24,21 +24,12 @@ router.route('/add').post((req, res) => {
 router.route('/login').post((req, res) => {
   const email = req.body.email;
 
-  User.findOne({email: email}, function(err, data){
-    if(err) {
-      res.sendStatus(500);
-    }
-    if (data) {
-      let dbResponse = data._doc;
-      if (SHA256(req.body.password).toString() === dbResponse.password) { res.sendStatus(200); }
-      else {res.sendStatus(403);}
-    }
-    else {
-      res.sendStatus(403);
-    }
-  });
-
+  User.findOne({email: email})
+      .then(user => {
+        if (!user) { res.sendStatus(403); }
+        else if (SHA256(req.body.password).toString() === user.password) { res.sendStatus(200); }
+        else { res.sendStatus(403); }
+      });
 });
-
 
 module.exports = router;
