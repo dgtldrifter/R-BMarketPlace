@@ -1,0 +1,30 @@
+import React from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
+<<<<<<< HEAD
+import NavBar from './components/layouts/navbar';
+import Footer from './components/layouts/footer';
+import SignUp from './components/pages/signup';
+import Home from './components/pages/home';
+import HomePage from './components/pages/HomePage';
+=======
+import NavBar from './components/layouts/Navbar';
+import Footer from './components/layouts/Footer';
+import SignUp from './components/pages/Signup';
+import Home from './components/pages/Home';
+>>>>>>> 5e4f1da08e36d56e6a2f46a6bc284dec617ce7a2
+import './App.css';
+
+function App() {
+  return (
+    <Router>
+      {/*<NavBar />*/}
+      <Route exact path="/" render={props => (
+        <HomePage />
+      )} />
+      <Route path="/signup" component={SignUp} />
+      {/*<Footer />*/}
+    </Router>
+  );
+}
+
+export default App;
