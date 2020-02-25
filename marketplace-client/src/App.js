@@ -4,14 +4,15 @@ import NavBar from './components/layouts/navbar';
 import Footer from './components/layouts/footer';
 import SignUp from './components/pages/signup';
 import Home from './components/pages/home';
+import HomePage from './components/pages/HomePage';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <NavBar />
+      {/*<NavBar />*/}
       <Route exact path="/" render={props => (
-        <Home />
+        <HomePage />
       )} />
       <Route path="/signup" component={SignUp} />
       {/*<Footer />*/}
