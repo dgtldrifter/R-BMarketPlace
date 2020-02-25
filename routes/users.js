@@ -21,4 +21,24 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/login').post((req, res) => {
+  const email = req.body.email;
+
+  User.findOne({email: email}, function(err, data){
+    if(err) {
+      res.sendStatus(500);
+    }
+    if (data) {
+      let dbResponse = data._doc;
+      if (SHA256(req.body.password).toString() === dbResponse.password) { res.sendStatus(200); }
+      else {res.sendStatus(403);}
+    }
+    else {
+      res.sendStatus(403);
+    }
+  });
+
+});
+
+
 module.exports = router;
