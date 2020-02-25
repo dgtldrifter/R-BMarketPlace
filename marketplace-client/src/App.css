@@ -7,6 +7,7 @@ body {
   overflow-y: scroll;
 }
 
+/* Header */
 .title {
   margin: 0;
   position: absolute;
@@ -25,6 +26,7 @@ body {
   }
 }
 
+/* Navbar */
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -53,6 +55,10 @@ body {
     right: 0px;
     top: 8vh;
     height: 92vh;
+    background-color: #737373;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -63,6 +69,7 @@ body {
   color: white;
 }
 
+/* Signup / Login */
 @media only screen and (max-width: 780px) {
   .lead {
     font-weight: bold !important;
