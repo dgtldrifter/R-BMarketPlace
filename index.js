@@ -28,11 +28,11 @@ let password = req.body.password;
 app.use(cors());
 app.use(express.json());
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect("mongodb+srv://" + process.env.ATLAS_USER + ":" + process.env.ATLAS_PASSWD + "@" + process.env.ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', () => {
    console.log("Database conneciton estabished successfully!");
-})
+});
 
 const userRouter = require('./routes/users');
 app.use("/users", userRouter);
