@@ -6,11 +6,21 @@ const styling = {
     opacity: .8
 }
 
+var loadjs = require('loadjs');
+
 
 
 const homeImage = "https://images.unsplash.com/photo-1502252430442-aac78f397426?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
 
 class HomePage extends Component {
+
+
+    componentDidMount() {
+        loadjs('main.js');
+    }
+
+
+
     render() {
         return (
             <div>
