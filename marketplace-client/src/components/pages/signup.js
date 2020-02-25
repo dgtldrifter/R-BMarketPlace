@@ -130,12 +130,4 @@ const container = {
     width: '60%'
 }
 
-const googleButton = {
-    textDecoration: 'none'
-}
-
-const googleImage = {
-    width: '40%'
-}
-
 export default signup;
