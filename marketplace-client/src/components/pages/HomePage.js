@@ -34,21 +34,21 @@ class HomePage extends Component {
                 </Parallax>
                 </div>
                 <div id="header">
-                <div class="container d-flex">
-                  <div class="logo mr-auto">
-                    <a href="#banner"><img src="img/logo.jpg" alt="" class="img-fluid"/></a>
+                <div className="container d-flex">
+                  <div className="logo mr-auto">
+                    <a href="#banner"><img src="img/logo.jpg" alt="" className="img-fluid"/></a>
                   </div>
-                  <nav class="nav-menu d-none d-lg-block">
+                  <nav className="nav-menu d-none d-lg-block">
                     <ul>
-                      <li class="active"><a href="#banner">Home</a></li>
+                      <li className="active"><a href="#banner">Home</a></li>
                       <li><a href="#main">Products and Properties</a></li>
                       <li><Link to="/signup">Sign Up</Link></li>
                       <li><a href="#">Link</a></li>
                       <li><a href="#header">Link</a></li>
-                      <li class="drop-down"><a href="">Drop Down</a>
+                      <li className="drop-down"><a href="">Drop Down</a>
                         <ul>
                           <li><a href="#">Drop Down 1</a></li>
-                          <li class="drop-down"><a href="#">Drop Down 2</a>
+                          <li className="drop-down"><a href="#">Drop Down 2</a>
                             <ul>
                               <li><a href="#">Deep Drop Down 1</a></li>
                               <li><a href="#">Deep Drop Down 2</a></li>
