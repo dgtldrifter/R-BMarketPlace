@@ -3,16 +3,9 @@ $(document).ready(function(){
   $("#header").sticky({topSpacing:0, zIndex: '50'});
 });
 
-
 !(function($) {
   "use strict";
-
-  // Stick the header at top on scroll
-  //$('#header').sticky({
-  //  topSpacing: 0,
-  //  zIndex: '50'
-  //});
-
+  
   // Smooth scroll for the navigation menu and links with .scrollto classes
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -48,7 +41,7 @@ $(document).ready(function(){
       }
     }
   });
-
+  
   // Mobile Navigation
   if ($('.nav-menu').length) {
     var $mobile_nav = $('.nav-menu').clone().prop({
@@ -64,12 +57,12 @@ $(document).ready(function(){
       $('.mobile-nav-overly').toggle();
     });
 
-    $(document).on('click', '.mobile-nav .drop-down > a', function(e) {
+    $(document).on('click', '.mobile-nav-toggle .drop-down > a', function(e) {
       e.preventDefault();
       $(this).next().slideToggle(300);
       $(this).parent().toggleClass('active');
     });
-
+    
     $(document).click(function(e) {
       var container = $(".mobile-nav, .mobile-nav-toggle");
       if (!container.is(e.target) && container.has(e.target).length === 0) {

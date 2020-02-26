@@ -23,8 +23,6 @@ class HomePage extends Component {
         loadjs('main.js');
     }
 
-
-
     render() {
         return (
             <div>
@@ -40,7 +38,6 @@ class HomePage extends Component {
                   <div class="logo mr-auto">
                     <a href="#banner"><img src="img/logo.jpg" alt="" class="img-fluid"/></a>
                   </div>
-            
                   <nav class="nav-menu d-none d-lg-block">
                     <ul>
                       <li class="active"><a href="#banner">Home</a></li>
