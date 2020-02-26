@@ -3,59 +3,71 @@ import {Parallax} from 'react-parallax';
 import {Link} from 'react-router-dom';
 
 const styling = {
-    opacity: .8
+    opacity: .8,
 }
 
 var loadjs = require('loadjs');
 
+
+
 const homeImage = "https://images.unsplash.com/photo-1502252430442-aac78f397426?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
 
+const homeImage2 = "https://images.unsplash.com/photo-1464082354059-27db6ce50048?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
+
+const homeImage3= "../houses-banner.jfif";
+
 class HomePage extends Component {
+
+
     componentDidMount() {
         loadjs('main.js');
     }
 
     render() {
-      return (
-        <div>
-          <div id="banner">
-            <Parallax bgImage={homeImage} style={styling} strength={450} onScroll={this.handleScroll}>
-              <div id="scrollHeader">
-                <h1 className="title">R&amp;B Market Place</h1>
-              </div>
-            </Parallax>
-          </div>
-          <div id="header">
-            <div className="container d-flex">
-              <div className="logo mr-auto">
-                <a href="#banner"><img src="img/logo.jpg" alt="logo" className="img-fluid"/></a>
-              </div>
-              <nav className="nav-menu d-none d-lg-block">
-                <ul>
-                  <li className="active"><a href="#banner">Home</a></li>
-                  <li><a href="#main">Products and Properties</a></li>
-                  <li><Link to="/signup">Sign Up / Login</Link></li>
-                  <li className="drop-down"><a href="">Drop Down</a>
+        return (
+            <div>
+                <div id="banner">
+                <Parallax bgImage={homeImage3} style={styling} strength={450} onScroll={this.handleScroll}>
+                    <div id="scrollHeader">
+                        <h1 className="title">R&amp;B Market Place</h1>
+                    </div>
+                </Parallax>
+                </div>
+                <div id="header">
+                <div class="container d-flex">
+                  <div class="logo mr-auto">
+                    <a href="#banner"><img src="img/logo.jpg" alt="" class="img-fluid"/></a>
+                  </div>
+                  <nav class="nav-menu d-none d-lg-block">
                     <ul>
-                      <li><a href="#">Drop Down 1</a></li>
-                      <li className="drop-down"><a href="#">Drop Down 2</a>
+                      <li class="active"><a href="#banner">Home</a></li>
+                      <li><a href="#main">Products and Properties</a></li>
+                      <li><Link to="/signup">Sign Up</Link></li>
+                      <li><a href="#">Link</a></li>
+                      <li><a href="#header">Link</a></li>
+                      <li class="drop-down"><a href="">Drop Down</a>
                         <ul>
-                          <li><a href="#">Deep Drop Down 1</a></li>
-                          <li><a href="#">Deep Drop Down 2</a></li>
-                          <li><a href="#">Deep Drop Down 3</a></li>
-                          <li><a href="#">Deep Drop Down 4</a></li>
-                          <li><a href="#">Deep Drop Down 5</a></li>
+                          <li><a href="#">Drop Down 1</a></li>
+                          <li class="drop-down"><a href="#">Drop Down 2</a>
+                            <ul>
+                              <li><a href="#">Deep Drop Down 1</a></li>
+                              <li><a href="#">Deep Drop Down 2</a></li>
+                              <li><a href="#">Deep Drop Down 3</a></li>
+                              <li><a href="#">Deep Drop Down 4</a></li>
+                              <li><a href="#">Deep Drop Down 5</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="#">Drop Down 3</a></li>
+                          <li><a href="#">Drop Down 4</a></li>
+                          <li><a href="#">Drop Down 5</a></li>
                         </ul>
                       </li>
-                      <li><a href="#">Drop Down 3</a></li>
-                      <li><a href="#">Drop Down 4</a></li>
-                      <li><a href="#">Drop Down 5</a></li>
+                      <li><a href="#">Link</a></li>
                     </ul>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
+                  </nav>
+                </div>
+              </div>
+
           <main id="main">
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
