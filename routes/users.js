@@ -28,9 +28,9 @@ router.route('/login').post((req, res) => {
 
   User.findOne({email: email})
       .then(user => {
-          if (!user) { res.sendStatus(403); }
+          if (!user) { res.sendStatus(401); }
           else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) { res.sendStatus(200); }
-          else { res.sendStatus(403); }
+          else { res.sendStatus(401); }
       });
 });
 

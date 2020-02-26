@@ -4,6 +4,7 @@ const path =            require('path');
 const cors =            require('cors');
 const mongoose =        require('mongoose');
 const userRouter =      require('./routes/users');
+const postRouter =      require('./routes/posts');
 const connection =      mongoose.connection;
 const app =             express();
 
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'marketplace-client/build')));
 app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
+app.use("/posts", postRouter);
 
 //Catchall handler
 app.get('*', (req, res) => {

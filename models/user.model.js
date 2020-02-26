@@ -33,7 +33,7 @@ const userSchema = new Schema({
     },
 }, {
     timestamps:true,
-    collection:"authentication",
+    collection: 'authentication'
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
