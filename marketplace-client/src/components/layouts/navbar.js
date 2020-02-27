@@ -6,30 +6,41 @@ export default class navbar extends React.Component {
     render() {
         return (
             <div>
-                <nav className="navigation">
-                    <ul id="nav-link">
-                        <li>
-                            <Link style={linkStyle} to='/'>Home</Link>
-                        </li>
-                        <li>
-                            <Link style={linkStyle} to="/signup">Access Account</Link>
-                        </li>
+                <div id="header">
+                <div className="container d-flex">
+                  <div className="logo mr-auto">
+                    <a href="#banner"><img src="img/logo.jpg" alt="" className="img-fluid"/></a>
+                  </div>
+                  <nav className="nav-menu d-none d-lg-block">
+                    <ul>
+                      <li className="active"><a href="#banner">Home</a></li>
+                      <li><a href="#main">Products and Properties</a></li>
+                      <li><Link to="/signup">Sign Up</Link></li>
+                      <li><a href="#">Link</a></li>
+                      <li><a href="#header">Link</a></li>
+                      <li className="drop-down"><a href="">Drop Down</a>
+                        <ul>
+                          <li><a href="#">Drop Down 1</a></li>
+                          <li className="drop-down"><a href="#">Drop Down 2</a>
+                            <ul>
+                              <li><a href="#">Deep Drop Down 1</a></li>
+                              <li><a href="#">Deep Drop Down 2</a></li>
+                              <li><a href="#">Deep Drop Down 3</a></li>
+                              <li><a href="#">Deep Drop Down 4</a></li>
+                              <li><a href="#">Deep Drop Down 5</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="#">Drop Down 3</a></li>
+                          <li><a href="#">Drop Down 4</a></li>
+                          <li><a href="#">Drop Down 5</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="#">Link</a></li>
                     </ul>
-                    <div className="burger">
-                        <div className="line1"></div>
-                        <div className="line2"></div>
-                    </div>
-                </nav>
+                  </nav>
+                </div>
+              </div>
             </div>
         )
     }
-}
-
-const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-    letterSpacing: '3px',
-    fontWeight: 'bold',
-    fontFamily: 'cabin',
-    fontSize: '14px'
 }

@@ -1,73 +1,14 @@
 import React, {Component} from 'react';
-import {Parallax} from 'react-parallax';
-import {Link} from 'react-router-dom';
-
-const styling = {
-    opacity: .8,
-}
 
 var loadjs = require('loadjs');
 
-
-
-const homeImage = "https://images.unsplash.com/photo-1502252430442-aac78f397426?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
-
-const homeImage2 = "https://images.unsplash.com/photo-1464082354059-27db6ce50048?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
-
-const homeImage3= "../houses-banner.jfif";
-
 class HomePage extends Component {
-
-
     componentDidMount() {
         loadjs('main.js');
     }
-
     render() {
         return (
             <div>
-                <div id="banner">
-                <Parallax bgImage={homeImage3} style={styling} strength={450} onScroll={this.handleScroll}>
-                    <div id="scrollHeader">
-                        <h1 className="title">R&amp;B Market Place</h1>
-                    </div>
-                </Parallax>
-                </div>
-                <div id="header">
-                <div className="container d-flex">
-                  <div className="logo mr-auto">
-                    <a href="#banner"><img src="img/logo.jpg" alt="" className="img-fluid"/></a>
-                  </div>
-                  <nav className="nav-menu d-none d-lg-block">
-                    <ul>
-                      <li className="active"><a href="#banner">Home</a></li>
-                      <li><a href="#main">Products and Properties</a></li>
-                      <li><Link to="/signup">Sign Up</Link></li>
-                      <li><a href="#">Link</a></li>
-                      <li><a href="#header">Link</a></li>
-                      <li className="drop-down"><a href="">Drop Down</a>
-                        <ul>
-                          <li><a href="#">Drop Down 1</a></li>
-                          <li className="drop-down"><a href="#">Drop Down 2</a>
-                            <ul>
-                              <li><a href="#">Deep Drop Down 1</a></li>
-                              <li><a href="#">Deep Drop Down 2</a></li>
-                              <li><a href="#">Deep Drop Down 3</a></li>
-                              <li><a href="#">Deep Drop Down 4</a></li>
-                              <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                          </li>
-                          <li><a href="#">Drop Down 3</a></li>
-                          <li><a href="#">Drop Down 4</a></li>
-                          <li><a href="#">Drop Down 5</a></li>
-                        </ul>
-                      </li>
-                      <li><a href="#">Link</a></li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-
           <main id="main">
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
@@ -206,29 +147,10 @@ class HomePage extends Component {
             </div>
           </section>
         </main>
-        <footer id="footer">
-          <div className="footer-top">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-3 col-md-6 footer-info">
-                  <img src="img/logo.jpg" alt="" className="img-fluid"/>
-                </div>
-                <div className="col-lg-3 col-md-6 footer-info">
-                  <div className="social-links mt-3">
-                    <a href="#" className="twitter"><i className="bx bxl-twitter"></i></a>
-                    <a href="#" className="facebook"><i className="bx bxl-facebook"></i></a>
-                    <a href="#" className="instagram"><i className="bx bxl-instagram"></i></a>
-                    <a href="#" className="google-plus"><i className="bx bxl-skype"></i></a>
-                    <a href="#" className="linkedin"><i className="bx bxl-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
         <a href="#" className="back-to-top"><i className="icofont-simple-up"></i></a>
       </div>
     );
   }
 }
+
 export default HomePage;
