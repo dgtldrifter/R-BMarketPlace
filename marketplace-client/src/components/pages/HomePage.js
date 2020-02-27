@@ -7,8 +7,8 @@ class HomePage extends Component {
         loadjs('main.js');
     }
     render() {
-        return (
-            <div>
+      return (
+        <div>
           <main id="main">
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
