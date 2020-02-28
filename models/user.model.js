@@ -3,30 +3,37 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: {
         type: String,
-        required: true,
-        unique: true, 
-        trim: true
+        required:true,
+        unique: true,
+        trim:true
     },
-    firstName: {
-        type: String,
-        required: true,
-        unique: false,
-        trim: true
+    firstName:{
+        type:String,
+        required:true,
+        unique:false,
+        trim:true
     },
-    lastName: {
-        type: String,
-        required: true,
-        unique: false,
-        trim: true
+    lastName:{
+        type:String,
+        required:true,
+        unique:false,
+        trim:true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: false,
-        trim: true
-    }
+    passwordSalt:{
+        type:String,
+        required:true,
+        unique:false,
+        trim:true
+    },
+    password:{
+        type:String,
+        required:true,
+        unique:false,
+        trim:true
+    },
 }, {
-    timestamps: true,
+    timestamps:true,
+    collection: 'authentication'
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
