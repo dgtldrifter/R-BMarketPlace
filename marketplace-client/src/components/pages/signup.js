@@ -1,6 +1,12 @@
 import React from 'react';
+import Axios from 'axios';
+
+var loadjs = require('loadjs');
 
 class signup extends React.Component {
+    componentDidMount() {
+        loadjs('main.js');
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -13,22 +19,45 @@ class signup extends React.Component {
     }
     onChangeErrorHandling = (event) => {
         event.preventDefault();
-        let name = event.target.name;
-        let val  = event.target.value;
-        let err  = '';
+        let name      = event.target.name;
+        let val       = event.target.value;
+        let err       = '';
         if(name === "firstname"){
             if(Number(val)) {
-                err = <p class="pt-2">There can't be a number for first name. </p>;
+                err = <p className="pt-2">There can't be a number for first name. </p>;
             }
         } else if(name === "lastname") {
             if(Number(val)) {
-                err = <p class="pt-2">There can't be a number for last name.</p>;
+                err = <p className="pt-2">There can't be a number for last name.</p>;
             }
         }
 
         this.setState({errorMessage: err});
         this.setState({[name]: val});
     }
+    mySubmitHandlerSignUp = e => {
+        e.preventDefault();
+        this.register();
+    }
+    async register() {
+        Axios({
+            method: 'Post',
+            url: 'http://localhost:5000/users/add',
+            data: {
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
+            }
+        }).then((response) => {
+            console.log(response);
+            //Add code here to handle a successful signup
+        }, error => {
+            window.alert(error);
+            //Add code here to handle an unsuccessful signup
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -51,21 +80,21 @@ class signup extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
-                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" required/>
+                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required/>
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Last Name</label>
-                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" required/>
+                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required/>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" id="signUpEmail" className="form-control" placeholder="Enter an email" required/>
+                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required/>
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" id="signUpPassword" minLength="5" className="form-control" placeholder="Enter a password" required/>
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required/>
                                         </div>
                                     </div>
                                     {this.state.errorMessage}

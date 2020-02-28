@@ -20,7 +20,12 @@ function App() {
           <Footer />
         </div>
       )} />
-      <Route path="/signup" component={SignUp} />
+      <Route path="/signup" render={props => (
+        <div>
+          <NavBar />
+          <SignUp />
+        </div>
+      )} />
     </Router>
   );
 }
