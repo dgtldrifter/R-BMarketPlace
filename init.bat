@@ -1,4 +1,4 @@
-call npm ci
+call npm install
 call cd marketplace-client
-call npm ci
+call npm install
 call cd ..
