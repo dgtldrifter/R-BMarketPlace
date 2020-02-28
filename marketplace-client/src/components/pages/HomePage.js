@@ -30,12 +30,12 @@ class HomePage extends Component {
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                      <h4>App 1</h4>
-                      <p>App</p>
-                    </div>
+                        <h4>App 1</h4>
+                        <p>App</p>
+                      </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -48,7 +48,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" className="venobox" title="App 2"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                     {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" className="venobox" title="Card 2"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -87,7 +87,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" className="venobox" title="Web 2"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" className="venobox" title="App 3"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" className="venobox" title="Card 1"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" className="venobox" title="Card 3"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ class HomePage extends Component {
                     </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                      <a href="#" title="More Details"><i className="bx bx-link"></i></a>
+                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>

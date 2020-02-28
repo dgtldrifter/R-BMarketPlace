@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 class signup extends React.Component {
     constructor(props) {
@@ -29,11 +29,6 @@ class signup extends React.Component {
         this.setState({errorMessage: err});
         this.setState({[name]: val});
     }
-    mySubmitHandlerLogin = (event) => {
-        event.preventDefault();
-        let email    = this.state.email;
-        let password = this.state.password;
-    }
     render() {
         return (
             <React.Fragment>
@@ -52,7 +47,7 @@ class signup extends React.Component {
                         {/* Tab Panes */}
                         <div className="tab-content">
                             <div id="SignUp" className="container tab-pane active">
-                                <form className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
+                                <form method="post" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
@@ -66,11 +61,11 @@ class signup extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" id="email" className="form-control" placeholder="Enter an email" required/>
+                                            <input type="email" id="signUpEmail" className="form-control" placeholder="Enter an email" required/>
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" id="password" minLength="5" className="form-control" placeholder="Enter a password" required/>
+                                            <input type="password" id="signUpPassword" minLength="5" className="form-control" placeholder="Enter a password" required/>
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
@@ -78,15 +73,15 @@ class signup extends React.Component {
                                 </form>
                             </div>
                             <div id="Login" className="container tab-pane">
-                                <form className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerLogin}>
+                                <form method="post" className="form-horizontal mt-4">
                                     <div className="row mt-2">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" id="email" className="form-control" placeholder="Enter an email" required/>
+                                            <input type="email" id="loginEmail" className="form-control" placeholder="Enter an email" required/>
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" id="password" className="form-control" placeholder="Enter a password" required/>
+                                            <input type="password" id="loginPassword" className="form-control" placeholder="Enter a password" required/>
                                         </div>
                                     </div>
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>

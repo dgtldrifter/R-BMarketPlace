@@ -5,8 +5,11 @@ const styling = {
     opacity: .8,
 }
 
+{/*
 const homeImage = "https://images.unsplash.com/photo-1502252430442-aac78f397426?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
 const homeImage2 = "https://images.unsplash.com/photo-1464082354059-27db6ce50048?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
+*/}
+
 const homeImage3= "../houses-banner.jfif";
 
 class header extends Component {
