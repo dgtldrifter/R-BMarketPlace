@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
 var loadjs = require('loadjs');
 
@@ -39,13 +39,14 @@ class signup extends React.Component {
         e.preventDefault();
         this.register();
     }
+
     async register() {
-        Axios({
-            method: 'Post',
+        axios({
+            method: 'POST',
             url: 'http://localhost:5000/users/add',
             data: {
-                firstname: this.state.firstname,
-                lastname: this.state.lastname,
+                firstName: this.state.firstname,
+                lastName: this.state.lastname,
                 email: this.state.email,
                 password: this.state.password
             }
@@ -53,7 +54,8 @@ class signup extends React.Component {
             console.log(response);
             //Add code here to handle a successful signup
         }, error => {
-            window.alert(error);
+            //window.alert(error);
+            console.log(error);
             //Add code here to handle an unsuccessful signup
         });
     }

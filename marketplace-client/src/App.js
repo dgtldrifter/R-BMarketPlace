@@ -20,7 +20,7 @@ function App() {
           <Footer />
         </div>
       )} />
-      <Route path="/signup" render={props => (
+      <Route path="/Signup" render={props => (
         <div>
           <NavBar />
           <SignUp />
