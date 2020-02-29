@@ -26,3 +26,15 @@ to run additional commands for the build to work properly, so after the main pro
 the node build script `cd` into the `marketplace-client` folder, and run the `npm run build` script.
 
 `index.js` then serves the built client files if anyone connects to anything other than defined API endpoints.
+
+### Environment Variables
+This project uses the library `dotenv`, so that you can add you own environment variables to the project. Currently,
+this project uses three variables:
+* `ATLAS_URL` - URL for the MongoDB server that you want to use. Does not include the protocol string at the front of the URL.
+This is used in the index.js file in the root of the project
+* `ATLAS_USER` - Command line username. This is used in the index.js file in the root of the project.
+* `ATLAS_PASSWD` - Command line password. This is used in the index.js file in the root of the project.
+
+To use these environment variables, you must create a file labeled `.env`, and you would enter the variable name, add
+an `=` sign, and the the appropriate value for that variable. Those variables defined inside the `.env` file would then 
+be accessed by calling `process.env.<variable_name>`.
