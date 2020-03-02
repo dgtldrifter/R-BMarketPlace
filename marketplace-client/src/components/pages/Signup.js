@@ -43,7 +43,7 @@ class signup extends React.Component {
     async register() {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/users/add',
+            url: 'users/add',
             data: {
                 firstName: this.state.firstname,
                 lastName: this.state.lastname,
