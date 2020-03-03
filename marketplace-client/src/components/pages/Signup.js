@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import SignupModal from './../modals/SignupModal';
+import SignupError from './../modals/SignupError';
 
 var loadjs = require('loadjs');
 
@@ -21,6 +22,12 @@ class signup extends React.Component {
     }
 
     toggleModal = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    toggleModalError = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -63,11 +70,9 @@ class signup extends React.Component {
             if(response.status == 200) {
                 this.toggleModal();
             }
-            //Add code here to handle a successful signup
         }, error => {
-            //window.alert(error);
-            //console.log(error);
-            //Add code here to handle an unsuccessful signup
+            this.toggleModalError();
+            console.log(error);
         });
     }
     render() {
@@ -77,6 +82,9 @@ class signup extends React.Component {
                     <SignupModal show={this.state.isOpen} onClose={this.toggleModal}>
                         You successfully created an account. 
                     </SignupModal>
+                    <SignupError show={this.state.isOpen} onClose={this.toggleModalError}>
+                        Your account was not created. The email address / user already exists in the system. 
+                    </SignupError>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}
