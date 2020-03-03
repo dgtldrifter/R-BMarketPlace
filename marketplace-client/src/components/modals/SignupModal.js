@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class SignupModal extends React.Component {
     render() {
@@ -31,12 +32,10 @@ class SignupModal extends React.Component {
 
         return (
             <div className="backdrop" style={{backdropStyle}}>
-                <div className="modal" style={{modalStyle}}>
+                <div style={{modalStyle}}>
                     {this.props.children}
-                    <div className="footer">
-                        <button onClick={this.props.onClose}>
-                            Close
-                        </button>
+                    <div className="btn btn-danger">
+                        <Link to="/">Close</Link>
                     </div>
                 </div>
             </div>

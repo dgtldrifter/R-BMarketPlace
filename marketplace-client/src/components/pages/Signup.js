@@ -60,7 +60,9 @@ class signup extends React.Component {
                 password: this.state.password
             }
         }).then((response) => {
-            //console.log(response);
+            if(response.status == 200) {
+                this.toggleModal();
+            }
             //Add code here to handle a successful signup
         }, error => {
             //window.alert(error);
@@ -73,11 +75,8 @@ class signup extends React.Component {
             <React.Fragment>
                 <div style={background}>
                     <SignupModal show={this.state.isOpen} onClose={this.toggleModal}>
-                        Here's some content for the modal
+                        You successfully created an account. 
                     </SignupModal>
-                    <button onClick={this.toggleModal}>
-                        Open the modal
-                    </button>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}
