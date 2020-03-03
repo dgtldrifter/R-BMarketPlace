@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import SignupModal from './../modals/SignupModal';
 
 var loadjs = require('loadjs');
 
@@ -14,9 +15,17 @@ class signup extends React.Component {
             lastname: '',
             email: '',
             password: '',
-            errorMessage: ''
+            errorMessage: '',
+            isOpen: false
         };
     }
+
+    toggleModal = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
     onChangeErrorHandling = (event) => {
         event.preventDefault();
         let name      = event.target.name;
@@ -51,19 +60,24 @@ class signup extends React.Component {
                 password: this.state.password
             }
         }).then((response) => {
-            console.log(response);
+            //console.log(response);
             //Add code here to handle a successful signup
         }, error => {
             //window.alert(error);
-            console.log(error);
+            //console.log(error);
             //Add code here to handle an unsuccessful signup
         });
     }
-
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
+                    <SignupModal show={this.state.isOpen} onClose={this.toggleModal}>
+                        Here's some content for the modal
+                    </SignupModal>
+                    <button onClick={this.toggleModal}>
+                        Open the modal
+                    </button>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}
