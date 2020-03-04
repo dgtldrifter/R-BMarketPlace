@@ -17,19 +17,20 @@ class signup extends React.Component {
             email: '',
             password: '',
             errorMessage: '',
-            isOpen: false
+            isOpenSuccess: false,
+            isOpenError: false
         };
     }
 
     toggleModal = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpenSuccess: !this.state.isOpenSuccess
         });
     }
 
     toggleModalError = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpenError: !this.state.isOpenError
         });
     }
 
@@ -62,27 +63,27 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName: this.state.lastname,
-                email: this.state.email,
-                password: this.state.password
+                lastName:  this.state.lastname,
+                email:     this.state.email,
+                password:  this.state.password
             }
         }).then((response) => {
+            console.log(response);
             if(response.status == 200) {
                 this.toggleModal();
             }
         }, error => {
             this.toggleModalError();
-            console.log(error);
         });
     }
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
-                    <SignupModal show={this.state.isOpen} onClose={this.toggleModal}>
+                    <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
                         You successfully created an account. 
                     </SignupModal>
-                    <SignupError show={this.state.isOpen} onClose={this.toggleModalError}>
+                    <SignupError show={this.state.isOpenError} onCloseError={this.toggleModalError}>
                         Your account was not created. The email address / user already exists in the system. 
                     </SignupError>
                     <h1 style={title}>R&amp;B Market Place</h1>

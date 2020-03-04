@@ -8,30 +8,44 @@ class SignupError extends React.Component {
             return null;
         }
 
-        const backdropStyle = {
+        const modal = {
+            width: '500px',
+            background: 'white',
+            border: '1px solid #ccc',
+            transition: '1.1s ease-out',
+            boxShadow: '-2rem 2rem 2rem rgba(black, 0.2)',
+            filter: 'blur(0)',
+            transform: 'scale(1)',  
+            opacity: '1',
+            visibility: 'visible',
             position: 'fixed',
             top: 0,
             bottom: 0,
             left: 0,
             right: 0,
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            padding: 50
+            padding: 50,
+            textAlign: 'center'
         };
 
-        const modalStyle = {
-            backgroundColor: '#fff',
-            borderRadius: 5,
-            maxWidth: 500,
-            minHeight: 300,
-            margin: '0 auto',
-            padding: 30
+        const content = {
+            padding: '1rem'
+        };
+
+        const actions = {
+            borderTop: '1px solid #ccc',
+            background: '#eee',
+            padding: '0.5rem 1rem',
+            textAlign: 'right'
         };
 
         return (
-            <div style={{backdropStyle}}>
-                <div style={{modalStyle}}>
+            <div style={{modal}}>
+                <div style={{content}}>
                     {this.props.children}
-                    <button className="btn btn-danger" onClick={this.props.close}>Close</button>
+                    <div style={{actions}}>
+                        <button className="btn btn-danger" onClick={this.props.onCloseError}>Close Message</button>
+                    </div>
                 </div>
             </div>
         );
@@ -39,7 +53,7 @@ class SignupError extends React.Component {
 }
 
 SignupError.propTypes = {
-    onClose: PropTypes.func.isRequired,
+    onCloseError: PropTypes.func.isRequired,
     show: PropTypes.bool,
     children: PropTypes.node
 };
