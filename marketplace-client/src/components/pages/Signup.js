@@ -3,6 +3,7 @@ import axios from 'axios';
 import SignupModal from './../modals/SignupModal';
 import SignupError from './../modals/SignupError';
 import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 var loadjs = require('loadjs');
 
@@ -19,7 +20,7 @@ class signup extends React.Component {
             password: '',
             errorMessage: '',
             isOpenSuccess: false,
-            isOpenError: false
+            isOpenError: false,
         };
     }
 
@@ -73,8 +74,8 @@ class signup extends React.Component {
                 password: this.state.password
             }
         }).then((response) => {
-            if(response.status == 200) {
-                return <Redirect to="/AddProduct" />
+            if(response.status === 200) {
+                return <Redirect to="http://localhost:3000/AddProduct" />
             }
         }, error => {
             
@@ -93,7 +94,7 @@ class signup extends React.Component {
             }
         }).then((response) => {
             console.log(response);
-            if(response.status == 200) {
+            if(response.status === 200) {
                 this.toggleModal();
             }
         }, error => {
