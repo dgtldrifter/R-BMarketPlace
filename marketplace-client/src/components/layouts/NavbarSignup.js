@@ -12,9 +12,9 @@ export default class navbar extends React.Component {
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
-                  <li className="active"><a href="/">Home</a></li>
+                  <li><a href="/">Home</a></li>
                   <li><a href="#main">Products and Properties</a></li>
-                  <li><Link to="/signup">Sign Up</Link></li>
+                  <li className="active"><Link to="/signup">Sign Up</Link></li>
                   <li><a href="#header">Link</a></li>
                   <li className="drop-down"><a href="">Drop Down</a>
                     <ul>

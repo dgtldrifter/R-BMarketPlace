@@ -6,6 +6,7 @@ import NavbarSignup from './components/layouts/NavbarSignup';
 import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
+import AddProduct from './components/pages/AddProduct';
 
 import './App.css';
 
@@ -24,6 +25,12 @@ function App() {
         <div>
           <NavbarSignup />
           <SignUp />
+        </div>
+      )} />
+      <Route path="/AddProduct" render={props => (
+        <div>
+          <NavbarSignup />
+          <AddProduct />
         </div>
       )} />
     </Router>
