@@ -52,9 +52,31 @@ class signup extends React.Component {
         this.setState({errorMessage: err});
         this.setState({[name]: val});
     }
+
+    onLoginHandle = e => {
+        e.preventDefault();
+        this.login();
+    }
+
     mySubmitHandlerSignUp = e => {
         e.preventDefault();
         this.register();
+    }
+
+    async login() {
+        axios({
+            method: 'POST',
+            url: 'users/login',
+            data: {
+                email:    this.state.email,
+                password: this.state.password
+            }
+        }).then((response) => {
+            if(response.status == 200) {
+            }
+        }, error => {
+            
+        });
     }
 
     async register() {
@@ -126,15 +148,15 @@ class signup extends React.Component {
                                 </form>
                             </div>
                             <div id="Login" className="container tab-pane">
-                                <form method="post" className="form-horizontal mt-4">
+                                <form method="post" className="form-horizontal mt-4" onSubmit={this.onLoginHandle}>
                                     <div className="row mt-2">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" id="loginEmail" className="form-control" placeholder="Enter an email" required/>
+                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required/>
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" id="loginPassword" className="form-control" placeholder="Enter a password" required/>
+                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required/>
                                         </div>
                                     </div>
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>

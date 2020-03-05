@@ -23,7 +23,6 @@ app.get('*', (req, res) => {
    res.sendFile(path.join(__dirname, 'marketplace-client/build/index.html'));
 });
 
-
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 connection.once('open', () => {
    console.log("Database connection established successfully!");

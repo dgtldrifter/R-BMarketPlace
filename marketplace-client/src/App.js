@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './components/layouts/Header';
 import NavBar from './components/layouts/Navbar';
+import NavbarSignup from './components/layouts/NavbarSignup';
 import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
-
 
 import './App.css';
 
@@ -22,7 +22,7 @@ function App() {
       )} />
       <Route path="/Signup" render={props => (
         <div>
-          <NavBar />
+          <NavbarSignup />
           <SignUp />
         </div>
       )} />
