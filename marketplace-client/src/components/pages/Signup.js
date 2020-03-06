@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import SignupModal from './../modals/SignupModal';
 import SignupError from './../modals/SignupError';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 var loadjs = require('loadjs');
 
@@ -75,10 +73,10 @@ class signup extends React.Component {
             }
         }).then((response) => {
             if(response.status === 200) {
-                return <Redirect to="http://localhost:3000/AddProduct" />
-            }
+                window.location.href = './AddProduct';
+            } 
         }, error => {
-            
+            alert('The email / password combination does not match an account. ');
         });
     }
 

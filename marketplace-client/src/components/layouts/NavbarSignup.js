@@ -13,19 +13,18 @@ export default class navbar extends React.Component {
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
                   <li><a href="/">Home</a></li>
-                  <li><a href="#main">Products and Properties</a></li>
                   <li className="active"><Link to="/signup">Sign Up</Link></li>
                   <li><a href="#header">Link</a></li>
-                  <li className="drop-down"><a href="">Drop Down</a>
+                  <li className="drop-down"><a href="">Categories</a>
                     <ul>
-                      <li><a href="#">Drop Down 1</a></li>
-                      <li className="drop-down"><a href="#">Drop Down 2</a>
+                      <li><a href="#">Furniture</a></li>
+                      <li className="drop-down"><a href="#">Real Estate</a>
                         <ul>
-                          <li><a href="#">Deep Drop Down 1</a></li>
-                          <li><a href="#">Deep Drop Down 2</a></li>
+                          <li><a href="#">Homes</a></li>
+                          <li><a href="#">Apartments</a></li>
                         </ul>
                       </li>
-                      <li><a href="#">Drop Down 3</a></li>
+                      <li><a href="#">Cooking</a></li>
                     </ul>
                   </li>
                 </ul>
