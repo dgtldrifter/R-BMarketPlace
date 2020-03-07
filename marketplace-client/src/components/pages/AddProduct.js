@@ -16,7 +16,7 @@ class AddProduct extends React.Component {
             price: '',
             date: '',
             location: '',
-            seller: '',
+            ownerID: '',
             image: ''
         }
     }
@@ -35,7 +35,7 @@ class AddProduct extends React.Component {
                 price:      this.state.price,
                 date:       this.state.date,
                 location:   this.state.location,
-                seller:     this.state.seller,
+                ownerID:    this.state.ownerID,
                 image:      this.state.image
             }
         }).then((response) => {
@@ -52,7 +52,7 @@ class AddProduct extends React.Component {
             <div class="container">
                 <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
                     <input type="hidden" className="form-control" name="date" />
-                    <input type="hidden" className="form-control" name="seller" />
+                    <input type="hidden" className="form-control" name="ownerID" />
                     <div className="row">
                         <div className="col-12 col-sm-6">
                             <label>Name</label>
