@@ -13,16 +13,19 @@ router.route('/create').post((req, res) => {
     const email       = req.body.email;
     const image       = req.body.image;
     const categoryid  = req.body.categoryid;
+    const saletype    = req.body.saletype;
     const price       = req.body.price;
     const date        = req.body.date;
-    const location    = req.body.location;
+    const city        = req.body.city;
+    const state       = req.body.state;
+    const address     = req.body.address;
     const description = req.body.description;
 
 
     User.findOne({email: email})
         .then(user => {
             let ownerID = user._id;
-            const newPost = new Post({categoryid, name, price, description, ownerID, date, location, image});
+            const newPost = new Post({categoryid, saletype, name, price, description, ownerID, date, city, state, address, image});
 
             newPost.save()
                 .then(() => res.json('Post Created!'))

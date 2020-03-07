@@ -7,6 +7,12 @@ const postSchema = new Schema({
         unique: false,
         trim: true
     },
+    saletype: {
+        type: Number,
+        required: true,
+        unique: false,
+        trim: true
+    },
     name: {
         type: String,
         required: true,
@@ -36,7 +42,19 @@ const postSchema = new Schema({
         unique: true,
         trim: true
     },
-    location: {
+    city: {
+        type: String,
+        required: true,
+        unique: false,
+        trim: true
+    },
+    state: {
+        type: String,
+        required: true,
+        unique: false,
+        trim: true
+    },
+    address: {
         type: String,
         required: true,
         unique: false,
