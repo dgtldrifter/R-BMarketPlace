@@ -31,7 +31,7 @@ const postSchema = new Schema({
         unique:false,
         trim:true
     },
-    ownerID: {
+    ownerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true

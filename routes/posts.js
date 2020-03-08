@@ -9,23 +9,22 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/create').post((req, res) => {
-    const name        = req.body.name;
-    const email       = req.body.email;
-    const image       = req.body.image;
     const categoryid  = req.body.categoryid;
     const saletype    = req.body.saletype;
+    const name        = req.body.name;
     const price       = req.body.price;
+    const description = req.body.description;
+    const ownerId     = req.body.ownerId;
     const date        = req.body.date;
     const city        = req.body.city;
     const state       = req.body.state;
     const address     = req.body.address;
-    const description = req.body.description;
-
-
+    const image       = req.body.image;
+    
     User.findOne({email: email})
         .then(user => {
-            let ownerID = user._id;
-            const newPost = new Post({categoryid, saletype, name, price, description, ownerID, date, city, state, address, image});
+            //let ownerId = user._id;
+            const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, state, address, image});
 
             newPost.save()
                 .then(() => res.json('Post Created!'))
@@ -36,7 +35,7 @@ router.route('/create').post((req, res) => {
 
 router.route('/getAll').post((req, res) => {
     Post.find()
-        .populate('ownerID', 'email firstName lastName -_id')
+        .populate('ownerId', 'email firstName lastName -_id')
         .exec(function(error, posts) {
             res.json(posts);
         });

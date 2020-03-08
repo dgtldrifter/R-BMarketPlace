@@ -18,7 +18,7 @@ class AddProduct extends React.Component {
             city: '',
             state: '',
             address: '',
-            ownerID: '',
+            ownerId: '',
             image: '',
             saletype: '',
             errorMessage: ''
@@ -29,10 +29,17 @@ class AddProduct extends React.Component {
     buildStateOptions() {
         var arr = [];
     
-        const states = ['Alabama', 'Alaska', 'Missouri', 'Washington'];
+        const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 
+            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 
+            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 
+            'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 
+            'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 
+            'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 
+            'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 
+            'West Virginia', 'Wisconsin', 'Wyoming'];
     
         for(let i = 0; i <= states.length - 1; i++) {
-            arr.push(<option value="{i}">{states[i]}</option>);
+            arr.push(<option key={i} value={states[i]}>{states[i]}</option>);
         }
     
         return arr;
@@ -44,7 +51,7 @@ class AddProduct extends React.Component {
         const saleTypes = ['Community', 'Services', 'Discussion Forms', 'Housing', 'For Sale', 'For Rent'];
 
         for(let i = 0; i <= saleTypes.length - 1; i++) {
-            arr.push(<option value="{i}">{saleTypes[i]}</option>);
+            arr.push(<option key={i} value={saleTypes[i]}>{saleTypes[i]}</option>);
         }
 
         return arr;
@@ -54,10 +61,10 @@ class AddProduct extends React.Component {
         var arr = [];
 
         const categories = ['Apts / Housing Rent', 'Apts / Housing For Sale', 
-            'Office / Commerical Space Rent / For Sale', 'Furniture', 'Cooking'];
+            'Office / Commerical Space Rent / For Sale', 'Furniture', 'Cooking', 'Transportation'];
 
         for(let i = 0; i <= categories.length - 1; i++) {
-            arr.push(<option value="{i}">{categories[i]}</option>)
+            arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
         }
 
         return arr;
@@ -87,7 +94,7 @@ class AddProduct extends React.Component {
     async addProduct() {
         axios({
             method: 'POST',
-            url: '/product',
+            url: 'posts/create',
             data: {
                 name:       this.state.name,
                 categoryid: this.state.categoryid,
@@ -96,40 +103,45 @@ class AddProduct extends React.Component {
                 city:       this.state.city,
                 state:      this.state.state,
                 address:    this.state.address,
-                ownerID:    this.state.ownerID,
+                ownerID:    this.state.ownerId,
                 image:      this.state.image,
                 saletype:   this.state.saletype
             }
         }).then((response) => {
             if(response.status === 200) {
-
+                console.log("Success");
             }
         }, error => {
-
+            console.log(error);
+            alert('The product could not be added.');
         });
     }
     
     render() {
         return (
-            <div class="container mt-3 mb-5">
+            <div className="container mt-3 mb-5">
                 <h1 className='text-center'>Add Product</h1>
                 <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
-                    <input type="hidden" className="form-control" name="date" />
-                    <input type="hidden" className="form-control" name="ownerID" />
+                    <input type="hidden" className="form-control" name="date" value="3/8/2020"/>
+                    <input type="hidden" className="form-control" name="ownerId" value="1"/>
                     <div className="row">
                         <div className="col-12 col-sm-6">
-                            <label>Name</label>
+                            <label>Product Name</label>
                             <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off"/>
-                        </div> 
+                        </div>
                         <div className="col-12 col-sm-6">
+                            <label>Description</label>
+                            <textarea name="_description" rows="5" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                        </div> 
+                    </div>
+                    <div className="row mt-4">
+                    <div className="col-12 col-sm-6">
                             <label>Sale Type</label>
                             <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
                                 <option value="0">Choose a Sale Type</option>
                                 {this.buildSaleTypeOptions()}
                             </select>
                         </div>
-                    </div>
-                    <div className="row mt-3">
                         <div className="col-12 col-sm-6">
                             <label>Product Category</label>
                             <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
@@ -137,38 +149,34 @@ class AddProduct extends React.Component {
                                 {this.buildCategoryTypeOptions()}
                             </select>
                         </div>
+                    </div>
+                    <div className="row mt-3">
                         <div className="col-12 col-sm-6">
                             <label>Price</label>
                             <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-6">
-                            <label>Description</label>
-                            <textarea name="_description" onChange={this.onChangeHandler} className="form-control"></textarea>
-                        </div>
-                        <div class="col-12 col-sm-6">
+                        <div className="col-12 col-sm-6">
                             <label>City</label>
-                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" />
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required/>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-6">
+                    <div className="row mt-3">
+                        <div className="col-12 col-sm-6">
                             <label>State</label> 
                             <select onChange={this.onChangeHandler} className="form-control" name="state" required>
                                 <option value="0">Choose a State</option>
                                 {this.buildStateOptions()}
                             </select>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div className="col-12 col-sm-6">
                             <label>Address</label> 
-                            <input type="text" className="form-control" name="address" required autocomplete="off"/>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required/>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12">
+                    <div className="row mt-3">
+                        <div className="col-12">
                             <label>Image</label>
-                            <input type="file" onChange={this.onChangeHandler} className="form-control" name="image" />
+                            <input type="file" onChange={this.onChangeHandler} className="form-control" name="image" required />
                         </div>
                     </div>
                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
