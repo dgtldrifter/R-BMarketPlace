@@ -4,8 +4,8 @@ Application can be found at https://rbmarketplace.herokuapp.com/
 
 ### Instructions For Setting Up the Project
 
-* run `npm ci` in the root directory
-* `cd` into `marketplace-client` and run `npm ci`
+Included inside this project is a batch file with the name init.bat. Run this, and the script will run `npm install` in all 
+the locations that is needed.
 
 ### Running the Project on Local
 
