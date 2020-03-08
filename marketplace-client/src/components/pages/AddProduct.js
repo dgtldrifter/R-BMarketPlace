@@ -32,9 +32,34 @@ class AddProduct extends React.Component {
         const states = ['Alabama', 'Alaska', 'Missouri', 'Washington'];
     
         for(let i = 0; i <= states.length - 1; i++) {
-            arr.push(<option value="{i}">{states[i]}</option>)
+            arr.push(<option value="{i}">{states[i]}</option>);
         }
     
+        return arr;
+    }
+
+    buildSaleTypeOptions() {
+        var arr = [];
+
+        const saleTypes = ['Community', 'Services', 'Discussion Forms', 'Housing', 'For Sale', 'For Rent'];
+
+        for(let i = 0; i <= saleTypes.length - 1; i++) {
+            arr.push(<option value="{i}">{saleTypes[i]}</option>);
+        }
+
+        return arr;
+    }
+
+    buildCategoryTypeOptions() {
+        var arr = [];
+
+        const categories = ['Apts / Housing Rent', 'Apts / Housing For Sale', 
+            'Office / Commerical Space Rent / For Sale', 'Furniture', 'Cooking'];
+
+        for(let i = 0; i <= categories.length - 1; i++) {
+            arr.push(<option value="{i}">{categories[i]}</option>)
+        }
+
         return arr;
     }
 
@@ -100,12 +125,7 @@ class AddProduct extends React.Component {
                             <label>Sale Type</label>
                             <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
                                 <option value="0">Choose a Sale Type</option>
-                                <option value="1">Community</option>
-                                <option value="2">Services</option>
-                                <option value="3">Discussion Forms</option>
-                                <option value="4">Housing</option>
-                                <option value="5">For Sale</option>
-                                <option value="5">For Rent</option>
+                                {this.buildSaleTypeOptions()}
                             </select>
                         </div>
                     </div>
@@ -114,11 +134,7 @@ class AddProduct extends React.Component {
                             <label>Product Category</label>
                             <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
                                 <option value="0">Choose a Category</option>
-                                <option value="1">Apts / Housing Rent</option>
-                                <option value="2">Apts / Housing For Sale</option>
-                                <option value="3">Office / Commerical Space Rent / For Sale</option>
-                                <option value="4">Furniture</option>
-                                <option value="4">Cooking</option>
+                                {this.buildCategoryTypeOptions()}
                             </select>
                         </div>
                         <div className="col-12 col-sm-6">
