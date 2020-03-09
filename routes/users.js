@@ -4,11 +4,11 @@ const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 let User = require('../models/user.model');
 
-// router.route('/').get((req, res) => {
-//   User.find()
-//     .then(users => res.json(users))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
+router.route('/').get((req, res) => {
+  User.find()
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add').post((req, res) => {
   const email           = req.body.email;
@@ -34,28 +34,6 @@ router.route('/add').post((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// router.route('/login').post((req, res) => {
-//   const email = req.body.email;
-//
-//   User.findOne({email: email})
-//       .then(user => {
-//           if (!user) { res.sendStatus(401); }
-//           else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
-//               const payload = {user: {email: user.email}};
-//
-//               jwt.sign(
-//                   payload,
-//                   randomString.generate(32), {expiresIn: 3600},
-//                   (err, token) => {
-//                       if (err) throw err;
-//                       res.status(200).json({token});
-//                   }
-//               );
-//           }
-//           else { res.sendStatus(401); }
-//       });
-// });
-
 router.route("/login").post((req, res) => {
     const email = req.body.email;
 
@@ -78,7 +56,7 @@ router.route("/login").post((req, res) => {
         });
 });
 
-router.route("/authToken").post((req, res) => {
+router.route("/authToken").get((req, res) => {
     let email;
     try {
         const token = req.header("token");
