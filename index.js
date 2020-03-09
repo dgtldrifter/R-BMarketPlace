@@ -3,6 +3,7 @@ const express =         require('express');
 const path =            require('path');
 const cors =            require('cors');
 const mongoose =        require('mongoose');
+const bodyParser =      require('body-parser');
 const userRouter =      require('./routes/users');
 const postRouter =      require('./routes/posts');
 const connection =      mongoose.connection;
@@ -22,14 +23,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
-
-app.use(session({
-   secret:"thisisatestplschangethislater",
-   resave: true,
-   saveUninitialized, false
-}));
-
-
+app.use(bodyParser.json());
 
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 connection.once('open', () => {
