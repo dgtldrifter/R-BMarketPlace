@@ -4,13 +4,11 @@ const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 let User = require('../models/user.model');
 
-router.use()
-
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.route('/').get((req, res) => {
+//   User.find()
+//     .then(users => res.json(users))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
 
 router.route('/add').post((req, res) => {
   const email           = req.body.email;
@@ -26,7 +24,7 @@ router.route('/add').post((req, res) => {
 
           jwt.sign(
               payload,
-              randomString.generate(32), {expiresIn: 10000},
+              "thisisasecretkey", {expiresIn: 10000},
               (err, token) => {
                   if (err) throw err;
                   res.status(200).json({token});
@@ -36,30 +34,71 @@ router.route('/add').post((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/login').post((req, res) => {
-  const email = req.body.email;
+// router.route('/login').post((req, res) => {
+//   const email = req.body.email;
+//
+//   User.findOne({email: email})
+//       .then(user => {
+//           if (!user) { res.sendStatus(401); }
+//           else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
+//               const payload = {user: {email: user.email}};
+//
+//               jwt.sign(
+//                   payload,
+//                   randomString.generate(32), {expiresIn: 3600},
+//                   (err, token) => {
+//                       if (err) throw err;
+//                       res.status(200).json({token});
+//                   }
+//               );
+//           }
+//           else { res.sendStatus(401); }
+//       });
+// });
 
-  User.findOne({email: email})
-      .then(user => {
-          if (!user) { res.sendStatus(401); }
-          else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
-              const payload = {user: {email: user.email}};
+router.route("/login").post((req, res) => {
+    const email = req.body.email;
 
-              jwt.sign(
-                  payload,
-                  randomString.generate(32), {expiresIn: 3600},
-                  (err, token) => {
-                      if (err) throw err;
-                      res.status(200).json({token});
-                  }
-              );
-          }
-          else { res.sendStatus(401); }
-      });
+    User.findOne({email: email})
+        .then(user => {
+            if (!user) { res.sendStatus(401); }
+            else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
+                const payload = {user: {email: user.email}};
+
+                jwt.sign(
+                    payload,
+                    "thisisasecretkey", {expiresIn: 3600},
+                    (err, token) => {
+                        if (err) throw err;
+                        res.status(200).json({token});
+                    }
+                );
+            }
+            else { res.sendStatus(401); }
+        });
 });
 
-router.route('/authToken').get((req, res) => {
+router.route("/authToken").post((req, res) => {
+    let email;
+    try {
+        const token = req.header("token");
+        if(!token) return res.status(401).json({message: "Auth Error"});
 
+        try{
+            const decoded = jwt.verify(token, "thisisasecretkey");
+            email = decoded.user.email;
+        } catch (e) {
+            console.error(e);
+            res.status(500).send({ message: "Invalid Token" })
+        }
+
+        User.findOne({email: email})
+            .then(user => res.json(user))
+            .catch(err => res.json(err));
+
+    } catch (e) {
+        res.send({ message: "Error in fetching user" });
+    }
 });
 
 module.exports = router;
