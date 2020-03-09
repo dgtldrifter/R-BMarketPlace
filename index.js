@@ -13,15 +13,23 @@ const uri = "mongodb+srv://" + process.env.ATLAS_USER + ":" + process.env.ATLAS_
 //serve the static files from the react application
 app.use(express.static(path.join(__dirname, 'marketplace-client/build')));
 
+//Catchall handler
+app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, 'marketplace-client/build/index.html'));
+});
+
 app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 
-//Catchall handler
-app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname, 'marketplace-client/build/index.html'));
-});
+app.use(session({
+   secret:"thisisatestplschangethislater",
+   resave: true,
+   saveUninitialized, false
+}));
+
+
 
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 connection.once('open', () => {
