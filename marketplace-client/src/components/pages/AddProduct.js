@@ -12,13 +12,12 @@ class AddProduct extends React.Component {
         super(props);
         this.state = {
             name: '',
+            description: '',
             categoryid: '',
             price: '',
-            date: '',
             city: '',
-            state: '',
+            location: '',
             address: '',
-            ownerId: '',
             image: '',
             saletype: '',
             errorMessage: ''
@@ -96,16 +95,17 @@ class AddProduct extends React.Component {
             method: 'POST',
             url: 'posts/create',
             data: {
-                name:       this.state.name,
-                categoryid: this.state.categoryid,
-                price:      this.state.price,
-                date:       this.state.date,
-                city:       this.state.city,
-                state:      this.state.state,
-                address:    this.state.address,
-                ownerID:    this.state.ownerId,
-                image:      this.state.image,
-                saletype:   this.state.saletype
+                name:        this.state.name,
+                description: this.state.description,
+                categoryid:  this.state.categoryid,
+                price:       this.state.price,
+                date:        this.date.value,
+                city:        this.state.city,
+                location:    this.state.location,
+                address:     this.state.address,
+                ownerId:     this.ownerId.value,
+                image:       this.state.image,
+                saletype:    this.state.saletype
             }
         }).then((response) => {
             if(response.status === 200) {
@@ -122,8 +122,8 @@ class AddProduct extends React.Component {
             <div className="container mt-3 mb-5">
                 <h1 className='text-center'>Add Product</h1>
                 <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
-                    <input type="hidden" className="form-control" name="date" value="3/8/2020"/>
-                    <input type="hidden" className="form-control" name="ownerId" value="1"/>
+                    <input type="hidden" className="form-control" name="date" value="3/8/2020" ref={(input) => {this.date = input}}/>
+                    <input type="hidden" className="form-control" name="ownerId" value="1" ref={(input) => {this.ownerId = input}}/>
                     <div className="row">
                         <div className="col-12 col-sm-6">
                             <label>Product Name</label>
@@ -131,11 +131,11 @@ class AddProduct extends React.Component {
                         </div>
                         <div className="col-12 col-sm-6">
                             <label>Description</label>
-                            <textarea name="_description" rows="5" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                            <textarea name="description" rows="5" onChange={this.onChangeHandler} className="form-control" required></textarea>
                         </div> 
                     </div>
                     <div className="row mt-4">
-                    <div className="col-12 col-sm-6">
+                        <div className="col-12 col-sm-6">
                             <label>Sale Type</label>
                             <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
                                 <option value="0">Choose a Sale Type</option>
@@ -153,7 +153,7 @@ class AddProduct extends React.Component {
                     <div className="row mt-3">
                         <div className="col-12 col-sm-6">
                             <label>Price</label>
-                            <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
                         </div>
                         <div className="col-12 col-sm-6">
                             <label>City</label>
@@ -163,7 +163,7 @@ class AddProduct extends React.Component {
                     <div className="row mt-3">
                         <div className="col-12 col-sm-6">
                             <label>State</label> 
-                            <select onChange={this.onChangeHandler} className="form-control" name="state" required>
+                            <select onChange={this.onChangeHandler} className="form-control" name="location" required>
                                 <option value="0">Choose a State</option>
                                 {this.buildStateOptions()}
                             </select>
