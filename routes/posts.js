@@ -24,7 +24,7 @@ router.route('/create').post((req, res) => {
     const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, location, address, image});
 
     newPost.save()
-        .then(post => res.json('Post Created!'))
+        .then(post => res.json('Post Created!' + post))
         .catch(err => res.status(500).json('Error: ' + err));
     
     /*
