@@ -9,6 +9,7 @@ class signup extends React.Component {
     componentDidMount() {
         loadjs('main.js');
     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +20,7 @@ class signup extends React.Component {
             errorMessage: '',
             isOpenSuccess: false,
             isOpenError: false,
+            token: ''
         };
     }
 
@@ -64,6 +66,7 @@ class signup extends React.Component {
     }
 
     async login() {
+        let userToken;
         axios({
             method: 'POST',
             url: 'users/login',
@@ -73,6 +76,9 @@ class signup extends React.Component {
             }
         }).then((response) => {
             if(response.status === 200) {
+                userToken = response.data.token;
+                this.setState({token: userToken});
+                localStorage.setItem('token', userToken);
                 window.location.href = './AddProduct';
             } 
         }, error => {

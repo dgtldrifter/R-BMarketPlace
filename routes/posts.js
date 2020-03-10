@@ -49,4 +49,10 @@ router.route('/getAll').post((req, res) => {
         });
 });
 
+/*
+router.route('/getHomes').post((req, res) => {
+    Post.find();
+});
+*/
+
 module.exports = router;
