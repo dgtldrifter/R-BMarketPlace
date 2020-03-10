@@ -20,7 +20,14 @@ router.route('/create').post((req, res) => {
     const state       = req.body.state;
     const address     = req.body.address;
     const image       = req.body.image;
+
+    const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, state, address, image});
+
+    newPost.save()
+        .then(() => res.json('Post Created!'))
+        .catch(err => res.status(500).json('Error: ' + err));
     
+    /*
     User.findOne({email: email})
         .then(user => {
             //let ownerId = user._id;
@@ -31,6 +38,7 @@ router.route('/create').post((req, res) => {
                 .catch(err => res.status(500).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
+    */
 });
 
 router.route('/getAll').post((req, res) => {
