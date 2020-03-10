@@ -8,11 +8,11 @@ export default class navbar extends React.Component {
           <div id="header">
             <div className="container d-flex">
               <div className="logo mr-auto">
-                <a href="/"><img src="img/logo.jpg" alt="Logo" className="img-fluid"/></a>
+                <Link to="/"><img src="img/logo.jpg" alt="Logo" className="img-fluid"/></Link>
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
-                  <li><a href="/">Home</a></li>
+                  <li><Link to="/">Home</Link></li>
                   <li className="active"><Link to="/signup">Sign Up / Login</Link></li>
                   <li><a href="#header">Link</a></li>
                   <li className="drop-down"><a href="">Categories</a>
