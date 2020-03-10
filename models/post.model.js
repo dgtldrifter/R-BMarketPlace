@@ -32,9 +32,13 @@ const postSchema = new Schema({
         trim:true
     },
     ownerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: 'User',
+        // required: true
+        type:String,
+        required:true,
+        unique:false,
+        trim:true
     },
     date: {
         type: Date,
@@ -48,7 +52,7 @@ const postSchema = new Schema({
         unique: false,
         trim: true
     },
-    state: {
+    location: {
         type: String,
         required: true,
         unique: false,

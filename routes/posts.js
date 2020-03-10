@@ -17,11 +17,11 @@ router.route('/create').post((req, res) => {
     const ownerId     = req.body.ownerId;
     const date        = req.body.date;
     const city        = req.body.city;
-    const state       = req.body.state;
+    const location    = req.body.location;
     const address     = req.body.address;
     const image       = req.body.image;
 
-    const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, state, address, image});
+    const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, location, address, image});
 
     newPost.save()
         .then(() => res.json('Post Created!'))

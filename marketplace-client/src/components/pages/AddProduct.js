@@ -15,11 +15,9 @@ class AddProduct extends React.Component {
             description: '',
             categoryid: '',
             price: '',
-            date: '',
             city: '',
-            state: '',
+            location: '',
             address: '',
-            ownerId: '',
             image: '',
             saletype: '',
             errorMessage: ''
@@ -103,14 +101,13 @@ class AddProduct extends React.Component {
                 price:       this.state.price,
                 date:        this.date.value,
                 city:        this.state.city,
-                state:       this.state.state,
+                location:    this.state.location,
                 address:     this.state.address,
-                ownerID:     this.ownerId.value,
+                ownerId:     this.ownerId.value,
                 image:       this.state.image,
                 saletype:    this.state.saletype
             }
         }).then((response) => {
-            console.log("Hello Success");
             if(response.status === 200) {
                 console.log("Success");
             }
@@ -166,7 +163,7 @@ class AddProduct extends React.Component {
                     <div className="row mt-3">
                         <div className="col-12 col-sm-6">
                             <label>State</label> 
-                            <select onChange={this.onChangeHandler} className="form-control" name="state" required>
+                            <select onChange={this.onChangeHandler} className="form-control" name="location" required>
                                 <option value="0">Choose a State</option>
                                 {this.buildStateOptions()}
                             </select>
