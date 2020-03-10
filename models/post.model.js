@@ -43,7 +43,7 @@ const postSchema = new Schema({
     date: {
         type: String,
         required: true,
-        unique: true,
+        unique: false,
         trim: true
     },
     city: {
