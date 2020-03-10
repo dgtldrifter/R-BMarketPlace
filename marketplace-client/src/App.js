@@ -23,13 +23,13 @@ function App() {
       )} />
       <Route path="/Signup" render={props => (
         <div>
-          <NavbarSignup />
+          <NavBar />
           <SignUp />
         </div>
       )} />
       <Route path="/AddProduct" render={props => (
         <div>
-          <NavbarSignup />
+          <NavBar />
           <AddProduct />
         </div>
       )} />
