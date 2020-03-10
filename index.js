@@ -15,7 +15,7 @@ const uri = "mongodb+srv://" + process.env.ATLAS_USER + ":" + process.env.ATLAS_
 app.use(express.static(path.join(__dirname, 'marketplace-client/build')));
 
 //Catchall handler
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
    res.sendFile(path.join(__dirname, 'marketplace-client/build/index.html'));
 });
 

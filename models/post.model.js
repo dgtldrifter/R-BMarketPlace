@@ -2,13 +2,13 @@ const mongoose   = require('mongoose');
 const Schema     = mongoose.Schema;
 const postSchema = new Schema({
     categoryid: {
-        type: Number,
+        type: String,
         required: true,
         unique: false,
         trim: true
     },
     saletype: {
-        type: Number,
+        type: String,
         required: true,
         unique: false,
         trim: true
@@ -41,7 +41,7 @@ const postSchema = new Schema({
         trim:true
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
         unique: true,
         trim: true

@@ -71,7 +71,11 @@ router.route("/authToken").get((req, res) => {
         }
 
         User.findOne({email: email})
-            .then(user => res.json(user))
+            .then(user => res.json({
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }))
             .catch(err => res.json(err));
 
     } catch (e) {
