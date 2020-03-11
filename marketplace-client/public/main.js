@@ -3,7 +3,18 @@ $(document).ready(function(){
   $("#header").sticky({topSpacing:0, zIndex: '50'});
   //scroll to top on route
   window.scrollTo(0, 0);
+  clock();
 });
+
+function clock() {
+  var d        = new Date();
+  var date     = d.getDate();
+  var year     = d.getFullYear();
+  var month    = d.getMonth();
+  var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
+  month        = monthArr[month];
+  $("#currentDate").val(date + " " + month + ", " + year);
+}
 
 !(function($) {
   "use strict";

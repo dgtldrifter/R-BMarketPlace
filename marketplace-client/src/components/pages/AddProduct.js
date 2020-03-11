@@ -122,7 +122,7 @@ class AddProduct extends React.Component {
             <div className="container mt-3 mb-5">
                 <h1 className='text-center'>Add Product</h1>
                 <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
-                    <input type="hidden" className="form-control" name="date" value="3/8/2020" ref={(input) => {this.date = input}}/>
+                    <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
                     <input type="hidden" className="form-control" name="ownerId" value="1" ref={(input) => {this.ownerId = input}}/>
                     <div className="row">
                         <div className="col-12 col-sm-6">

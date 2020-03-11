@@ -62,7 +62,7 @@ router.route("/authToken").get((req, res) => {
         const token = req.header("token");
         if(!token) return res.status(401).json({message: "Auth Error"});
 
-        try{
+        try {
             const decoded = jwt.verify(token, "thisisasecretkey");
             email = decoded.user.email;
         } catch (e) {
