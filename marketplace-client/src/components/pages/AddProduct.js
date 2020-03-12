@@ -6,6 +6,20 @@ var loadjs = require('loadjs');
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
+        if(localStorage.getItem('token') != "") {
+            axios({
+                method: 'POST',
+                url: 'users/authToken',
+                config: { 
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.getItem('token')
+                    }   
+                }
+            }).then((response) => {
+    
+            });
+        }
     }
 
     constructor(props) {
