@@ -56,7 +56,7 @@ router.route("/login").post((req, res) => {
         });
 });
 
-router.route("/authToken").get((req, res) => {
+router.route("/authToken").post((req, res) => {
     let email;
     try {
         const token = req.header("token");
