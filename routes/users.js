@@ -16,8 +16,9 @@ router.route('/add').post((req, res) => {
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
     const password = SHA256(req.body.password + passwordSalt);
+    const emailToken = randomString.generate(15);
 
-    const newUser = new User({ email, firstName, lastName, passwordSalt, password });
+    const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
     newUser.save()
         .then(user => {
             const payload = { user: { id: user.email } };
@@ -43,11 +44,11 @@ router.route("/login").post((req, res) => {
                 res.status(401);
                 res.send("Error: Email address is not registered");
             }
-            else if (user.active == false) {
-                res.status(401);
-                res.send("Error: Email address is not verified.");
-            }
             else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
+                if (user.active == false) {
+                    res.status(401);
+                    res.send("unverified");
+                }
                 const payload = { user: { email: user.email } };
 
                 jwt.sign(
@@ -62,6 +63,33 @@ router.route("/login").post((req, res) => {
             else {
                 res.status(401);
                 res.send("Error: The email and password combination does not match!");
+            }
+
+        });
+});
+
+router.route("/verify").post((req, res) => {
+    const email = req.body.email;
+    User.findOne({ email: email })
+        .then(user => {
+            if (!user) {
+                res.status(404);
+                res.send("Error: Invalid email!");
+            }
+            else if (user.active == true) {
+                res.status(404);
+                res.send("Error: Email is already verified.");
+            }
+            else if (req.body.emailToken === user.emailToken) {
+                user.active = true;
+                user.emailToken = '';
+                user.save();
+                res.status(200);
+                res.send("Successful: Email address verified successfully!");
+            }
+            else {
+                res.status(401);
+                res.send("Error: Invalid token!");
             }
 
         });

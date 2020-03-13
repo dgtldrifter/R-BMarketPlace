@@ -82,7 +82,30 @@ class signup extends React.Component {
                 window.location.href = './AddProduct';
             }
         }, error => {
-            alert(error.response.data);
+            if (error.response.data == "unverified") {
+                //TODO: Create a new page for the user to type in the token, then redirect to that page here.
+                //      Replace the prompt with an actual verification page. Also add an option to resend token.
+                var promptToken = prompt("The email address is not verified.\nPlease type in the token that was sent to the email: ");
+                if (promptToken != null || promptToken != "") {
+                    axios({
+                        method: 'POST',
+                        url: 'users/verify',
+                        data: {
+                            email: this.state.email,
+                            emailToken: promptToken
+                        }
+                    }).then((response) => {
+                        if (response.status === 200) {
+                            alert("Email address verified successfully!");
+                            window.location.href = "./";
+                        }
+                    }, error => {
+                        alert(error.response.data);
+                    });
+                }
+            }
+            else
+                alert(error.response.data);
         });
     }
 

@@ -31,6 +31,12 @@ const userSchema = new Schema({
         unique: false,
         trim: true
     },
+    emailToken: {
+        type: String,
+        required: false,
+        unique: false,
+        trim: true
+    },
     active: {
         type: Boolean,
         default: false
