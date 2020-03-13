@@ -38,21 +38,21 @@ class signup extends React.Component {
 
     onChangeErrorHandling = (event) => {
         event.preventDefault();
-        let name      = event.target.name;
-        let val       = event.target.value;
-        let err       = '';
-        if(name === "firstname"){
-            if(Number(val)) {
+        let name = event.target.name;
+        let val = event.target.value;
+        let err = '';
+        if (name === "firstname") {
+            if (Number(val)) {
                 err = <p className="pt-2">There can't be a number for first name. </p>;
             }
-        } else if(name === "lastname") {
-            if(Number(val)) {
+        } else if (name === "lastname") {
+            if (Number(val)) {
                 err = <p className="pt-2">There can't be a number for last name.</p>;
             }
         }
 
-        this.setState({errorMessage: err});
-        this.setState({[name]: val});
+        this.setState({ errorMessage: err });
+        this.setState({ [name]: val });
     }
 
     onLoginHandle = e => {
@@ -71,18 +71,18 @@ class signup extends React.Component {
             method: 'POST',
             url: 'users/login',
             data: {
-                email:    this.state.email,
+                email: this.state.email,
                 password: this.state.password
             }
         }).then((response) => {
-            if(response.status === 200) {
+            if (response.status === 200) {
                 userToken = response.data.token;
-                this.setState({token: userToken});
+                this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
                 window.location.href = './AddProduct';
-            } 
+            }
         }, error => {
-            alert('The email / password combination does not match an account. ');
+            alert(error.response.data);
         });
     }
 
@@ -92,13 +92,13 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName:  this.state.lastname,
-                email:     this.state.email,
-                password:  this.state.password
+                lastName: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
             }
         }).then((response) => {
             console.log(response);
-            if(response.status === 200) {
+            if (response.status === 200) {
                 this.toggleModal();
             }
         }, error => {
@@ -110,10 +110,10 @@ class signup extends React.Component {
             <React.Fragment>
                 <div style={background}>
                     <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
-                        You successfully created an account. 
+                        You successfully created an account.
                     </SignupModal>
                     <SignupError show={this.state.isOpenError} onCloseError={this.toggleModalError}>
-                        Your account was not created. The email address / user already exists in the system. 
+                        Your account was not created. The email address / user already exists in the system.
                     </SignupError>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
@@ -133,21 +133,21 @@ class signup extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
-                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required/>
+                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Last Name</label>
-                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required/>
+                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required/>
+                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required/>
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required />
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
@@ -159,18 +159,18 @@ class signup extends React.Component {
                                     <div className="row mt-2">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required/>
+                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required/>
+                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required />
                                         </div>
                                     </div>
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
                                     <button type="button" style={forgotPassword} className="btn btn-block mt-3">Forgot your password?</button>
                                 </form>
                             </div>
-                            <hr/>
+                            <hr />
                         </div>
                     </div>
                 </div>
