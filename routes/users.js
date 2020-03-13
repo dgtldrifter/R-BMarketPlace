@@ -3,6 +3,7 @@ const SHA256 = require("crypto-js/sha256");
 const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 let User = require('../models/user.model');
+const mailer = require('../mailer/mailer');
 
 router.route('/').get((req, res) => {
     User.find()
@@ -31,6 +32,12 @@ router.route('/add').post((req, res) => {
                     res.status(200).json({ token });
                 }
             );
+            const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
+                '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
+                '<b>' + emailToken + '</b>';
+            const subject = "R&B Marketplace Account Confirmation";
+
+            mailer.sendEmail(subject, email, emailContent);
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
