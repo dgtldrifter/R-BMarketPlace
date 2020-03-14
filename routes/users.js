@@ -17,7 +17,7 @@ router.route('/add').post((req, res) => {
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
     const password = SHA256(req.body.password + passwordSalt);
-    const emailToken = randomString.generate(15);
+    const emailToken = randomString.generate(5);
 
     const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
     newUser.save()
