@@ -40,9 +40,33 @@ router.route('/getAll').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// For returning the category 'Apartments' and the saletype 'For Sale'
 /*
-router.route('/getHomes').post((req, res) => {
-    Post.find();
+router.route('/getForSaleApts').post((req, res) => {
+    Post.find()
+        .populate()
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+*/
+
+// For returning the category 'Homes' and the saletype 'For Sale'
+/*
+router.routes('/getForSaleHomes').post((req, res) => {
+    Post.find()
+        .populate()
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+*/
+
+// For returning the category 'Offices / Commercal' Space and the saletype 'For Sale'
+/*
+router.routes('/getForSaleOffices').post((req, res) => {
+    Post.find()
+        .populate()
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 */
 

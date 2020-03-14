@@ -3,6 +3,8 @@ import axios from 'axios';
 
 var loadjs = require('loadjs');
 
+const homeImage3= "../houses-banner.jfif";
+
 var email = "";
 
 class AddProduct extends React.Component {
@@ -17,7 +19,6 @@ class AddProduct extends React.Component {
                 'token': localStorage.getItem('token')
               }
             }).then((response) => {
-                console.log(response);
                 email = response.data.email;
             }).catch((error) => {
                 console.log(error);
@@ -76,8 +77,8 @@ class AddProduct extends React.Component {
     buildCategoryTypeOptions() {
         var arr = [];
 
-        const categories = ['Apts / Housing Rent', 'Apts / Housing For Sale', 
-            'Office / Commerical Space Rent / For Sale', 'Furniture', 'Cooking', 'Transportation'];
+        const categories = ['Apartments', 'Homes', 
+            'Offices / Commercal Space', 'Furniture', 'Cooking', 'Transportation'];
 
         for(let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
@@ -104,7 +105,6 @@ class AddProduct extends React.Component {
 
     submitHandler = e => {
         e.preventDefault();
-        console.log(localStorage.getItem('token'));
         this.addProduct();
     }
 
@@ -127,8 +127,8 @@ class AddProduct extends React.Component {
             }
         }).then((response) => {
             if(response.status === 200) {
-                console.log("Success");
-                console.log(response);
+                //console.log("Success");
+                // /console.log(response);
             }
         }, error => {
             console.log(error);

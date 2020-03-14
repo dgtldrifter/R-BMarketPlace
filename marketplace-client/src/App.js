@@ -7,6 +7,8 @@ import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
+import ForSale from './components/pages/ForSale';
+import ForRent from './components/pages/ForRent';
 
 import './App.css';
 
@@ -44,12 +46,28 @@ class App extends React.Component {
           <div>
             <NavBar />
             <SignUp />
+            <Footer />
           </div>
         )} />
         <Route path="/AddProduct" render={props => (
           <div>
             <NavBar />
             <AddProduct />
+            <Footer />
+          </div>
+        )} />
+        <Route path="/ForSale" render={props => (
+          <div>
+            <NavBar />
+            <ForSale />
+            <Footer />
+          </div>
+        )} />
+        <Route path="/ForRent" render={props => (
+          <div>
+            <NavBar />
+            <ForRent />
+            <Footer />
           </div>
         )} />
       </Router>

@@ -1,24 +1,28 @@
 import React from 'react';
 
-class Home extends React.Component {
+var loadjs = require('loadjs');
+
+class ForRent extends React.Component {
     componentDidMount() {
         loadjs('main.js');
 
-        fetch('posts/getHomes')
+        /*
+        fetch('/getForRentApts')
         .then(results => {
 
         }).catch({
 
         });
+        */
     }
 
     render() {
         return (
             <div>
-
+                <h1>For Rent</h1>
             </div>
         );
     }
 }
 
-export default Home;
+export default ForRent;

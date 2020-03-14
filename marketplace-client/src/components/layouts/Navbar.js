@@ -34,11 +34,12 @@ export default class navbar extends React.Component {
                   <li><a href="#header">Link</a></li>
                   <li className="drop-down"><a href="/">Categories</a>
                     <ul>
+                      <li><a href="/">Transportation</a></li>
                       <li><a href="/">Furniture</a></li>
                       <li className="drop-down"><a href="/">Real Estate</a>
                         <ul>
-                          <li><a href="/">Homes</a></li>
-                          <li><a href="/">Apartments</a></li>
+                          <li><Link to="/ForSale">For Sale</Link></li>
+                          <li><Link to="/ForRent">For Rent</Link></li>
                         </ul>
                       </li>
                       <li><a href="/">Cooking</a></li>
