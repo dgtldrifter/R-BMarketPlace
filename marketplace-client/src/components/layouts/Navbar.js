@@ -15,16 +15,16 @@ export default class navbar extends React.Component {
                   <li className="active"><Link to="/">Home</Link></li>
                   <li><a href="#main">Popular Products</a></li>
                   <li><a href="#header">Link</a></li>
-                  <li className="drop-down"><a href="">Categories</a>
+                  <li className="drop-down"><a href="/">Categories</a>
                     <ul>
-                      <li><a href="#">Furniture</a></li>
-                      <li className="drop-down"><a href="#">Real Estate</a>
+                      <li><a href="/">Furniture</a></li>
+                      <li className="drop-down"><a href="/">Real Estate</a>
                         <ul>
-                          <li><a href="#">Homes</a></li>
-                          <li><a href="#">Apartments</a></li>
+                          <li><a href="/">Homes</a></li>
+                          <li><a href="/">Apartments</a></li>
                         </ul>
                       </li>
-                      <li><a href="#">Cooking</a></li>
+                      <li><a href="/">Cooking</a></li>
                     </ul>
                   </li>
                   <WelcomeUser id={1}/>
@@ -43,8 +43,8 @@ function WelcomeUser(props) {
   var fullName = "Chase Anzelc";
 
 
-  if (props.id == 0) {
-  return <React.Fragment><li><div id="welcome">Welcome {fullName}</div></li><li><a>Sign Out</a></li></React.Fragment>;
+  if (props.id === 0) {
+  return <React.Fragment><li><div id="welcome">Welcome {fullName}</div></li><li><a href="/">Sign Out</a></li></React.Fragment>;
   }
   return <li><Link to="/signup">Create Account / Login</Link></li>;
 }
