@@ -32,13 +32,11 @@ const postSchema = new Schema({
         trim:true
     },
     ownerId: {
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'User',
-        // required: true
-        type:String,
-        required:true,
-        unique:false,
-        trim:true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        unique: true,
+        trim: true
     },
     date: {
         type: String,
@@ -74,5 +72,5 @@ const postSchema = new Schema({
     timestamps:true,
     collection: "posts"
 });
-const Post = mongoose.model('Post', postSchema);
+const Post     = mongoose.model('Post', postSchema);
 module.exports = Post;

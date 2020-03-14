@@ -1,9 +1,9 @@
-const router = require('express').Router();
-const SHA256 = require("crypto-js/sha256");
-const jwt = require("jsonwebtoken");
+const router       = require('express').Router();
+const SHA256       = require("crypto-js/sha256");
+const jwt          = require("jsonwebtoken");
 const randomString = require("randomstring");
-let User = require('../models/user.model');
-const mailer = require('../mailer/mailer');
+let User           = require('../models/user.model');
+const mailer       = require('../mailer/mailer');
 
 router.route('/').get((req, res) => {
     User.find()
@@ -113,14 +113,14 @@ router.route("/authToken").post((req, res) => {
             email = decoded.user.email;
         } catch (e) {
             console.error(e);
-            res.status(500).send({ message: "Invalid Token" })
+            res.status(401).send({ message: "Invalid Token" })
         }
 
         User.findOne({ email: email })
             .then(user => res.json({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName
+                email:      user.email,
+                firstName:  user.firstName,
+                lastName:   user.lastName
             }))
             .catch(err => res.json(err));
 

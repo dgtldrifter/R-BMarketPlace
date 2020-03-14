@@ -3,20 +3,24 @@ import axios from 'axios';
 
 var loadjs = require('loadjs');
 
+var email = "";
+
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
-        if(localStorage.getItem('token') !== "") {
-            console.log(localStorage.getItem('token'));
+        if(localStorage.getItem('token') !== null) {
             axios({
-                method: 'POST',
-                url: 'users/authToken',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'token': localStorage.getItem('token')
-                }
+              method: 'POST',
+              url: 'users/authToken',
+              headers: {
+                "Content-Type": "application/json",
+                'token': localStorage.getItem('token')
+              }
             }).then((response) => {
                 console.log(response);
+                email = response.data.email;
+            }).catch((error) => {
+                console.log(error);
             });
         }
     }
@@ -100,7 +104,8 @@ class AddProduct extends React.Component {
 
     submitHandler = e => {
         e.preventDefault();
-        this.addProduct(); 
+        console.log(localStorage.getItem('token'));
+        this.addProduct();
     }
 
     async addProduct() {
@@ -116,13 +121,14 @@ class AddProduct extends React.Component {
                 city:        this.state.city,
                 location:    this.state.location,
                 address:     this.state.address,
-                ownerId:     this.ownerId.value,
+                email:       this.email.value,
                 image:       this.state.image,
                 saletype:    this.state.saletype
             }
         }).then((response) => {
             if(response.status === 200) {
                 console.log("Success");
+                console.log(response);
             }
         }, error => {
             console.log(error);
@@ -137,7 +143,7 @@ class AddProduct extends React.Component {
                     <h1 className='text-center'>Add Product</h1>
                     <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
-                        <input type="hidden" className="form-control" name="ownerId" value="1" ref={(input) => {this.ownerId = input}}/>
+                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => {this.email = input}}/>
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label>Product Name</label>
