@@ -116,7 +116,7 @@ class AddProduct extends React.Component {
                 city:        this.state.city,
                 location:    this.state.location,
                 address:     this.state.address,
-                ownerId:     this.ownerId.value,
+                email:       this.email.value,
                 image:       this.state.image,
                 saletype:    this.state.saletype
             }
@@ -137,7 +137,7 @@ class AddProduct extends React.Component {
                     <h1 className='text-center'>Add Product</h1>
                     <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
-                        <input type="hidden" className="form-control" name="ownerId" value="1" ref={(input) => {this.ownerId = input}}/>
+                        <input type="hidden" className="form-control" name="email" value={} ref={(input) => {this.ownerId = input}}/>
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label>Product Name</label>
