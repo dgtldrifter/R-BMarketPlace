@@ -14,16 +14,16 @@ router.route('/create').post((req, res) => {
     const name        = req.body.name;
     const price       = req.body.price;
     const description = req.body.description;
-    //const ownerId     = req.body.ownerId;
     const date        = req.body.date;
     const city        = req.body.city;
     const location    = req.body.location;
     const address     = req.body.address;
     const image       = req.body.image;
+    const email       = req.body.email;
 
     User.findOne({email: email})
         .then(user => {
-            //let ownerId = user._id;
+            let ownerId = user._id;
             const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, location, address, image});
 
             newPost.save()
