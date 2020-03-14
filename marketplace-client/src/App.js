@@ -12,6 +12,7 @@ import './App.css';
 
 class App extends React.Component {
   componentDidMount() {
+    // 401 bad token
     if(localStorage.getItem('token') !== null) {
       axios({
         method: 'POST',
