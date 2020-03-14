@@ -36,9 +36,8 @@ router.route('/create').post((req, res) => {
 router.route('/getAll').post((req, res) => {
     Post.find()
         .populate('ownerId', 'email firstName lastName -_id')
-        .exec(function(error, posts) {
-            res.json(posts);
-        });
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 /*

@@ -128,6 +128,7 @@ class AddProduct extends React.Component {
         }).then((response) => {
             if(response.status === 200) {
                 console.log("Success");
+                console.log(response);
             }
         }, error => {
             console.log(error);
