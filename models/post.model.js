@@ -32,13 +32,15 @@ const postSchema = new Schema({
         trim:true
     },
     ownerId: {
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'User',
-        // required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+        /*
         type:String,
         required:true,
         unique:false,
         trim:true
+        */
     },
     date: {
         type: String,

@@ -1,7 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 export default class navbar extends React.Component {
+  componentDidMount() {
+    if(localStorage.getItem('token') !== null) {
+      Axios({
+        method: 'post',
+        url: 'users/authToken',
+        headers: {
+          "Content-Type": "application/json",
+          "token": localStorage.getItem('token')
+        }
+      }).then((response) => {
+        //console.log(response);
+      }).catch((error) => {
+
+      });
+    }
+  }
   render() {
       return (
         <div>     
