@@ -3,8 +3,6 @@ import axios from 'axios';
 
 var loadjs = require('loadjs');
 
-const homeImage3= "../houses-banner.jfif";
-
 var email = "";
 
 class AddProduct extends React.Component {
@@ -127,8 +125,8 @@ class AddProduct extends React.Component {
             }
         }).then((response) => {
             if(response.status === 200) {
-                //console.log("Success");
-                // /console.log(response);
+                console.log("Success");
+                console.log(response);
             }
         }, error => {
             console.log(error);
@@ -138,10 +136,10 @@ class AddProduct extends React.Component {
     
     render() {
         return (
-            <div style={outerContainer}>
-                <div className="container containerStyle">
-                    <h1 className='text-center'>Add Product</h1>
-                    <form method="post" className="form-horizontal mt-4" onSubmit={this.submitHandler}>
+            <div className="container">
+                <h1 className='text-center'>Add Product</h1>
+                <div class="wrapper">
+                    <form method="post" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => {this.email = input}}/>
                         <div className="row">
@@ -154,7 +152,7 @@ class AddProduct extends React.Component {
                                 <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
                             </div> 
                         </div>
-                        <div className="row mt-4">
+                        <div className="row mt-3">
                             <div className="col-12 col-sm-6">
                                 <label>Sale Type</label>
                                 <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
@@ -211,8 +209,4 @@ export default AddProduct;
 
 const loginButton = {
     backgroundColor: '#ffa64d'
-}
-
-const outerContainer = {
-    backgroundColor: '#66ccff'
 }

@@ -52,7 +52,9 @@ class App extends React.Component {
         <Route path="/AddProduct" render={props => (
           <div>
             <NavBar />
-            <AddProduct />
+            <div style={outerStyle}>
+              <AddProduct />
+            </div>
             <Footer />
           </div>
         )} />
@@ -76,3 +78,10 @@ class App extends React.Component {
 }
 
 export default App;
+
+const outerStyle = {
+  backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
+  backgroundSize: 'cover',
+  width: '100%',
+  height: '100vh'
+}

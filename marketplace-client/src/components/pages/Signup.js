@@ -82,11 +82,11 @@ class signup extends React.Component {
                 window.location.href = './AddProduct';
             }
         }, error => {
-            if (error.response.data == "unverified") {
+            if (error.response.data === "unverified") {
                 //TODO: Create a new page for the user to type in the token, then redirect to that page here.
                 //      Replace the prompt with an actual verification page. Also add an option to resend token.
                 var promptToken = prompt("The email address is not verified.\nPlease type in the token that was sent to the email: ");
-                if (promptToken != null || promptToken != "") {
+                if (promptToken !== null || promptToken !== "") {
                     axios({
                         method: 'POST',
                         url: 'users/verify',
@@ -143,15 +143,31 @@ class signup extends React.Component {
                         {/* Nav Tabs */}
                         <ul className="nav nav-tabs" role="tablist">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#SignUp">Create Account</a>
+                                <a className="nav-link active" data-toggle="tab" href="#Login">Login</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#Login">Login</a>
+                                <a className="nav-link" data-toggle="tab" href="#SignUp">Create Account</a>
                             </li>
                         </ul>
                         {/* Tab Panes */}
                         <div className="tab-content">
-                            <div id="SignUp" className="container tab-pane active">
+                            <div id="Login" className="container tab-pane active">
+                                <form method="post" className="form-horizontal mt-4" onSubmit={this.onLoginHandle}>
+                                    <div className="row mt-2">
+                                        <div className="col-sm-12 col-md-6 mt-2">
+                                            <label className="lead">Email</label>
+                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required />
+                                        </div>
+                                        <div className="col-sm-12 col-md-6 mt-2">
+                                            <label className="lead">Password</label>
+                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required />
+                                        </div>
+                                    </div>
+                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
+                                    <button type="button" style={forgotPassword} className="btn btn-block mt-3">Forgot your password?</button>
+                                </form>
+                            </div>
+                            <div id="SignUp" className="container tab-pane">
                                 <form method="post" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
@@ -175,22 +191,6 @@ class signup extends React.Component {
                                     </div>
                                     {this.state.errorMessage}
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Create Account</button>
-                                </form>
-                            </div>
-                            <div id="Login" className="container tab-pane">
-                                <form method="post" className="form-horizontal mt-4" onSubmit={this.onLoginHandle}>
-                                    <div className="row mt-2">
-                                        <div className="col-sm-12 col-md-6 mt-2">
-                                            <label className="lead">Email</label>
-                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required />
-                                        </div>
-                                        <div className="col-sm-12 col-md-6 mt-2">
-                                            <label className="lead">Password</label>
-                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required />
-                                        </div>
-                                    </div>
-                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
-                                    <button type="button" style={forgotPassword} className="btn btn-block mt-3">Forgot your password?</button>
                                 </form>
                             </div>
                             <hr />

@@ -31,7 +31,7 @@ export default class navbar extends React.Component {
                 <ul>
                   <li className="active"><Link to="/">Home</Link></li>
                   <li><a href="#main">Popular Products</a></li>
-                  <li><a href="#header">Link</a></li>
+                  <li><a href="/AddProduct">Add Product</a></li>
                   <li className="drop-down"><a href="/">Categories</a>
                     <ul>
                       <li><a href="/">Transportation</a></li>
