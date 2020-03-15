@@ -14,21 +14,7 @@ import './App.css';
 
 class App extends React.Component {
   componentDidMount() {
-    // 401 bad token
-    if(localStorage.getItem('token') !== null) {
-      axios({
-        method: 'POST',
-        url: 'users/authToken',
-        headers: {
-          "Content-Type": "application/json",
-          'token': localStorage.getItem('token')
-        }
-      }).then((response) => {
-          //console.log(response);
-      }).catch((error) => {
-          //console.log(error);
-      });
-    }
+    console.log(localStorage.getItem('token'));
   }
 
   render() {
@@ -49,15 +35,7 @@ class App extends React.Component {
             <Footer />
           </div>
         )} />
-        <Route path="/AddProduct" render={props => (
-          <div>
-            <NavBar />
-            <div style={outerStyle}>
-              <AddProduct />
-            </div>
-            <Footer />
-          </div>
-        )} />
+        <AddProductPage />
         <Route path="/ForSale" render={props => (
           <div>
             <NavBar />
@@ -85,3 +63,21 @@ const outerStyle = {
   width: '100%',
   height: '100vh'
 }
+
+function AddProductPage(props) {
+  if(localStorage.getItem('token') !== null) {
+    return (
+      <Route path="/AddProduct" render={props => (
+        <div>
+          <NavBar />
+          <div style={outerStyle}>
+            <AddProduct />
+          </div>
+          <Footer />
+        </div>
+      )} />
+    )
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
+} 

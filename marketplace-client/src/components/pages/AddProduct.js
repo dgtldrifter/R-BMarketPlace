@@ -2,26 +2,23 @@ import React from 'react';
 import axios from 'axios';
 
 var loadjs = require('loadjs');
-
-var email = "";
+var email  = "";
 
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
-        if(localStorage.getItem('token') !== null) {
-            axios({
-              method: 'POST',
-              url: 'users/authToken',
-              headers: {
-                "Content-Type": "application/json",
-                'token': localStorage.getItem('token')
-              }
-            }).then((response) => {
-                email = response.data.email;
-            }).catch((error) => {
-                console.log(error);
-            });
-        }
+        axios({
+            method: 'POST',
+            url: 'users/authToken',
+            headers: {
+            "Content-Type": "application/json",
+            'token': localStorage.getItem('token')
+            }
+        }).then((response) => {
+            email = response.data.email;
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     constructor(props) {

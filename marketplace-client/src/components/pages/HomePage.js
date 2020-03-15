@@ -1,11 +1,31 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 var loadjs = require('loadjs');
 
 class HomePage extends Component {
-    componentDidMount() {
-        loadjs('main.js');
+  constructor() {
+    super();
+    this.state = {
+      products: []
     }
+  }
+  componentDidMount() {
+    loadjs('main.js');
+
+    fetch('posts/getAll')
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        console.log(data);
+        let productNames = data.results.map((name) => {
+          return (
+            {name}
+          )
+        })
+        this.setState({products: productNames});
+      })
+  }
     render() {
       return (
         <div>

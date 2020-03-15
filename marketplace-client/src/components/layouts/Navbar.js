@@ -3,22 +3,6 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios';
 
 export default class navbar extends React.Component {
-  componentDidMount() {
-    if(localStorage.getItem('token') !== null) {
-      Axios({
-        method: 'post',
-        url: 'users/authToken',
-        headers: {
-          "Content-Type": "application/json",
-          "token": localStorage.getItem('token')
-        }
-      }).then((response) => {
-        //console.log(response);
-      }).catch((error) => {
-
-      });
-    }
-  }
   render() {
       return (
         <div>     
@@ -31,7 +15,7 @@ export default class navbar extends React.Component {
                 <ul>
                   <li className="active"><Link to="/">Home</Link></li>
                   <li><a href="#main">Popular Products</a></li>
-                  <li><a href="/AddProduct">Add Product</a></li>
+                  <AddProduct />
                   <li className="drop-down"><a href="/">Categories</a>
                     <ul>
                       <li><a href="/">Transportation</a></li>
@@ -45,6 +29,7 @@ export default class navbar extends React.Component {
                       <li><a href="/">Cooking</a></li>
                     </ul>
                   </li>
+                  <SignoutUser />
                   <WelcomeUser id={1}/>
                 </ul>
               </nav>
@@ -55,6 +40,23 @@ export default class navbar extends React.Component {
   }
 }
 
+function SignoutUser(props) {
+  if(localStorage.getItem('token') !== null) {
+    return <React.Fragment><li><Link to="">Sign Out</Link></li></React.Fragment>
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
+}
+
+function AddProduct(props) {
+  if(localStorage.getItem('token') !== null) {
+    return (
+      <li><a href="/AddProduct">Add Product</a></li>
+    )
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
+}
 
 function WelcomeUser(props) {
 
