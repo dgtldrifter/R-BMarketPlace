@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
 
 export default class navbar extends React.Component {
   render() {
