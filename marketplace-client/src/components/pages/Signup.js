@@ -79,7 +79,7 @@ class signup extends React.Component {
                 userToken = response.data.token;
                 this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
-                window.location.href = './AddProduct';
+                window.location.href = './';
             }
         }, error => {
             if (error.response.data === "unverified") {

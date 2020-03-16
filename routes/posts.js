@@ -35,7 +35,7 @@ router.route('/create').post((req, res) => {
 
 router.route('/getAll').post((req, res) => {
     Post.find()
-        .populate('ownerId', 'email firstName lastName -_id')
+        .populate('ownerId', 'name price description -_id')
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });

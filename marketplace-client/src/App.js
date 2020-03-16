@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './components/layouts/Header';
-import NavBar from './components/layouts/Navbar';
+import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
@@ -11,9 +11,25 @@ import ForSale from './components/pages/ForSale';
 import ForRent from './components/pages/ForRent';
 
 import './App.css';
+var email  = "";
 
 class App extends React.Component {
   componentDidMount() {
+    if(localStorage.getItem('token') !== null) {
+      axios({
+        method: 'POST',
+        url: 'users/authToken',
+        headers: {
+          "Content-Type": "application/json",
+          'token': localStorage.getItem('token')
+        }
+      }).then((response) => {
+        email = response.data.email;
+        console.log("Email: " + email);
+      }).catch((error) => {
+        localStorage.clear();
+      });
+    }
     console.log(localStorage.getItem('token'));
   }
 
@@ -23,14 +39,14 @@ class App extends React.Component {
         <Route exact path="/" render={props => (
           <div>
             <Header />
-            <NavBar />
+            <Navbar />
             <HomePage />
             <Footer />
           </div>
         )} />
         <Route path="/Signup" render={props => (
           <div>
-            <NavBar />
+            <Navbar />
             <SignUp />
             <Footer />
           </div>
@@ -38,14 +54,14 @@ class App extends React.Component {
         <AddProductPage />
         <Route path="/ForSale" render={props => (
           <div>
-            <NavBar />
+            <Navbar />
             <ForSale />
             <Footer />
           </div>
         )} />
         <Route path="/ForRent" render={props => (
           <div>
-            <NavBar />
+            <Navbar />
             <ForRent />
             <Footer />
           </div>
@@ -69,7 +85,7 @@ function AddProductPage(props) {
     return (
       <Route path="/AddProduct" render={props => (
         <div>
-          <NavBar />
+          <Navbar />
           <div style={outerStyle}>
             <AddProduct />
           </div>

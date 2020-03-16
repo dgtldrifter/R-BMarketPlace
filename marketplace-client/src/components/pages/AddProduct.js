@@ -7,18 +7,20 @@ var email  = "";
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
-        axios({
-            method: 'POST',
-            url: 'users/authToken',
-            headers: {
-            "Content-Type": "application/json",
-            'token': localStorage.getItem('token')
-            }
-        }).then((response) => {
-            email = response.data.email;
-        }).catch((error) => {
-            console.log(error);
-        });
+        if(localStorage.getItem('token') !== null) {
+            axios({
+              method: 'POST',
+              url: 'users/authToken',
+              headers: {
+                  "Content-Type": "application/json",
+                  'token': localStorage.getItem('token')
+              }
+            }).then((response) => {
+                email = response.data.email;
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     }
 
     constructor(props) {
@@ -135,7 +137,7 @@ class AddProduct extends React.Component {
         return (
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
-                <div class="wrapper">
+                <div className="wrapper">
                     <form method="post" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => {this.email = input}}/>

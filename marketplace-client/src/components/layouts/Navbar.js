@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class navbar extends React.Component {
+export default class Navbar extends React.Component {
   render() {
       return (
         <div>     
@@ -13,7 +13,6 @@ export default class navbar extends React.Component {
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
                   <li className="active"><Link to="/">Home</Link></li>
-                  <li><a href="#main">Popular Products</a></li>
                   <AddProduct />
                   <li className="drop-down"><a href="/">Categories</a>
                     <ul>
