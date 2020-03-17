@@ -56,7 +56,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +160,7 @@ class ForSale extends React.Component {
                                     </div>
                                     <div className="portfolio-links">
                                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                                        <a title="More Details"><i className="bx bx-link"></i></a>
+                                        <a href="/ForSale" title="More Details"><i className="bx bx-link"></i></a>
                                     </div>
                                 </div>
                             </div>
