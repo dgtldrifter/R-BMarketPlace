@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Axios from 'axios';
 
 var loadjs = require('loadjs');
 
@@ -14,25 +15,22 @@ class HomePage extends Component {
 
   componentDidMount() {
     loadjs('main.js');
-    fetch("posts/getAll")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            posts: result.posts
-          })
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+    Axios({
+      method: 'POST',
+      url: 'posts/getAll'
+    }).then((response) => {
+      this.setState({
+        isLoaded: true,
+        posts: response
+      });
+      console.log(this.state.posts.data[0].name);
+      console.log(this.state.posts.data[1].name);
+    }).catch((error) => {
+      this.setState({
+        isLoaded: true,
+        error
+      });
+    });
   }
 
   render() {
@@ -45,11 +43,12 @@ class HomePage extends Component {
       return (
         <div>
           <ul>
+            {/*}
             {posts.map(post => (
               <li key={post.name}>
                 {post.name} {post.price}
               </li>
-            ))}
+            ))}*/}
           </ul>
           <div>
             <main id="main">

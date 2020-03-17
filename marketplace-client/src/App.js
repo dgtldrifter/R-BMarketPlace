@@ -30,7 +30,6 @@ class App extends React.Component {
         localStorage.clear();
       });
     }
-    console.log(localStorage.getItem('token'));
   }
 
   render() {
