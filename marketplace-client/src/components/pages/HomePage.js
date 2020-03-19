@@ -60,9 +60,9 @@ class HomePage extends Component {
                 <div className="row portfolio-container">
                   <div className="col-lg-4 col-md-6 portfolio-item filter-app">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt={name1}/>
+                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>{name1}</h4>
+                        <h4></h4>
                         <p>App</p>
                       </div>
                     <div className="portfolio-links">
@@ -75,7 +75,7 @@ class HomePage extends Component {
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>{name2}</h4>
+                        <h4></h4>
                         <p>Web</p>
                       </div>
                       <div className="portfolio-links">
