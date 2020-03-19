@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
 var loadjs = require('loadjs');
-
-var name1 = "";
-var name2 = "";
 
 class HomePage extends Component {
   constructor(props) {
@@ -12,13 +9,26 @@ class HomePage extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      posts: []
+      name0: '',
+      name1: '',
+      name2: '',
+      name3: '',
+      name4: '',
+      name5: '',
+      name6: '',
+      price0: '',
+      price1: '',
+      price2: '',
+      price3: '',
+      price4: '',
+      price5: '',
+      price6: ''
     };
   } 
 
   componentDidMount() {
     loadjs('main.js');
-    Axios({
+    axios({
       method: 'POST',
       url: 'posts/getAll',
       headers: {
@@ -27,9 +37,21 @@ class HomePage extends Component {
     }).then((response) => {
       this.setState({
         isLoaded: true,
-        posts: response
+        name0: response.data[0].name,
+        name1: response.data[1].name,
+        name2: response.data[2].name,
+        name3: response.data[3].name,
+        name4: response.data[4].name,
+        name5: response.data[5].name,
+        name6: response.data[6].name,
+        price0: response.data[0].price,
+        price1: response.data[1].price,
+        price2: response.data[2].price,
+        price3: response.data[3].price,
+        price4: response.data[4].price,
+        price5: response.data[5].price,
+        price6: response.data[6].price
       }); 
-      name1 = this.state.posts.data[0].name 
     }).catch((error) => {
       this.setState({
         isLoaded: true,
@@ -57,19 +79,19 @@ class HomePage extends Component {
                   <div className="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
                       <li data-filter="*" className="filter-active">All</li>
-                      <li data-filter=".filter-app">Coffee Appliances</li>
-                      <li data-filter=".filter-card">Cooking Appliances</li>
-                      <li data-filter=".filter-web">Silverware</li>
+                      <li data-filter=".filter-coffee-appliances">Coffee Appliances</li>
+                      <li data-filter=".filter-cooking-appliances">Cooking Appliances</li>
+                      <li data-filter=".filter-silverware">Silverware</li>
                     </ul>
                   </div>
                 </div>
                 <div className="row portfolio-container">
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-app">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt={name1}/>
+                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt={this.state.name1} />
                       <div className="portfolio-info">
-                        <h4>{name1}</h4>
-                        <p>App</p>
+                        <h4>{this.state.name0}</h4>
+                        <p>${this.state.price0}</p>
                       </div>
                     <div className="portfolio-links">
                       <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
@@ -77,12 +99,12 @@ class HomePage extends Component {
                     </div>
                   </div>
                 </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-web">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>{name2}</h4>
-                        <p>Web</p>
+                        <h4>{this.state.name1}</h4>
+                        <p>${this.state.price1}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
@@ -90,12 +112,12 @@ class HomePage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-web">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-5.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>Web 2</h4>
-                        <p>Web</p>
+                        <h4>{this.state.name2}</h4>
+                        <p>${this.state.price2}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" className="venobox" title="Web 2"><i className="bx bx-plus"></i></a>
@@ -103,12 +125,12 @@ class HomePage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-app">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-6.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>App 3</h4>
-                        <p>App</p>
+                        <h4>{this.state.name3}</h4>
+                        <p>${this.state.price3}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" className="venobox" title="App 3"><i className="bx bx-plus"></i></a>
@@ -116,12 +138,12 @@ class HomePage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-card">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-7.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>Card 1</h4>
-                        <p>Card</p>
+                        <h4>{this.state.name4}</h4>
+                        <p>${this.state.price4}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" className="venobox" title="Card 1"><i className="bx bx-plus"></i></a>
@@ -129,12 +151,12 @@ class HomePage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-card">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-8.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>Card 3</h4>
-                        <p>Card</p>
+                        <h4>{this.state.name5}</h4>
+                        <p>${this.state.price5}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" className="venobox" title="Card 3"><i className="bx bx-plus"></i></a>
@@ -142,12 +164,12 @@ class HomePage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-web">
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
                       <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
+                        <h4>{this.state.name6}</h4>
+                        <p>${this.state.price6}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
