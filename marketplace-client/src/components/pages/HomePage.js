@@ -3,16 +3,12 @@ import Axios from 'axios';
 
 var loadjs = require('loadjs');
 
-var name1 = "";
-var name2 = "";
-
 class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
-      isLoaded: false,
-      posts: []
+      isLoaded: false
     };
   } 
 
@@ -26,10 +22,8 @@ class HomePage extends Component {
       }
     }).then((response) => {
       this.setState({
-        isLoaded: true,
-        posts: response
+        isLoaded: true
       }); 
-      name1 = this.state.posts.data[0].name 
     }).catch((error) => {
       this.setState({
         isLoaded: true,
