@@ -52,6 +52,7 @@ class HomePage extends Component {
         price5: response.data[5].price,
         price6: response.data[6].price
       }); 
+      console.log(response.data);
     }).catch((error) => {
       this.setState({
         isLoaded: true,
@@ -93,15 +94,15 @@ class HomePage extends Component {
                         <h4>{this.state.name0}</h4>
                         <p>${this.state.price0}</p>
                       </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                      {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+                      <div className="portfolio-links">
+                        <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
+                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+                      </div>
                     </div>
                   </div>
-                </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt={this.state.name1}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name1}</h4>
                         <p>${this.state.price1}</p>
@@ -114,7 +115,7 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-5.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-5.jpg" className="img-fluid" alt={this.state.name2}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name2}</h4>
                         <p>${this.state.price2}</p>
@@ -127,7 +128,7 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-6.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-6.jpg" className="img-fluid" alt={this.state.name3}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name3}</h4>
                         <p>${this.state.price3}</p>
@@ -140,7 +141,7 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-7.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-7.jpg" className="img-fluid" alt={this.state.name4}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name4}</h4>
                         <p>${this.state.price4}</p>
@@ -153,7 +154,7 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-8.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-8.jpg" className="img-fluid" alt={this.state.name5}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name5}</h4>
                         <p>${this.state.price5}</p>
@@ -166,7 +167,33 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
+                      <div className="portfolio-info">
+                        <h4>{this.state.name6}</h4>
+                        <p>${this.state.price6}</p>
+                      </div>
+                      <div className="portfolio-links">
+                        <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
+                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
+                    <div className="portfolio-wrap">
+                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
+                      <div className="portfolio-info">
+                        <h4>{this.state.name6}</h4>
+                        <p>${this.state.price6}</p>
+                      </div>
+                      <div className="portfolio-links">
+                        <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
+                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
+                    <div className="portfolio-wrap">
+                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
                       <div className="portfolio-info">
                         <h4>{this.state.name6}</h4>
                         <p>${this.state.price6}</p>
