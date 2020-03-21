@@ -33,9 +33,9 @@ class AddProduct extends React.Component {
             city: '',
             location: '',
             address: '',
-            image: '',
             saletype: '',
-            errorMessage: ''
+            errorMessage: '',
+            image: null
         }
     }
 
@@ -84,11 +84,17 @@ class AddProduct extends React.Component {
         return arr;
     }
 
+    onChangeHandlerImage = e => {
+        e.preventDefault();
+        let image = e.target.files[0];
+        this.setState({image: image});
+    }
+
     onChangeHandler = e => {
         e.preventDefault();
-        let name = e.target.name;
-        let val  = e.target.value;
-        let err  = '';
+        let name  = e.target.name;
+        let val   = e.target.value;
+        let err   = '';
 
         if(name === "price") {
             if(!Number(val)) {
@@ -119,13 +125,13 @@ class AddProduct extends React.Component {
                 location:    this.state.location,
                 address:     this.state.address,
                 email:       this.email.value,
-                image:       this.state.image,
+                image:       this.state.image.name,
                 saletype:    this.state.saletype
             }
         }).then((response) => {
             if(response.status === 200) {
-                console.log("Success");
-                console.log(response);
+                alert("You successfully added a product. ");
+                window.location.href = "./";
             }
         }, error => {
             console.log(error);
@@ -138,7 +144,7 @@ class AddProduct extends React.Component {
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
                 <div className="wrapper">
-                    <form method="post" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => {this.email = input}}/>
                         <div className="row">
@@ -193,7 +199,7 @@ class AddProduct extends React.Component {
                         <div className="row mt-3">
                             <div className="col-12">
                                 <label>Image</label>
-                                <input type="file" onChange={this.onChangeHandler} className="form-control" name="image" required />
+                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>

@@ -16,18 +16,39 @@ class HomePage extends Component {
       name4: '',
       name5: '',
       name6: '',
+      name7: '',
+      name8: '',
       price0: '',
       price1: '',
       price2: '',
       price3: '',
       price4: '',
       price5: '',
-      price6: ''
+      price6: '',
+      price7: '',
+      price8: '',
+      image7: ''
     };
   } 
 
   componentDidMount() {
     loadjs('main.js');
+    if(localStorage.getItem('token') !== null) {
+      axios({
+        method: 'POST',
+        url: 'users/authToken',
+        headers: {
+            "Content-Type": "application/json",
+            'token': localStorage.getItem('token')
+        }
+      }).then((response) => {
+
+      }).catch((error) => {
+          console.log(error);
+      });
+    } else {
+      localStorage.clear();
+    }
     axios({
       method: 'POST',
       url: 'posts/getAll',
@@ -44,15 +65,19 @@ class HomePage extends Component {
         name4: response.data[4].name,
         name5: response.data[5].name,
         name6: response.data[6].name,
+        name7: response.data[7].name,
+        name8: response.data[8].name,
         price0: response.data[0].price,
         price1: response.data[1].price,
         price2: response.data[2].price,
         price3: response.data[3].price,
         price4: response.data[4].price,
         price5: response.data[5].price,
-        price6: response.data[6].price
+        price6: response.data[6].price,
+        price7: response.data[7].price,
+        price8: response.data[8].price,
+        image7: response.data[7].image
       }); 
-      console.log(response.data);
     }).catch((error) => {
       this.setState({
         isLoaded: true,
@@ -180,23 +205,23 @@ class HomePage extends Component {
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
+                      <img src={this.state.image7} className="img-fluid" alt={this.state.name6}/>
                       <div className="portfolio-info">
-                        <h4>{this.state.name6}</h4>
-                        <p>${this.state.price6}</p>
+                        <h4>{this.state.name7}</h4>
+                        <p>${this.state.price7}</p>
                       </div>
                       <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
+                        <a href={this.state.image7} data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
                         {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
+                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name8}/>
                       <div className="portfolio-info">
-                        <h4>{this.state.name6}</h4>
-                        <p>${this.state.price6}</p>
+                        <h4>{this.state.name8}</h4>
+                        <p>${this.state.price8}</p>
                       </div>
                       <div className="portfolio-links">
                         <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
