@@ -20,6 +20,8 @@ class AddProduct extends React.Component {
             }).catch((error) => {
                 console.log(error);
             });
+        } else {
+            window.location.href = "./";
         }
     }
 
@@ -176,7 +178,7 @@ class AddProduct extends React.Component {
                         <div className="row mt-3">
                             <div className="col-12 col-sm-6">
                                 <label>Price</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
+                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label>City</label>
