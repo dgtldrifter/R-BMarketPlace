@@ -7,7 +7,9 @@ router.route('/').post((req, res) => {
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
+router.route('/getAPIKey').post((req, res) => {
+    res.status(200).send(process.env.IMGUR_ID);
+});
 router.route('/create').post((req, res) => {
     const categoryid  = req.body.categoryid;
     const saletype    = req.body.saletype;
@@ -21,10 +23,10 @@ router.route('/create').post((req, res) => {
     const image       = req.body.image;
     const email       = req.body.email;
 
-    User.findOne({email: email})
+    User.findOne({ email: email })
         .then(user => {
             let ownerId = user._id;
-            const newPost = new Post({categoryid, saletype, name, price, description, ownerId, date, city, location, address, image});
+            const newPost = new Post({ categoryid, saletype, name, price, description, ownerId, date, city, location, address, image });
 
             newPost.save()
                 .then(() => res.json('Post Created!'))
