@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layouts/Header';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
@@ -9,13 +9,15 @@ import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
 import ForSale from './components/pages/ForSale';
 import ForRent from './components/pages/ForRent';
+import VerifyEmail from './components/pages/VerifyEmail';
+
 
 import './App.css';
-var email  = "";
+var email = "";
 
 class App extends React.Component {
   componentDidMount() {
-    if(localStorage.getItem('token') !== null) {
+    if (localStorage.getItem('token') !== null) {
       axios({
         method: 'POST',
         url: 'users/authToken',
@@ -51,6 +53,7 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
+        <VerifyEmailPage />
         <Route path="/ForSale" render={props => (
           <div>
             <Navbar />
@@ -80,7 +83,7 @@ const outerStyle = {
 }
 
 function AddProductPage(props) {
-  if(localStorage.getItem('token') !== null) {
+  if (localStorage.getItem('token') !== null) {
     return (
       <Route path="/AddProduct" render={props => (
         <div>
@@ -95,4 +98,22 @@ function AddProductPage(props) {
   } else {
     return <React.Fragment></React.Fragment>
   }
-} 
+}
+
+function VerifyEmailPage(props) {
+  if (localStorage.getItem('token') !== null) {
+    return (
+      <Route path="/VerifyEmail" render={props => (
+        <div>
+          <Navbar />
+          <div style={outerStyle}>
+            <VerifyEmail />
+          </div>
+          <Footer />
+        </div>
+      )} />
+    )
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
+}
