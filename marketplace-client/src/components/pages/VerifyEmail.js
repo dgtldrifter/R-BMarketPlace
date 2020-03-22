@@ -4,28 +4,17 @@ var loadjs = require('loadjs');
 var email = "";
 class VerifyEmail extends React.Component {
     componentDidMount() {
-        loadjs('main.js');
-        if (localStorage.getItem('token') !== null) {
-            axios({
-                method: 'POST',
-                url: 'users/authToken',
-                headers: {
-                    "Content-Type": "application/json",
-                    'token': localStorage.getItem('token')
-                }
-            }).then((response) => {
-                email = response.data.email;
-            }).catch((error) => {
-                console.log(error);
-            });
-        } else {
-            window.location.href = "./";
+        if (localStorage.getItem('email') === undefined || localStorage.getItem('email') === "") {
+            window.location.href = '/';
         }
+        this.setState({ userEmail: localStorage.getItem('email') });
+        localStorage.removeItem('email');
     }
 
     constructor(props) {
         super(props);
         this.state = {
+            userEmail: '',
             emailToken: ''
         }
     }
@@ -46,10 +35,26 @@ class VerifyEmail extends React.Component {
     }
 
     submitToken() {
-        window.alert("here")
+        if (this.state.emailToken !== undefined || this.state.emailToken !== "") {
+            axios({
+                method: 'POST',
+                url: 'users/verify',
+                data: {
+                    email: this.state.userEmail,
+                    emailToken: this.state.emailToken
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert("Email address verified successfully!");
+                    window.location.href = "./";
+                }
+            }, error => {
+                alert(error.response.data);
+            });
+        }
     }
     resendToken() {
-        window.alert("here2")
+        window.alert(email)
     }
 
     render() {

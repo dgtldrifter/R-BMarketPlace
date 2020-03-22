@@ -53,7 +53,15 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
-        <VerifyEmailPage />
+        <Route path="/VerifyEmail" render={props => (
+          <div>
+            <Navbar />
+            <div style={outerStyle}>
+              <VerifyEmail />
+            </div>
+            <Footer />
+          </div>
+        )} />
         <Route path="/ForSale" render={props => (
           <div>
             <Navbar />
@@ -90,24 +98,6 @@ function AddProductPage(props) {
           <Navbar />
           <div style={outerStyle}>
             <AddProduct />
-          </div>
-          <Footer />
-        </div>
-      )} />
-    )
-  } else {
-    return <React.Fragment></React.Fragment>
-  }
-}
-
-function VerifyEmailPage(props) {
-  if (localStorage.getItem('token') !== null) {
-    return (
-      <Route path="/VerifyEmail" render={props => (
-        <div>
-          <Navbar />
-          <div style={outerStyle}>
-            <VerifyEmail />
           </div>
           <Footer />
         </div>
