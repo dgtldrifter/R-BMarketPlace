@@ -4,6 +4,16 @@ $(document).ready(function(){
   //scroll to top on route
   window.scrollTo(0, 0);
   clock();
+
+
+
+  //signout on click clear localstorage, reload page
+  $(document).on('click', '#signout', function(e) {
+    localStorage.clear();
+    window.location.reload()
+    window.scrollTo(0, 0);
+  });
+
 });
 
 function clock() {
@@ -73,6 +83,7 @@ function clock() {
       $('.mobile-nav-overly').toggle();
     });
 
+    //mobile drop downs 
     $(document).on('click', '.drop-down > a', function(e) {
       e.preventDefault();
       $(this).next().slideToggle(300);
@@ -116,6 +127,7 @@ function clock() {
     }, 1500, 'easeInOutExpo');
     return false;
   });
+
   // Porfolio isotope and filter
   $(window).on('load', function() {
 

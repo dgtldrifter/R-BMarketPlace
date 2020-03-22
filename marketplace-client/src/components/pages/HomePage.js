@@ -60,26 +60,26 @@ class HomePage extends Component {
                 <div className="row portfolio-container">
                   <div className="col-lg-4 col-md-6 portfolio-item filter-app">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/house-1.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
                         <h4></h4>
                         <p>App</p>
                       </div>
                     <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
+                      <a href="img/portfolio/house-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
                       {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
                     </div>
                   </div>
                 </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-web">
                     <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
+                      <img src="img/portfolio/house-2.jpg" className="img-fluid" alt=""/>
                       <div className="portfolio-info">
                         <h4></h4>
                         <p>Web</p>
                       </div>
                       <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
+                        <a href="img/portfolio/house-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
                         {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
                       </div>
                     </div>
