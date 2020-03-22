@@ -2,24 +2,25 @@ import React from 'react';
 import axios from 'axios';
 
 var loadjs = require('loadjs');
-var email  = "";
-
+var email = "";
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
-        if(localStorage.getItem('token') !== null) {
+        if (localStorage.getItem('token') !== null) {
             axios({
-              method: 'POST',
-              url: 'users/authToken',
-              headers: {
-                  "Content-Type": "application/json",
-                  'token': localStorage.getItem('token')
-              }
+                method: 'POST',
+                url: 'users/authToken',
+                headers: {
+                    "Content-Type": "application/json",
+                    'token': localStorage.getItem('token')
+                }
             }).then((response) => {
                 email = response.data.email;
             }).catch((error) => {
                 console.log(error);
             });
+        } else {
+            window.location.href = "./";
         }
     }
 
@@ -33,29 +34,29 @@ class AddProduct extends React.Component {
             city: '',
             location: '',
             address: '',
-            image: '',
             saletype: '',
-            errorMessage: ''
+            errorMessage: '',
+            image: null
         }
     }
 
 
     buildStateOptions() {
         var arr = [];
-    
-        const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 
-            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 
-            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 
-            'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 
-            'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 
-            'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 
-            'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 
+
+        const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+            'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+            'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina',
+            'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
+            'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
             'West Virginia', 'Wisconsin', 'Wyoming'];
-    
-        for(let i = 0; i <= states.length - 1; i++) {
+
+        for (let i = 0; i <= states.length - 1; i++) {
             arr.push(<option key={i} value={states[i]}>{states[i]}</option>);
         }
-    
+
         return arr;
     }
 
@@ -64,7 +65,7 @@ class AddProduct extends React.Component {
 
         const saleTypes = ['Community', 'Services', 'Discussion Forms', 'Housing', 'For Sale', 'For Rent'];
 
-        for(let i = 0; i <= saleTypes.length - 1; i++) {
+        for (let i = 0; i <= saleTypes.length - 1; i++) {
             arr.push(<option key={i} value={saleTypes[i]}>{saleTypes[i]}</option>);
         }
 
@@ -74,30 +75,36 @@ class AddProduct extends React.Component {
     buildCategoryTypeOptions() {
         var arr = [];
 
-        const categories = ['Apartments', 'Homes', 
+        const categories = ['Apartments', 'Homes',
             'Offices / Commercal Space', 'Furniture', 'Cooking', 'Transportation'];
 
-        for(let i = 0; i <= categories.length - 1; i++) {
+        for (let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
         }
 
         return arr;
     }
 
+    onChangeHandlerImage = e => {
+        e.preventDefault();
+        let image = e.target.files[0];
+        this.setState({ image: image });
+    }
+
     onChangeHandler = e => {
         e.preventDefault();
         let name = e.target.name;
-        let val  = e.target.value;
-        let err  = '';
+        let val = e.target.value;
+        let err = '';
 
-        if(name === "price") {
-            if(!Number(val)) {
+        if (name === "price") {
+            if (!Number(val)) {
                 err = <p className="pt-2">Price has to be a number.</p>;
             }
         }
 
-        this.setState({errorMessage: err});
-        this.setState({[name]: val});
+        this.setState({ errorMessage: err });
+        this.setState({ [name]: val });
     }
 
     submitHandler = e => {
@@ -105,51 +112,84 @@ class AddProduct extends React.Component {
         this.addProduct();
     }
 
-    async addProduct() {
+    addProduct() {
+        //getting imgur key
         axios({
             method: 'POST',
-            url: 'posts/create',
-            data: {
-                name:        this.state.name,
-                description: this.state.description,
-                categoryid:  this.state.categoryid,
-                price:       this.state.price,
-                date:        this.date.value,
-                city:        this.state.city,
-                location:    this.state.location,
-                address:     this.state.address,
-                email:       this.email.value,
-                image:       this.state.image,
-                saletype:    this.state.saletype
+            url: 'posts/getAPIKey',
+        }).then((api_token) => {
+            if (api_token.status === 200) {
+                //Saving the image to imgur first
+                let reader = new FileReader();
+                reader.readAsDataURL(this.state.image);
+                reader.onloadend = () => {
+                    axios({
+                        method: 'POST',
+                        url: 'https://api.imgur.com/3/image',
+                        crossDomain: true,
+                        headers: {
+                            Authorization: `Client-ID ${api_token.data}`
+                        },
+                        data: {
+                            image: reader.result.split(",")[1]
+                        }
+                    }).then((response) => {
+                        if (response.status === 200) {
+                            //If image is added successfully, add the product.
+                            axios({
+                                method: 'POST',
+                                url: 'posts/create',
+                                data: {
+                                    name: this.state.name,
+                                    description: this.state.description,
+                                    categoryid: this.state.categoryid,
+                                    price: this.state.price,
+                                    date: this.date.value,
+                                    city: this.state.city,
+                                    location: this.state.location,
+                                    address: this.state.address,
+                                    email: this.email.value,
+                                    image: response.data.data.link,
+                                    saletype: this.state.saletype
+                                }
+                            }).then((response) => {
+                                if (response.status === 200) {
+                                    alert("You successfully added a product. ");
+                                    window.location.href = "./";
+                                }
+                            }, error => {
+                                console.log(error);
+                                alert('The product could not be added.');
+                            });
+                        }
+                    }, error => {
+                        console.log(error);
+                        alert('Error:  The image could not be submitted!');
+                    });
+                }
             }
-        }).then((response) => {
-            if(response.status === 200) {
-                console.log("Success");
-                console.log(response);
-            }
-        }, error => {
+        }).catch((error) => {
             console.log(error);
-            alert('The product could not be added.');
-        });
+        })
     }
-    
+
     render() {
         return (
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
                 <div className="wrapper">
-                    <form method="post" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
-                        <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => {this.date = input}}/>
-                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => {this.email = input}}/>
+                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                        <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
+                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off"/>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label>Description</label>
                                 <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
-                            </div> 
+                            </div>
                         </div>
                         <div className="row mt-3">
                             <div className="col-12 col-sm-6">
@@ -170,30 +210,30 @@ class AddProduct extends React.Component {
                         <div className="row mt-3">
                             <div className="col-12 col-sm-6">
                                 <label>Price</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required/>
+                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required/>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
                             </div>
                         </div>
                         <div className="row mt-3">
                             <div className="col-12 col-sm-6">
-                                <label>State</label> 
+                                <label>State</label>
                                 <select onChange={this.onChangeHandler} className="form-control" name="location" required>
                                     <option value="0">Choose a State</option>
                                     {this.buildStateOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-6">
-                                <label>Address</label> 
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required/>
+                                <label>Address</label>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
                             </div>
                         </div>
                         <div className="row mt-3">
                             <div className="col-12">
                                 <label>Image</label>
-                                <input type="file" onChange={this.onChangeHandler} className="form-control" name="image" required />
+                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>

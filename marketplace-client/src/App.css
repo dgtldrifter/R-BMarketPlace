@@ -6,7 +6,6 @@ body {
   overflow-y: scroll;
 }
 
-
 /* Header */
 .title {
   margin: 0;
@@ -451,6 +450,7 @@ body {
 
 .portfolio .portfolio-wrap .portfolio-links a:hover {
   color: #56e7d0;
+  margin-top: 20px;
 }
 
 .portfolio .portfolio-wrap:hover::before {
@@ -472,7 +472,6 @@ body {
 }
 
 /* Section for Homepage Product Isotope */
-
 
 section {
   padding: 60px 0;
