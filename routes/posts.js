@@ -37,16 +37,19 @@ router.route('/create').post((req, res) => {
 
 router.route('/getAll').post((req, res) => {
     Post.find()
-        .populate('ownerId', 'name price description -_id')
+        .populate('ownerId', 'firstName lastName email -_id')
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/filterPosts').post((req, res) => {
-   category = req.body.categoryid;
-   saleType = req.body.saletype;
+   let category = req.body.categoryid;
+   let saleType = req.body.saletype;
 
-
+    Post.find({categoryid: category, saletype: saleType})
+        .populate('ownerId', 'firstName lastName email -_id')
+        .then(posts => res.json(posts))
+        .catch(err => res.staus(400).json('Error: ' + err));
 });
 
 // For returning the category 'Apartments' and the saletype 'For Sale'
