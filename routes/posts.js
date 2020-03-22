@@ -42,6 +42,13 @@ router.route('/getAll').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/filterPosts').post((req, res) => {
+   category = req.body.categoryid;
+   saleType = req.body.saletype;
+
+
+});
+
 // For returning the category 'Apartments' and the saletype 'For Sale'
 /*
 router.route('/getForSaleApts').post((req, res) => {
