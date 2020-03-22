@@ -5,15 +5,6 @@ $(document).ready(function(){
   window.scrollTo(0, 0);
   clock();
 
-
-
-  //signout on click clear localstorage, reload page
-  $(document).on('click', '#signout', function(e) {
-    localStorage.clear();
-    window.location.reload()
-    window.scrollTo(0, 0);
-  });
-
 });
 
 function clock() {
@@ -28,6 +19,17 @@ function clock() {
 
 !(function($) {
   "use strict";
+
+
+  //signout on click clear localstorage, reload page
+  $(document).on('click', '#signout', function(e) {
+
+    if(localStorage.getItem('token') !== null){
+    localStorage.clear();
+    window.location.reload()
+    window.scrollTo(0, 0);
+    }
+  });
   
   // Smooth scroll for the navigation menu and links with .scrollto classes
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
