@@ -119,7 +119,6 @@ class AddProduct extends React.Component {
             url: 'posts/getAPIKey',
         }).then((api_token) => {
             if (api_token.status === 200) {
-
                 //Saving the image to imgur first
                 let reader = new FileReader();
                 reader.readAsDataURL(this.state.image);
@@ -167,12 +166,11 @@ class AddProduct extends React.Component {
                         console.log(error);
                         alert('Error:  The image could not be submitted!');
                     });
-
-
                 }
             }
-        });
-
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     render() {

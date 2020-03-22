@@ -1,14 +1,14 @@
-import React from 'react';
-import axios from 'axios';
+import React      from 'react';
+import axios      from 'axios';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
-import Header from './components/layouts/Header';
-import Navbar from './components/layouts/Navbar';
-import Footer from './components/layouts/Footer';
-import SignUp from './components/pages/Signup';
-import HomePage from './components/pages/HomePage';
+import Header     from './components/layouts/Header';
+import Navbar     from './components/layouts/Navbar';
+import Footer     from './components/layouts/Footer';
+import SignUp     from './components/pages/Signup';
+import HomePage   from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
-import ForSale from './components/pages/ForSale';
-import ForRent from './components/pages/ForRent';
+import ForSale    from './components/pages/ForSale';
+import ForRent    from './components/pages/ForRent';
 
 import './App.css';
 var email  = "";
