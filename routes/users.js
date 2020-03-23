@@ -128,7 +128,7 @@ router.route('/reemail').post((req, res) => {
                 res.status(404);
                 res.send("Error: Invalid email!");
             }
-            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) <= 300) { //token expires in 1 hour
+            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) <= 300) { //token can only be resent every 5 minutes
                 res.status(400);
                 res.send("Eror: Please wait at least 5 minutes before a token request.");
             }
@@ -143,6 +143,47 @@ router.route('/reemail').post((req, res) => {
                 mailer.sendEmail(subject, email, emailContent);
                 res.status(200);
                 res.send("Successfully sent the token to the email address!");
+            }
+        })
+});
+
+router.route('/resetpassword').post((req, res) => {
+    const resetEmail = req.body.email;
+    const resetToken = req.body.emailToken;
+    const resetSalt = randomString.generate(32);
+    const resetPassword = SHA256(req.body.newPassword + resetSalt);
+
+    User.findOne({ email: resetEmail })
+        .then(user => {
+            if (req.body.newPassword.length < 6) {
+                res.status(400);
+                res.send("Error: The password has to be at least 6 characters.");
+            }
+            else if (!user) {
+                res.status(404);
+                res.send("Error: Invalid email!");
+            }
+            else if (resetToken !== user.emailToken.substring(0, 5)) {
+                res.status(403);
+                res.send("Error: Invalid token!");
+            }
+            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
+                res.status(403);
+                res.send("Eror: The token is expired!");
+            }
+            else {
+                user.passwordSalt = resetSalt;
+                user.password = resetPassword;
+                user.emailToken = '';
+                user.save();
+                const emailContent = '<h2> R&B Marketplace </h2>' +
+                    '<br/><br/> This email is being sent to notify you that your R&B Marketplace account\'s password was changed. <br/>' +
+                    'Time of change: ' + new Date().toString(); + '<br/>';
+                const subject = "R&B Marketplace Account Changed";
+
+                mailer.sendEmail(subject, resetEmail, emailContent);
+                res.status(200);
+                res.send("Successfully reset password!");
             }
         })
 });

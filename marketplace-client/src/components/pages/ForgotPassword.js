@@ -32,26 +32,38 @@ class ForgotPassword extends React.Component {
         this.getToken();
     }
 
+    resetHandler = e => {
+        e.preventDefault();
+        this.resetPassword();
+    }
+
     resetPassword() {
-        if (this.state.emailToken !== undefined || this.state.emailToken !== "") {
-            axios({
-                method: 'POST',
-                url: 'users/verify',
-                data: {
-                    email: localStorage.getItem('verificationEmail'),
-                    emailToken: this.state.emailToken
-                }
-            }).then((response) => {
-                if (response.status === 200) {
-                    alert("Email address verified successfully!");
-                    window.location.href = "./";
-                }
-            }, error => {
-                alert(error.response.data);
-            });
+        if (this.state.userToken !== undefined || this.state.userEmail !== undefined
+            || this.state.newPassword !== undefined || this.state.confirmPassword !== undefined) {
+            if (this.state.newPassword !== this.state.confirmPassword) {
+                window.alert("Error: The passwords do not match.");
+            }
+            else {
+                axios({
+                    method: 'POST',
+                    url: 'users/resetpassword',
+                    data: {
+                        email: this.state.userEmail,
+                        emailToken: this.state.userToken,
+                        newPassword: this.state.newPassword
+                    }
+                }).then((response) => {
+                    if (response.status === 200) {
+                        alert(response.data);
+                        window.location.href = "./";
+                    }
+                }, error => {
+                    alert(error.response.data);
+                });
+            }
         }
         else {
-            window.alert("Error: Couldn't get the user's email.");
+            window.alert("Error: Please fill out all of the input boxes.");
             window.location.href = '/';
         }
     }
@@ -73,7 +85,7 @@ class ForgotPassword extends React.Component {
             });
         }
         else {
-            window.alert("Error: Couldn't get the user's email.");
+            window.alert("Error: Please fill out the email address.");
             window.location.href = '/';
         }
     }
@@ -92,7 +104,7 @@ class ForgotPassword extends React.Component {
                         </div>
                         <button type="submit" style={resendButton} className="btn btn-block mt-3">Get token</button>
                     </form>
-                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" >
+                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.resetHandler}>
                         {
                             this.state.postEmailInput ? //making these visible after the token is successfully sent
                                 <div>
@@ -114,7 +126,7 @@ class ForgotPassword extends React.Component {
                                             <input type="text" onChange={this.onChangeHandler} className="form-control" name="confirmPassword" required autoComplete="off" />
                                         </div>
                                     </div>
-                                    <button type="button" style={verifyButton} onClick={this.resetPassword} className="btn btn-block mt-3">Confirm Reset</button>
+                                    <button type="submit" style={verifyButton} className="btn btn-block mt-3">Confirm Reset</button>
                                 </div>
                                 : null
                         }
