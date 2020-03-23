@@ -117,13 +117,13 @@ class ForgotPassword extends React.Component {
                                     <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <div className="col-12 col-sm-12">
                                             <label><b>New Password</b></label>
-                                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="newPassword" required autoComplete="off" />
+                                            <input type="password" onChange={this.onChangeHandler} className="form-control" name="newPassword" required autoComplete="off" />
                                         </div>
                                     </div>
                                     <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <div className="col-12 col-sm-12">
                                             <label><b>Confirm Password</b></label>
-                                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="confirmPassword" required autoComplete="off" />
+                                            <input type="password" onChange={this.onChangeHandler} className="form-control" name="confirmPassword" required autoComplete="off" />
                                         </div>
                                     </div>
                                     <button type="submit" style={verifyButton} className="btn btn-block mt-3">Confirm Reset</button>
