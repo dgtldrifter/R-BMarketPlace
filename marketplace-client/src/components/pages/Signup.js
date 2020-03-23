@@ -83,7 +83,7 @@ class signup extends React.Component {
             }
         }, error => {
             if (error.response.data === "unverified") {
-                localStorage.setItem('email', this.state.email);
+                localStorage.setItem('verificationEmail', this.state.email);
                 window.location.href = '/VerifyEmail';
             }
             else

@@ -4,11 +4,9 @@ var loadjs = require('loadjs');
 var email = "";
 class VerifyEmail extends React.Component {
     componentDidMount() {
-        if (localStorage.getItem('email') === undefined || localStorage.getItem('email') === "") {
+        if (localStorage.getItem('verificationEmail') === undefined || localStorage.getItem('verificationEmail') === "") {
             window.location.href = '/';
         }
-        this.setState({ userEmail: localStorage.getItem('email') });
-        localStorage.removeItem('email');
     }
 
     constructor(props) {
@@ -40,7 +38,7 @@ class VerifyEmail extends React.Component {
                 method: 'POST',
                 url: 'users/verify',
                 data: {
-                    email: this.state.userEmail,
+                    email: localStorage.getItem('verificationEmail'),
                     emailToken: this.state.emailToken
                 }
             }).then((response) => {
@@ -52,9 +50,31 @@ class VerifyEmail extends React.Component {
                 alert(error.response.data);
             });
         }
+        else {
+            window.alert("Error: Couldn't get the user's email.");
+            window.location.href = '/';
+        }
     }
     resendToken() {
-        window.alert(email)
+        if (localStorage.getItem('verificationEmail') != undefined) {
+            axios({
+                method: 'POST',
+                url: 'users/reemail',
+                data: {
+                    email: localStorage.getItem('verificationEmail')
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert(response.data);
+                }
+            }, error => {
+                alert(error.response.data);
+            });
+        }
+        else {
+            window.alert("Error: Couldn't get the user's email.");
+            window.location.href = '/';
+        }
     }
 
     render() {
