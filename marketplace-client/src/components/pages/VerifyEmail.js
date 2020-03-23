@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 var loadjs = require('loadjs');
-var email = "";
 class VerifyEmail extends React.Component {
     componentDidMount() {
+        loadjs('main.js');
         if (localStorage.getItem('verificationEmail') === undefined || localStorage.getItem('verificationEmail') === "") {
             window.location.href = '/';
         }
@@ -56,7 +56,7 @@ class VerifyEmail extends React.Component {
         }
     }
     resendToken() {
-        if (localStorage.getItem('verificationEmail') != undefined) {
+        if (localStorage.getItem('verificationEmail') !== undefined) {
             axios({
                 method: 'POST',
                 url: 'users/reemail',
