@@ -10,6 +10,7 @@ import AddProduct from './components/pages/AddProduct';
 import ForSale from './components/pages/ForSale';
 import ForRent from './components/pages/ForRent';
 import VerifyEmail from './components/pages/VerifyEmail';
+import ForgotPassword from './components/pages/ForgotPassword';
 
 import './App.css';
 var email = "";
@@ -57,6 +58,15 @@ class App extends React.Component {
             <Navbar />
             <div style={outerStyle}>
               <VerifyEmail />
+            </div>
+            <Footer />
+          </div>
+        )} />
+        <Route path="/ForgotPassword" render={props => (
+          <div>
+            <Navbar />
+            <div style={outerStyle}>
+              <ForgotPassword />
             </div>
             <Footer />
           </div>

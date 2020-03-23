@@ -80,7 +80,7 @@ class signup extends React.Component {
             if (response.status === 200) {
                 userToken = response.data.token;
                 fullName = response.data.fullName;
-                
+
                 this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
                 localStorage.setItem('fullName', fullName);
@@ -89,7 +89,7 @@ class signup extends React.Component {
         }, error => {
             if (error.response.data === "unverified") {
                 localStorage.setItem('verificationEmail', this.state.email);
-                window.location.href = '/VerifyEmail';
+                window.location.href = './VerifyEmail';
             }
             else
                 alert(error.response.data);
@@ -151,7 +151,7 @@ class signup extends React.Component {
                                         </div>
                                     </div>
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
-                                    <button type="button" style={forgotPassword} className="btn btn-block mt-3">Forgot your password?</button>
+                                    <button type="button" style={forgotPassword} onClick={() => { window.location.href = './ForgotPassword'; }} className="btn btn-block mt-3">Forgot your password?</button>
                                 </form>
                             </div>
                             <div id="SignUp" className="container tab-pane">
