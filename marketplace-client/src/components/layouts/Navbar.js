@@ -27,8 +27,8 @@ export default class Navbar extends React.Component {
                       <li><a href="/">Cooking</a></li>
                     </ul>
                   </li>
+                  <WelcomeUser />
                   <SignoutUser />
-                  <WelcomeUser id={1}/>
                 </ul>
               </nav>
             </div>
@@ -38,18 +38,10 @@ export default class Navbar extends React.Component {
   }
 }
 
-function SignoutUser(props) {
-  if(localStorage.getItem('token') !== null) {
-    return <React.Fragment><li><Link to="">Sign Out</Link></li></React.Fragment>
-  } else {
-    return <React.Fragment></React.Fragment>
-  }
-}
-
 function AddProduct(props) {
   if(localStorage.getItem('token') !== null) {
     return (
-      <li><a href="/AddProduct">Add Product</a></li>
+      <li><Link to="/AddProduct">Add Product</Link></li>
     )
   } else {
     return <React.Fragment></React.Fragment>
@@ -57,12 +49,17 @@ function AddProduct(props) {
 }
 
 function WelcomeUser(props) {
-
-  var fullName = "Chase Anzelc";
-
-
-  if (props.id === 0) {
-  return <React.Fragment><li><div id="welcome">Welcome {fullName}</div></li><li><a href="/">Sign Out</a></li></React.Fragment>;
+  if (localStorage.getItem('fullName') !== null) {
+  return <React.Fragment><li><div id="welcome">Welcome {localStorage.getItem('fullName')}</div></li></React.Fragment>;
+  } else{
+  return <li><Link to="/signup">Create Account / Login</Link></li>; 
   }
-  return <li><Link to="/signup">Create Account / Login</Link></li>;
+}
+
+function SignoutUser(props) {
+  if(localStorage.getItem('token') !== null) {
+    return <li><Link to="/" id="signout">Sign Out</Link></li>
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
 }

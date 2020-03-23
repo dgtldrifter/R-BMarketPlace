@@ -9,25 +9,7 @@ class HomePage extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      name0: '',
-      name1: '',
-      name2: '',
-      name3: '',
-      name4: '',
-      name5: '',
-      name6: '',
-      name7: '',
-      name8: '',
-      price0: '',
-      price1: '',
-      price2: '',
-      price3: '',
-      price4: '',
-      price5: '',
-      price6: '',
-      price7: '',
-      price8: '',
-      image7: ''
+      posts: []
     };
   } 
 
@@ -42,7 +24,7 @@ class HomePage extends Component {
             'token': localStorage.getItem('token')
         }
       }).then((response) => {
-
+        
       }).catch((error) => {
           console.log(error);
       });
@@ -56,27 +38,10 @@ class HomePage extends Component {
         "Content-Type": "application/json"
       }
     }).then((response) => {
+      console.log(response.data);
       this.setState({
         isLoaded: true,
-        name0: response.data[0].name,
-        name1: response.data[1].name,
-        name2: response.data[2].name,
-        name3: response.data[3].name,
-        name4: response.data[4].name,
-        name5: response.data[5].name,
-        name6: response.data[6].name,
-        name7: response.data[7].name,
-        name8: response.data[8].name,
-        price0: response.data[0].price,
-        price1: response.data[1].price,
-        price2: response.data[2].price,
-        price3: response.data[3].price,
-        price4: response.data[4].price,
-        price5: response.data[5].price,
-        price6: response.data[6].price,
-        price7: response.data[7].price,
-        price8: response.data[8].price,
-        image7: response.data[7].image
+        posts: response.data
       }); 
     }).catch((error) => {
       this.setState({
@@ -88,6 +53,51 @@ class HomePage extends Component {
 
   render() {
     const { error, isLoaded } = this.state;
+    const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
+    const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
+    const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
     if(error) {
       return <div>Error: {error.message}</div>;
     } else if(!isLoaded) {
@@ -105,130 +115,16 @@ class HomePage extends Component {
                   <div className="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
                       <li data-filter="*" className="filter-active">All</li>
-                      <li data-filter=".filter-coffee-appliances">Coffee Appliances</li>
-                      <li data-filter=".filter-cooking-appliances">Cooking Appliances</li>
-                      <li data-filter=".filter-silverware">Silverware</li>
+                      <li data-filter=".filter-cooking-appliances">Coffee Appliances</li>
+                      <li data-filter=".filter-transportation">Transportation</li>
+                      <li data-filter=".filter-furniture">Furniture</li>
                     </ul>
                   </div>
                 </div>
                 <div className="row portfolio-container">
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt={this.state.name1} />
-                      <div className="portfolio-info">
-                        <h4>{this.state.name0}</h4>
-                        <p>${this.state.price0}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt={this.state.name1}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name1}</h4>
-                        <p>${this.state.price1}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-5.jpg" className="img-fluid" alt={this.state.name2}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name2}</h4>
-                        <p>${this.state.price2}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" className="venobox" title="Web 2"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-6.jpg" className="img-fluid" alt={this.state.name3}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name3}</h4>
-                        <p>${this.state.price3}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" className="venobox" title="App 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-7.jpg" className="img-fluid" alt={this.state.name4}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name4}</h4>
-                        <p>${this.state.price4}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" className="venobox" title="Card 1"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-silverware">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-8.jpg" className="img-fluid" alt={this.state.name5}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name5}</h4>
-                        <p>${this.state.price5}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" className="venobox" title="Card 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name6}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name6}</h4>
-                        <p>${this.state.price6}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
-                    <div className="portfolio-wrap">
-                      <img src={this.state.image7} className="img-fluid" alt={this.state.name6}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name7}</h4>
-                        <p>${this.state.price7}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href={this.state.image7} data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt={this.state.name8}/>
-                      <div className="portfolio-info">
-                        <h4>{this.state.name8}</h4>
-                        <p>${this.state.price8}</p>
-                      </div>
-                      <div className="portfolio-links">
-                        <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                        {/* <a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-                      </div>
-                    </div>
-                  </div>
+                  {postItemsCooking}
+                  {postItemsTransportation}
+                  {postItemsFurniture}
                 </div>
               </div>
             </section>

@@ -67,6 +67,8 @@ class signup extends React.Component {
 
     async login() {
         let userToken;
+        let fullName;
+
         axios({
             method: 'POST',
             url: 'users/login',
@@ -77,8 +79,11 @@ class signup extends React.Component {
         }).then((response) => {
             if (response.status === 200) {
                 userToken = response.data.token;
+                fullName = response.data.fullName;
+                
                 this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
+                localStorage.setItem('fullName', fullName);
                 window.location.href = './';
             }
         }, error => {

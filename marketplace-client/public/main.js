@@ -18,6 +18,17 @@ function clock() {
 
 !(function($) {
   "use strict";
+
+
+  //signout on click clear localstorage, reload page
+  $(document).on('click', '#signout', function(e) {
+
+    if(localStorage.getItem('token') !== null){
+    localStorage.clear();
+    window.location.reload()
+    window.scrollTo(0, 0);
+    }
+  });
   
   // Smooth scroll for the navigation menu and links with .scrollto classes
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
@@ -73,6 +84,7 @@ function clock() {
       $('.mobile-nav-overly').toggle();
     });
 
+    //mobile drop downs 
     $(document).on('click', '.drop-down > a', function(e) {
       e.preventDefault();
       $(this).next().slideToggle(300);
@@ -116,6 +128,7 @@ function clock() {
     }, 1500, 'easeInOutExpo');
     return false;
   });
+
   // Porfolio isotope and filter
   $(window).on('load', function() {
 

@@ -55,18 +55,20 @@ router.route("/login").post((req, res) => {
                 res.send("Error: Email address is not registered");
             }
             else if (SHA256(req.body.password + user.passwordSalt).toString() === user.password) {
+
                 if (user.active == false) {
                     res.status(401);
                     res.send("unverified");
                 }
                 const payload = { user: { email: user.email } };
+                const fullName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) + " " + user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1);
 
                 jwt.sign(
                     payload,
                     "thisisasecretkey", { expiresIn: 3600 },
                     (err, token) => {
                         if (err) throw err;
-                        res.status(200).json({ token });
+                        res.status(200).json({  fullName, token });
                     }
                 );
             }

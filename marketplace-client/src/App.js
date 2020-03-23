@@ -11,7 +11,6 @@ import ForSale from './components/pages/ForSale';
 import ForRent from './components/pages/ForRent';
 import VerifyEmail from './components/pages/VerifyEmail';
 
-
 import './App.css';
 var email = "";
 
