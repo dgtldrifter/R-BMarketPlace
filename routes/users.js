@@ -68,7 +68,7 @@ router.route("/login").post((req, res) => {
                     "thisisasecretkey", { expiresIn: 3600 },
                     (err, token) => {
                         if (err) throw err;
-                        res.status(200).json({  fullName, token });
+                        res.status(200).json({ fullName, token });
                     }
                 );
             }
@@ -130,19 +130,19 @@ router.route('/reemail').post((req, res) => {
             }
             else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) <= 300) { //token expires in 1 hour
                 res.status(400);
-                res.send("Eror: Please wait at least 5 minutes before a token resend.");
+                res.send("Eror: Please wait at least 5 minutes before a token request.");
             }
             else {
                 user.emailToken = emailToken;
                 user.save();
                 const emailContent = '<h2> R&B Marketplace Token </h2>' +
-                    '<br/><br/> Please verify your email with the following token: <br/>' +
+                    '<br/><br/> Please verify your account changes following token: <br/>' +
                     '<b>' + emailToken.substring(0, 5) + '</b>';
-                const subject = "R&B Marketplace Account Confirmation";
+                const subject = "R&B Marketplace Account Confirmation/Management";
 
                 mailer.sendEmail(subject, email, emailContent);
                 res.status(200);
-                res.send("Successfully re-sent the token to the email address!");
+                res.send("Successfully sent the token to the email address!");
             }
         })
 });
