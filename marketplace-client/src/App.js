@@ -7,8 +7,6 @@ import Footer     from './components/layouts/Footer';
 import SignUp     from './components/pages/Signup';
 import HomePage   from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
-import ForSale    from './components/pages/ForSale';
-import ForRent    from './components/pages/ForRent';
 
 import './App.css';
 var email  = "";
@@ -51,20 +49,6 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
-        <Route path="/ForSale" render={props => (
-          <div>
-            <Navbar />
-            <ForSale />
-            <Footer />
-          </div>
-        )} />
-        <Route path="/ForRent" render={props => (
-          <div>
-            <Navbar />
-            <ForRent />
-            <Footer />
-          </div>
-        )} />
       </Router>
     );
   }

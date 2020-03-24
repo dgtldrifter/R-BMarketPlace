@@ -14,17 +14,31 @@ export default class Navbar extends React.Component {
                 <ul>
                   <li className="active"><Link to="/">Home</Link></li>
                   <AddProduct />
-                  <li className="drop-down"><a href="/">Categories</a>
+                  <li className="drop-down"><a href="/">Sale Types</a>
                     <ul>
-                      <li><a href="/">Transportation</a></li>
-                      <li><a href="/">Furniture</a></li>
-                      <li className="drop-down"><a href="/">Real Estate</a>
+                      <li><a href="/">Community</a></li>
+                      <li><a href="/">Discussion Board</a></li>
+                      <li className="drop-down"><a href="/">For Sale</a>
                         <ul>
-                          <li><Link to="/ForSale">For Sale</Link></li>
-                          <li><Link to="/ForRent">For Rent</Link></li>
+                          <li><Link to="/">Apartments</Link></li>
+                          <li><Link to="/">Housing</Link></li>
+                          <li><Link to="/">Office / Commerical Space</Link></li>
+                          <li><Link to="/">Cooking</Link></li>
+                          <li><Link to="/">Transportation</Link></li>
+                          <li><Link to="/">Furniture</Link></li>
                         </ul>
                       </li>
-                      <li><a href="/">Cooking</a></li>
+                      <li className="drop-down"><a href="/">For Rent</a>
+                        <ul>
+                          <li><Link to="/">Apartments</Link></li>
+                          <li><Link to="/">Housing</Link></li>
+                          <li><Link to="/">Office / Commerical Space</Link></li>
+                          <li><Link to="/">Cooking</Link></li>
+                          <li><Link to="/">Transportation</Link></li>
+                          <li><Link to="/">Furniture</Link></li>
+                        </ul>
+                      </li>
+                      <li><a href="/">Services</a></li>
                     </ul>
                   </li>
                   <WelcomeUser />
