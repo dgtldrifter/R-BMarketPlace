@@ -2,21 +2,13 @@ import React from 'react';
 
 var loadjs = require('loadjs');
 
-class ForRent extends React.Component {
+class Category extends React.Component {
     componentDidMount() {
         loadjs('main.js');
-
-        /*
-        fetch('/getForRentApts')
-        .then(results => {
-
-        }).catch({
-
-        });
-        */
     }
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <h1>For Rent</h1>
@@ -25,4 +17,4 @@ class ForRent extends React.Component {
     }
 }
 
-export default ForRent;
+export default Category;

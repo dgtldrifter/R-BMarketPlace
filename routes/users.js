@@ -1,9 +1,9 @@
-const router       = require('express').Router();
-const SHA256       = require("crypto-js/sha256");
-const jwt          = require("jsonwebtoken");
+const router = require('express').Router();
+const SHA256 = require("crypto-js/sha256");
+const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
-let User           = require('../models/user.model');
-const mailer       = require('../mailer/mailer');
+let User = require('../models/user.model');
+const mailer = require('../mailer/mailer');
 
 router.route('/').get((req, res) => {
     User.find()
@@ -17,7 +17,10 @@ router.route('/add').post((req, res) => {
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
     const password = SHA256(req.body.password + passwordSalt);
-    const emailToken = randomString.generate(5);
+    var emailToken = randomString.generate(5);
+    const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
+    //the first 5 characters of the token is the actual token, the rest is timestamp
+    emailToken = emailToken + tokenTime;
 
     const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
     newUser.save()
@@ -34,7 +37,7 @@ router.route('/add').post((req, res) => {
             );
             const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
                 '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
-                '<b>' + emailToken + '</b>';
+                '<b>' + emailToken.substring(0, 5) + '</b>';
             const subject = "R&B Marketplace Account Confirmation";
 
             mailer.sendEmail(subject, email, emailContent);
@@ -65,7 +68,7 @@ router.route("/login").post((req, res) => {
                     "thisisasecretkey", { expiresIn: 3600 },
                     (err, token) => {
                         if (err) throw err;
-                        res.status(200).json({  fullName, token });
+                        res.status(200).json({ fullName, token });
                     }
                 );
             }
@@ -89,12 +92,19 @@ router.route("/verify").post((req, res) => {
                 res.status(404);
                 res.send("Error: Email is already verified.");
             }
-            else if (req.body.emailToken === user.emailToken) {
-                user.active = true;
-                user.emailToken = '';
-                user.save();
-                res.status(200);
-                res.send("Successful: Email address verified successfully!");
+            else if (req.body.emailToken === user.emailToken.substring(0, 5)) {
+                if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
+                    res.status(403);
+                    res.send("Error: The token has expired!");
+                }
+                else {
+                    user.active = true;
+                    user.emailToken = '';
+                    user.save();
+                    res.status(200);
+                    res.send("Successful: Email address verified successfully!");
+                }
+
             }
             else {
                 res.status(401);
@@ -102,6 +112,80 @@ router.route("/verify").post((req, res) => {
             }
 
         });
+});
+
+router.route('/reemail').post((req, res) => {
+    const email = req.body.email;
+
+    var emailToken = randomString.generate(5);
+    const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
+    //the first 5 characters of the token is the actual token, the rest is timestamp
+    emailToken = emailToken + tokenTime;
+
+    User.findOne({ email: email })
+        .then(user => {
+            if (!user) {
+                res.status(404);
+                res.send("Error: Invalid email!");
+            }
+            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) <= 300) { //token can only be resent every 5 minutes
+                res.status(400);
+                res.send("Eror: Please wait at least 5 minutes before a token request.");
+            }
+            else {
+                user.emailToken = emailToken;
+                user.save();
+                const emailContent = '<h2> R&B Marketplace Token </h2>' +
+                    '<br/><br/> Please verify your account changes following token: <br/>' +
+                    '<b>' + emailToken.substring(0, 5) + '</b>';
+                const subject = "R&B Marketplace Account Confirmation/Management";
+
+                mailer.sendEmail(subject, email, emailContent);
+                res.status(200);
+                res.send("Successfully sent the token to the email address!");
+            }
+        })
+});
+
+router.route('/resetpassword').post((req, res) => {
+    const resetEmail = req.body.email;
+    const resetToken = req.body.emailToken;
+    const resetSalt = randomString.generate(32);
+    const resetPassword = SHA256(req.body.newPassword + resetSalt);
+
+    User.findOne({ email: resetEmail })
+        .then(user => {
+            if (req.body.newPassword.length < 6) {
+                res.status(400);
+                res.send("Error: The password has to be at least 6 characters.");
+            }
+            else if (!user) {
+                res.status(404);
+                res.send("Error: Invalid email!");
+            }
+            else if (resetToken !== user.emailToken.substring(0, 5)) {
+                res.status(403);
+                res.send("Error: Invalid token!");
+            }
+            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
+                res.status(403);
+                res.send("Eror: The token is expired!");
+            }
+            else {
+                user.passwordSalt = resetSalt;
+                user.password = resetPassword;
+                user.emailToken = '';
+                user.save();
+                const emailContent = '<h2> R&B Marketplace </h2>' +
+                    '<br/><br/> This email is being sent to notify you that your R&B Marketplace account\'s password was changed. <br/>' +
+                    'Time of change: ' + new Date().toString(); + '<br/>';
+                const subject = "R&B Marketplace Account Changed";
+
+                mailer.sendEmail(subject, resetEmail, emailContent);
+                res.status(200);
+                res.send("Successfully reset password!");
+            }
+        })
 });
 
 router.route("/authToken").post((req, res) => {
@@ -120,9 +204,9 @@ router.route("/authToken").post((req, res) => {
 
         User.findOne({ email: email })
             .then(user => res.json({
-                email:      user.email,
-                firstName:  user.firstName,
-                lastName:   user.lastName
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
             }))
             .catch(err => res.json(err));
 

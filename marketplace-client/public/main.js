@@ -4,7 +4,6 @@ $(document).ready(function(){
   //scroll to top on route
   window.scrollTo(0, 0);
   clock();
-
 });
 
 function clock() {
