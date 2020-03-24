@@ -3,6 +3,7 @@ import axios from 'axios';
 
 var loadjs = require('loadjs');
 var email = "";
+
 class AddProduct extends React.Component {
     componentDidMount() {
         loadjs('main.js');
