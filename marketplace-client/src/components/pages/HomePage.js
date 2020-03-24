@@ -127,7 +127,7 @@ class HomePage extends Component {
                 </div>
                 <div className="row portfolio-container">
                   <div className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
-                    <div className="portfolio-wrap">
+                    <div className="portfolio-wrap">h
                       <img src={this.state.image0} className="img-fluid" alt={this.state.name0} />
                       <div className="portfolio-info">
                         <h4>{this.state.name0}</h4>
@@ -137,7 +137,6 @@ class HomePage extends Component {
                         <a href={this.state.image0} data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
                         <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
                       </div>
-                    </div>
                   </div>
                   <div className="col-lg-4 col-md-6 portfolio-item filter-coffee-appliances">
                     <div className="portfolio-wrap">
@@ -148,7 +147,7 @@ class HomePage extends Component {
                       </div>
                       <div className="portfolio-links">
                         <a href={this.state.image1} data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                        <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+                        <a href="/" title="More Details"><i className="bx bx-link"></i></a>
                       </div>
                     </div>
                   </div>
