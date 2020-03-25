@@ -39,6 +39,7 @@ class App extends React.Component {
             <Header />
             <Navbar />
             <HomePage />
+            <ScrollToTop />
             <Footer />
           </div>
         )} />
@@ -46,6 +47,7 @@ class App extends React.Component {
           <div>
             <Navbar />
             <SignUp />
+            <ScrollToTop />
             <Footer />
           </div>
         )} />
@@ -78,8 +80,10 @@ export default App;
 const outerStyle = {
   backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
   backgroundSize: 'cover',
-  width: '100%',
-  height: '100vh'
+  backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    width: '100%',
+    height: '100%'
 }
 
 function AddProductPage(props) {
@@ -91,6 +95,7 @@ function AddProductPage(props) {
           <div style={outerStyle}>
             <AddProduct />
           </div>
+          <ScrollToTop />
           <Footer />
         </div>
       )} />
@@ -98,4 +103,9 @@ function AddProductPage(props) {
   } else {
     return <React.Fragment></React.Fragment>
   }
+}
+
+
+function ScrollToTop(){
+  return <a href="#" className="back-to-top"><i className="icofont-simple-up"></i></a>;
 }

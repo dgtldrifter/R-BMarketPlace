@@ -175,6 +175,7 @@ class AddProduct extends React.Component {
 
     render() {
         return (
+        <div className="add-product">
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
                 <div className="wrapper">
@@ -240,6 +241,7 @@ class AddProduct extends React.Component {
                     </form>
                 </div>
             </div>
+        </div>
         );
     }
 }
