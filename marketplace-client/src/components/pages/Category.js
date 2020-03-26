@@ -21,8 +21,8 @@ class Category extends Component {
   }
 
   componentDidMount() {
-
     loadjs('../main.js');
+
     if(localStorage.getItem('token') !== null) {
       axios({
         method: 'POST',
@@ -39,14 +39,14 @@ class Category extends Component {
     } else {
       localStorage.clear();
     }
+
     axios({
       method: 'POST',
-      url: '../posts/getAll',
+      url: '../posts/filterPosts',
       headers: {
         "Content-Type": "application/json"
       }
     }).then((response) => {
-      console.log(response.data);
       this.setState({
         isLoaded: true,
         posts: response.data
@@ -57,57 +57,21 @@ class Category extends Component {
         error
       });
     });
-    
   }
 
   componentDidUpdate() {
-    
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
-    this.setState({
-      category: this.props.category,
-      categoryExtra: this.props.categoryExtra
-    })
-  }
-
-
-    
-  
+      this.setState({
+        category: this.props.category,
+        categoryExtra: this.props.categoryExtra
+      });
+    }
   }
 
   render() {
     const { error, isLoaded } = this.state;
-    const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
-        <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
-          <div className="portfolio-info">
-            <h4>{post.name}</h4>
-            <p>${post.price}</p>
-          </div>
-          <div className="portfolio-links">
-            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
-          </div>
-        </div>
-      </div>
-    );
-    const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
-        <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
-          <div className="portfolio-info">
-            <h4>{post.name}</h4>
-            <p>${post.price}</p>
-          </div>
-          <div className="portfolio-links">
-            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
-          </div>
-        </div>
-      </div>
-    );
-    const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
+    const posts = this.state.posts.slice(1, 4).map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
@@ -147,9 +111,7 @@ class Category extends Component {
                 <h2>Search Bar User Input ->  {this.state.search}</h2>
                 </div>
                 <div className="row portfolio-container" style={{paddingTop: "50px"}}>
-                  {postItemsCooking}
-                  {postItemsTransportation}
-                  {postItemsFurniture}
+                  {posts}
                 </div>
               </div>
             </section>
