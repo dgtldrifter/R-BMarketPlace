@@ -234,7 +234,7 @@ class AddProduct extends React.Component {
                             <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                         </div>
                     </div>
-                    <button type="submit" style={loginButton} className="btn btn-block mt-3 mb-3">Add Product</button>
+                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
                 </form>
             </div>
         );

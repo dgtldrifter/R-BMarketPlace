@@ -14,8 +14,6 @@ import ForgotPassword from './components/pages/ForgotPassword';
 import './App.css';
 var email = "";
 
-const isMobile = window.innerWidth < 580;
-
 class App extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('token') !== null) {
@@ -80,39 +78,28 @@ export default App;
 
 const outerStyle = {
   backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
-  backgroundRepeat: 'repeat',
-  backgroundPosition: 'fixed',
+  backgroundRepeat: 'no-repeat',
+  backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
   width: '100%',
-  height: '100vh',
-  paddingTop: '12px'
+  height: '100%',
+  paddingTop: '12px',
+  paddingBottom: '12px'
 }
 
 function AddProductPage(props) {
   if (localStorage.getItem('token') !== null) {
-    if(isMobile === true) {
-      return (
-        <Route path="/AddProduct" render={props => (
-          <div>
-            <Navbar />
-            <div style={{paddingTop: '12px'}}>
-              <AddProduct />
-            </div>
+    return (
+      <Route path="/AddProduct" render={props => (
+        <div>
+          <Navbar />
+          <div style={outerStyle}>
+            <AddProduct />
           </div>
-        )} />
-      )
-    } else {
-      return (
-        <Route path="/AddProduct" render={props => (
-          <div>
-            <Navbar />
-            <div style={outerStyle}>
-              <AddProduct />
-            </div>
-          </div>
-        )} />
-      )
-    }
+          <Footer />
+        </div>
+      )} />
+    )
   } else {
     return <React.Fragment></React.Fragment>
   }
