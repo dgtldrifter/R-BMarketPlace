@@ -183,24 +183,24 @@ class AddProduct extends React.Component {
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
                         <div className="row">
-                            <div className="col-12 col-sm-6">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
                             </div>
-                            <div className="col-12 col-sm-6">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
                                 <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
                             </div>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
+                        <div className="row">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Sale Type</label>
                                 <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
                                     <option value="0">Choose a Sale Type</option>
                                     {this.buildSaleTypeOptions()}
                                 </select>
                             </div>
-                            <div className="col-12 col-sm-6">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Category</label>
                                 <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
                                     <option value="0">Choose a Category</option>
@@ -208,8 +208,8 @@ class AddProduct extends React.Component {
                                 </select>
                             </div>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
+                        <div className="row">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Price</label>
                                 <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
                             </div>
@@ -218,21 +218,21 @@ class AddProduct extends React.Component {
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
                             </div>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
+                        <div className="row">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>State</label>
                                 <select onChange={this.onChangeHandler} className="form-control" name="location" required>
                                     <option value="0">Choose a State</option>
                                     {this.buildStateOptions()}
                                 </select>
                             </div>
-                            <div className="col-12 col-sm-6">
+                            <div className="col-12 col-sm-6 mt-3">
                                 <label>Address</label>
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
                             </div>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12">
+                        <div className="row">
+                            <div className="col-12 mt-3">
                                 <label>Image</label>
                                 <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
