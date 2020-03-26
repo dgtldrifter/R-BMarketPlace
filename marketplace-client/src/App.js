@@ -10,6 +10,7 @@ import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
+import Category from './components/pages/Category';
 
 import './App.css';
 var email = "";
@@ -40,6 +41,7 @@ class App extends React.Component {
             <Header />
             <Navbar />
             <HomePage />
+            <ScrollToTop />
             <Footer />
           </div>
         )} />
@@ -47,10 +49,19 @@ class App extends React.Component {
           <div>
             <Navbar />
             <SignUp />
+            <ScrollToTop />
             <Footer />
           </div>
         )} />
         <AddProductPage />
+        <Route path="/Category/:category" render={props => (
+          <div>
+            <Navbar />
+            <Category category={props.match.params.category} categoryExtra={props.location.state.categoryExtra}/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
         <Route path="/VerifyEmail" render={props => (
           <div>
             <Navbar />
@@ -79,12 +90,10 @@ export default App;
 const outerStyle = {
   backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
   backgroundRepeat: 'no-repeat',
-  backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
+  backgroundAttachment: 'fixed',
   width: '100%',
-  height: '100%',
-  paddingTop: '12px',
-  paddingBottom: '12px'
+  height: '100%'
 }
 
 function AddProductPage(props) {
@@ -96,6 +105,7 @@ function AddProductPage(props) {
           <div style={outerStyle}>
             <AddProduct />
           </div>
+          <ScrollToTop />
           <Footer />
         </div>
       )} />
@@ -103,4 +113,9 @@ function AddProductPage(props) {
   } else {
     return <React.Fragment></React.Fragment>
   }
+}
+
+
+function ScrollToTop(){
+  return <a href="#" className="back-to-top"><i className="icofont-simple-up"></i></a>;
 }

@@ -176,6 +176,7 @@ class AddProduct extends React.Component {
 
     render() {
         return (
+        <div className="add-product">
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
                 <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
@@ -237,6 +238,7 @@ class AddProduct extends React.Component {
                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
                 </form>
             </div>
+        </div>
         );
     }
 }

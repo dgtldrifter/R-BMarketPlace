@@ -129,7 +129,6 @@ class HomePage extends Component {
               </div>
             </section>
           </main>
-          <a href="#" className="back-to-top"><i className="icofont-simple-up"></i></a>
         </div>
       );
     }

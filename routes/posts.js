@@ -42,4 +42,14 @@ router.route('/getAll').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/filterPosts').post((req, res) => {
+    let category = req.body.categoryid;
+    let saleType = req.body.saletype;
+ 
+    Post.find({categoryid: category, saletype: saleType})
+        .populate('ownerId', 'firstName lastName email -_id')
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;

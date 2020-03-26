@@ -8,37 +8,112 @@ export default class Navbar extends React.Component {
           <div id="header">
             <div className="container d-flex">
               <div className="logo mr-auto">
-                <Link to="/"><img src="img/logo.jpg" alt="Logo" className="img-fluid"/></Link>
+                <Link to="/"><img src="../img/logo.jpg" alt="Logo" className="img-fluid"/></Link>
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
                   <li className="active"><Link to="/">Home</Link></li>
                   <AddProduct />
-                  <li className="drop-down"><a href="/">Sale Types</a>
+                  <li className="drop-down"><a href="/">Postings</a>
                     <ul>
-                      <li><a href="/">Community</a></li>
-                      <li><a href="/">Discussion Board</a></li>
+                      <li><Link to={{
+                                pathname: '/Category/Community',
+                                state: {
+                                    categoryExtra: ''
+                                }
+                          }}>Community</Link></li>
+                      <li><Link to={{
+                                pathname: '/Category/Discussion',
+                                state: {
+                                    categoryExtra: ''
+                                }
+                          }}>Discussion Board</Link></li>
                       <li className="drop-down"><a href="/">For Sale</a>
                         <ul>
-                          <li><Link to="/">Apartments</Link></li>
-                          <li><Link to="/">Housing</Link></li>
-                          <li><Link to="/">Office / Commerical Space</Link></li>
-                          <li><Link to="/">Cooking</Link></li>
-                          <li><Link to="/">Transportation</Link></li>
-                          <li><Link to="/">Furniture</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Apartments'
+                                }
+                          }}>Apartments</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Housing'
+                                }
+                          }}>Housing</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Office / Commercial Space'
+                                }
+                          }}>Office / Commercial Space</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Cooking'
+                                }
+                          }}>Cooking</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Transportation'
+                                }
+                          }}>Transportation</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForSale',
+                                state: {
+                                    categoryExtra: 'Furniture'
+                                }
+                          }}>Furniture</Link></li>
                         </ul>
                       </li>
                       <li className="drop-down"><a href="/">For Rent</a>
                         <ul>
-                          <li><Link to="/">Apartments</Link></li>
-                          <li><Link to="/">Housing</Link></li>
-                          <li><Link to="/">Office / Commerical Space</Link></li>
-                          <li><Link to="/">Cooking</Link></li>
-                          <li><Link to="/">Transportation</Link></li>
-                          <li><Link to="/">Furniture</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Apartments'
+                                }
+                          }}>Apartments</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Housing'
+                                }
+                          }}>Housing</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Office / Commercial Space'
+                                }
+                          }}>Office / Commerical Space</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Cooking'
+                                }
+                          }}>Cooking</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Transportation'
+                                }
+                          }}>Transportation</Link></li>
+                          <li><Link to={{
+                                pathname: '/Category/ForRent',
+                                state: {
+                                    categoryExtra: 'Furniture'
+                                }
+                          }}>Furniture</Link></li>
                         </ul>
                       </li>
-                      <li><a href="/">Services</a></li>
+                      <li><Link to={{
+                                pathname: '/Category/Services',
+                                state: {
+                                    categoryExtra: ''
+                                }
+                          }}>Services</Link></li>
                     </ul>
                   </li>
                   <WelcomeUser />
