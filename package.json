@@ -24,7 +24,8 @@
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "react-search-box": "^2.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",

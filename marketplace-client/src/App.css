@@ -51,6 +51,21 @@ body {
 
 }
 
+/* Search Box */
+
+#searchBox input {
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px #354a90;
+  border: 1px solid #354a90;
+  font-size: 20px;
+  background-color: white;
+  background-image: url('search.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 5px 20px 5px 50px;
+}
+
 
 /* Desktop Nav Bar */
 

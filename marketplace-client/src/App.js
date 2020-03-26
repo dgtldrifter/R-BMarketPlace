@@ -9,6 +9,7 @@ import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
+import Category from './components/pages/Category';
 
 import './App.css';
 var email = "";
@@ -52,6 +53,14 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
+        <Route path="/Category/:category" render={props => (
+          <div>
+            <Navbar />
+            <Category category={props.match.params.category} categoryExtra={props.location.state.categoryExtra}/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
         <Route path="/VerifyEmail" render={props => (
           <div>
             <Navbar />
