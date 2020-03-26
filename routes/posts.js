@@ -49,7 +49,7 @@ router.route('/filterPosts').post((req, res) => {
     Post.find({categoryid: category, saletype: saleType})
         .populate('ownerId', 'firstName lastName email -_id')
         .then(posts => res.json(posts))
-        .catch(err => res.staus(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // For returning the category 'Apartments' and the saletype 'For Sale'
