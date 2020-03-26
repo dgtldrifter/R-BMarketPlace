@@ -178,68 +178,64 @@ class AddProduct extends React.Component {
         return (
             <div className="container">
                 <h1 className='text-center'>Add Product</h1>
-                <div className="wrapper">
-                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
-                        <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
-                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
-                        <div className="row">
-                            <div className="col-12 col-sm-6">
-                                <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label>Description</label>
-                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
-                            </div>
+                <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                    <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
+                    <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
+                    <div className="row">
+                        <div className="col-12 col-sm-6 mt-3">
+                            <label>Product Name</label>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
-                                <label>Sale Type</label>
-                                <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
-                                    <option value="0">Choose a Sale Type</option>
-                                    {this.buildSaleTypeOptions()}
-                                </select>
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label>Product Category</label>
-                                <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
-                                    <option value="0">Choose a Category</option>
-                                    {this.buildCategoryTypeOptions()}
-                                </select>
-                            </div>
+                        <div className="col-12 col-sm-6 mt-3">
+                            <label>Description</label>
+                            <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
-                                <label>Price</label>
-                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>Sale Type</label>
+                            <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
+                                <option value="0">Choose a Sale Type</option>
+                                {this.buildSaleTypeOptions()}
+                            </select>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12 col-sm-6">
-                                <label>State</label>
-                                <select onChange={this.onChangeHandler} className="form-control" name="location" required>
-                                    <option value="0">Choose a State</option>
-                                    {this.buildStateOptions()}
-                                </select>
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label>Address</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
-                            </div>
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>Product Category</label>
+                            <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
+                                <option value="0">Choose a Category</option>
+                                {this.buildCategoryTypeOptions()}
+                            </select>
                         </div>
-                        <div className="row mt-3">
-                            <div className="col-12">
-                                <label>Image</label>
-                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
-                            </div>
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>Price</label>
+                            <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
                         </div>
-                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
-                    </form>
-                </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>City</label>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
+                        </div>
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>State</label>
+                            <select onChange={this.onChangeHandler} className="form-control" name="location" required>
+                                <option value="0">Choose a State</option>
+                                {this.buildStateOptions()}
+                            </select>
+                        </div>
+                        <div className="col-12 col-sm-4 mt-3">
+                            <label>Address</label>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 mt-3">
+                            <label>Image</label>
+                            <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
+                        </div>
+                    </div>
+                    <button type="submit" style={loginButton} className="btn btn-block mt-3 mb-3">Add Product</button>
+                </form>
             </div>
         );
     }

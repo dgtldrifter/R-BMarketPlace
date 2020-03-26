@@ -94,44 +94,43 @@ class ForgotPassword extends React.Component {
         return (
             <div className="container">
                 <h1 className='text-center'>Forgot your password?</h1>
-                <div className="wrapper">
-                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
-                        <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <div className="col-12 col-sm-12">
-                                <label><b>Email address</b></label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="userEmail" required autoComplete="off" />
-                            </div>
+                <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                    <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div className="col-12 col-sm-12">
+                            <label><b>Email address</b></label>
+                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="userEmail" required autoComplete="off" />
                         </div>
-                        <button type="submit" style={resendButton} className="btn btn-block mt-3">Get token</button>
-                    </form>
-                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.resetHandler}>
-                        {
-                            this.state.postEmailInput ? //making these visible after the token is successfully sent
-                                <div>
-                                    <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <div className="col-12 col-sm-12">
-                                            <label><b>Password Reset Token</b></label>
-                                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="userToken" required autoComplete="off" />
-                                        </div>
+                    </div>
+                    <button type="submit" style={resendButton} className="btn btn-block mt-3">Get token</button>
+                </form>
+                <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.resetHandler}>
+                    {
+                        this.state.postEmailInput ? //making these visible after the token is successfully sent
+                            <div>
+                                <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <div className="col-12 col-sm-12">
+                                        <label><b>Password Reset Token</b></label>
+                                        <input type="text" onChange={this.onChangeHandler} className="form-control" name="userToken" required autoComplete="off" />
                                     </div>
-                                    <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <div className="col-12 col-sm-12">
-                                            <label><b>New Password</b></label>
-                                            <input type="password" onChange={this.onChangeHandler} className="form-control" name="newPassword" required autoComplete="off" />
-                                        </div>
-                                    </div>
-                                    <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <div className="col-12 col-sm-12">
-                                            <label><b>Confirm Password</b></label>
-                                            <input type="password" onChange={this.onChangeHandler} className="form-control" name="confirmPassword" required autoComplete="off" />
-                                        </div>
-                                    </div>
-                                    <button type="submit" style={verifyButton} className="btn btn-block mt-3">Confirm Reset</button>
                                 </div>
-                                : null
-                        }
-                    </form>
-                </div>
+                                <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <div className="col-12 col-sm-12">
+                                        <label><b>New Password</b></label>
+                                        <input type="password" onChange={this.onChangeHandler} className="form-control" name="newPassword" required autoComplete="off" />
+                                    </div>
+                                </div>
+                                <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <div className="col-12 col-sm-12">
+                                        <label><b>Confirm Password</b></label>
+                                        <input type="password" onChange={this.onChangeHandler} className="form-control" name="confirmPassword" required autoComplete="off" />
+                                    </div>
+                                </div>
+                                <button type="submit" style={verifyButton} className="btn btn-block mt-3">Confirm Reset</button>
+                            </div>
+                            : null
+                    }
+                </form>
+               
             </div>
         );
     }

@@ -26,7 +26,8 @@
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
     "randomstring": "^1.1.5",
-    "react-bootstrap": "^1.0.0"
+    "react-bootstrap": "^1.0.0",
+    "react-screen-size": "^2.0.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
