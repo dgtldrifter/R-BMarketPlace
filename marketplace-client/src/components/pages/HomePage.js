@@ -53,7 +53,7 @@ class HomePage extends Component {
   render() {
     const { error, isLoaded } = this.state;
     const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
@@ -68,7 +68,7 @@ class HomePage extends Component {
       </div>
     );
     const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
