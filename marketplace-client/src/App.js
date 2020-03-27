@@ -34,10 +34,10 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
-        <Route path="/Category/:category" render={props => (
+        <Route path="/Category/:category/:categoryExtra" render={props => (
           <div>
             <Navbar />
-            <Category category={props.match.params.category} categoryExtra={props.location.state.categoryExtra}/>
+            <Category category={props.match.params.category} categoryExtra={props.match.params.categoryExtra}/>
             <ScrollToTop />
             <Footer />
           </div>

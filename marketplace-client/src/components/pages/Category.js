@@ -21,10 +21,10 @@ class Category extends Component {
   }
 
   componentDidMount() {
-    loadjs('../main.js');
+    loadjs('../../main.js');
     axios({
       method: 'POST',
-      url: '../posts/filterPosts',
+      url: '../../posts/filterPosts',
       headers: {
         "Content-Type": "application/json"
       },
@@ -48,11 +48,40 @@ class Category extends Component {
   componentDidUpdate() {
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
-      window.location.reload();
+
+      
+
+      //Don't want to reload the page....
+      //window.location.reload();
       this.setState({
         category: this.props.category,
         categoryExtra: this.props.categoryExtra
       });
+
+
+      //Now that User has changed page, call fiterPosts again
+      axios({
+        method: 'POST',
+        url: '../../posts/filterPosts',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: {
+          categoryid: this.props.categoryExtra,
+          saletype: this.props.category
+        }
+      }).then((response) => {
+        this.setState({
+          isLoaded: true,
+          posts: response.data
+        }); 
+      }).catch((error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      });
+
     }
   }
 
