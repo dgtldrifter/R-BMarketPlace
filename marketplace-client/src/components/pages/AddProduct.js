@@ -64,7 +64,7 @@ class AddProduct extends React.Component {
     buildSaleTypeOptions() {
         var arr = [];
 
-        const saleTypes = ['Community', 'Services', 'Discussion Forms', 'Housing', 'For Sale', 'For Rent'];
+        const saleTypes = ['Community', 'Services', 'For Sale', 'For Rent'];
 
         for (let i = 0; i <= saleTypes.length - 1; i++) {
             arr.push(<option key={i} value={saleTypes[i]}>{saleTypes[i]}</option>);
@@ -76,8 +76,8 @@ class AddProduct extends React.Component {
     buildCategoryTypeOptions() {
         var arr = [];
 
-        const categories = ['Apartments', 'Homes',
-            'Offices / Commercal Space', 'Furniture', 'Cooking', 'Transportation'];
+        const categories = ['Artists', 'Apartments', 'Homes',
+            'Offices / Commercal Space', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
 
         for (let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)

@@ -22,15 +22,15 @@ function clock() {
 
   //signout on click clear localstorage, reload page
   $(document).on('click', '#signout', function(e) {
-
     if(localStorage.getItem('token') !== null){
-    localStorage.clear();
-    window.location.reload()
-    window.scrollTo(0, 0);
+      localStorage.clear();
+      window.location.reload()
+      window.scrollTo(0, 0);
     }
   });
   
   // Smooth scroll for the navigation menu and links with .scrollto classes
+  console.log(location.pathname);
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       e.preventDefault();
