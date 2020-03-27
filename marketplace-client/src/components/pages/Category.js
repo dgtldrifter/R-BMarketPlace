@@ -21,8 +21,6 @@ class Category extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.categoryExtra);
-    console.log(this.props.category);
     loadjs('../main.js');
     axios({
       method: 'POST',
