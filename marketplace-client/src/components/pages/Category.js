@@ -48,6 +48,7 @@ class Category extends Component {
   componentDidUpdate() {
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
+      window.location.reload();
       this.setState({
         category: this.props.category,
         categoryExtra: this.props.categoryExtra
@@ -57,26 +58,26 @@ class Category extends Component {
 
   render() {
     const { error, isLoaded } = this.state;
-    const posts = this.state.posts.map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
-        <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
-          <div className="portfolio-info">
-            <h4>{post.name}</h4>
-            <p>${post.price}</p>
-          </div>
-          <div className="portfolio-links">
-            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
-          </div>
-        </div>
-      </div>
-    );
     if(error) {
       return <div>Error: {error.message}</div>;
     } else if(!isLoaded) {
       return <div>Loading ... </div>;
     } else {
+      const posts = this.state.posts.map((post) => 
+        <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+          <div className="portfolio-wrap">
+            <img src={post.image} className="img-fluid" alt={post.name} />
+            <div className="portfolio-info">
+              <h4>{post.name}</h4>
+              <p>${post.price}</p>
+            </div>
+            <div className="portfolio-links">
+              <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+              <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+            </div>
+          </div>
+        </div>
+      );
       return (
         <div>
           <main id="main">
