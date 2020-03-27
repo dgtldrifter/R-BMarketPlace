@@ -38,7 +38,6 @@ class HomePage extends Component {
         "Content-Type": "application/json"
       }
     }).then((response) => {
-      console.log(response.data);
       this.setState({
         isLoaded: true,
         posts: response.data

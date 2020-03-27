@@ -69,8 +69,8 @@ export default App;
 
 const outerStyle = {
   backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
-  backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
   backgroundAttachment: 'fixed',
   width: '100%',
   height: '100%'

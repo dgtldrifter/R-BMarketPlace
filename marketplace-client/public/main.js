@@ -22,11 +22,10 @@ function clock() {
 
   //signout on click clear localstorage, reload page
   $(document).on('click', '#signout', function(e) {
-
     if(localStorage.getItem('token') !== null){
-    localStorage.clear();
-    window.location.reload()
-    window.scrollTo(0, 0);
+      localStorage.clear();
+      window.location.reload()
+      window.scrollTo(0, 0);
     }
   });
   
@@ -129,10 +128,9 @@ function clock() {
     return false;
   });
 
+  
   // Porfolio isotope and filter
   $(window).on('load', function() {
-
-
     var portfolioIsotope = $('.portfolio-container').isotope({
       itemSelector: '.portfolio-item',
       layoutMode: 'fitRows'
@@ -151,10 +149,8 @@ function clock() {
     $(document).ready(function() {
       $('.venobox').venobox();
     });
-
-
-
   });
+  
 
 })(jQuery);
 
@@ -179,5 +175,4 @@ $(document).ready(function(){
   $(document).ready(function() {
     $('.venobox').venobox();
   });
-
 });
