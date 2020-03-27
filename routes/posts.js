@@ -43,11 +43,11 @@ router.route('/getAll').post((req, res) => {
 });
 
 router.route('/filterPosts').post((req, res) => {
-    let category = req.body.categoryid;
-    let saleType = req.body.saletype;
- 
+   let category = req.body.categoryid;
+   let saleType = req.body.saletype;
+
     Post.find({categoryid: category, saletype: saleType})
-        .populate('ownerId', 'name price description -_id')
+        .populate('ownerId', 'firstName lastName email -_id')
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
