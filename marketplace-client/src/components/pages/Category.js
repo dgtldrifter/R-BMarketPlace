@@ -22,12 +22,15 @@ class Category extends Component {
 
   componentDidMount() {
     loadjs('../main.js');
-
     axios({
       method: 'POST',
       url: '../posts/filterPosts',
       headers: {
         "Content-Type": "application/json"
+      },
+      data: {
+        categoryid: this.props.categoryExtra,
+        saletype: this.props.category
       }
     }).then((response) => {
       this.setState({
@@ -54,7 +57,7 @@ class Category extends Component {
 
   render() {
     const { error, isLoaded } = this.state;
-    const posts = this.state.posts.slice(1, 4).map((post) => 
+    const posts = this.state.posts.map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
