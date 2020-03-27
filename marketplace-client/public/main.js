@@ -30,7 +30,6 @@ function clock() {
   });
   
   // Smooth scroll for the navigation menu and links with .scrollto classes
-  console.log(location.pathname);
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       e.preventDefault();
