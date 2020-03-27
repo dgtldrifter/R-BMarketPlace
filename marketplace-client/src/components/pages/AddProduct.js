@@ -77,7 +77,7 @@ class AddProduct extends React.Component {
         var arr = [];
 
         const categories = ['Artists', 'Apartments', 'Homes',
-            'Offices / Commercal Space', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
+            'Offices / Commercial Space', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
 
         for (let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
