@@ -23,23 +23,6 @@ class Category extends Component {
   componentDidMount() {
     loadjs('../main.js');
 
-    if(localStorage.getItem('token') !== null) {
-      axios({
-        method: 'POST',
-        url: '../users/authToken',
-        headers: {
-            "Content-Type": "application/json",
-            'token': localStorage.getItem('token')
-        }
-      }).then((response) => {
-        
-      }).catch((error) => {
-          console.log(error);
-      });
-    } else {
-      localStorage.clear();
-    }
-
     axios({
       method: 'POST',
       url: '../posts/filterPosts',

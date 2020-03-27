@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layouts/Header';
 import Navbar from './components/layouts/Navbar';
@@ -12,26 +11,8 @@ import ForgotPassword from './components/pages/ForgotPassword';
 import Category from './components/pages/Category';
 
 import './App.css';
-var email = "";
 
 class App extends React.Component {
-  componentDidMount() {
-    if (localStorage.getItem('token') !== null) {
-      axios({
-        method: 'POST',
-        url: 'users/authToken',
-        headers: {
-          "Content-Type": "application/json",
-          'token': localStorage.getItem('token')
-        }
-      }).then((response) => {
-        email = response.data.email;
-      }).catch((error) => {
-        localStorage.clear();
-      });
-    }
-  }
-
   render() {
     return (
       <Router>
@@ -90,9 +71,9 @@ const outerStyle = {
   backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../houses-banner.jfif")',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed',
-    width: '100%',
-    height: '100%'
+  backgroundAttachment: 'fixed',
+  width: '100%',
+  height: '100%'
 }
 
 function AddProductPage(props) {
