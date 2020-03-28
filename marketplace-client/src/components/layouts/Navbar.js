@@ -68,7 +68,7 @@ export default class Navbar extends React.Component {
                       <li className="drop-down"><a href="/">Services</a>
                         <ul>
                           <li>
-                            <Link to='/Category/Services/Cleaning Services'>Cleaning Service</Link>
+                            <Link to='/Category/Services/Cleaning Service'>Cleaning Service</Link>
                           </li>
                         </ul>
                       </li>

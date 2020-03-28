@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
 var loadjs = require('loadjs');
 
-class Category extends Component {
+class Category extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +22,7 @@ class Category extends Component {
 
   componentDidMount() {
     loadjs('../../main.js');
+    
     axios({
       method: 'POST',
       url: '../../posts/filterPosts',
@@ -147,7 +148,7 @@ class Category extends Component {
               </div>
             </section>
           </main>
-        </div>
+        </div>        
       );
     }
   }
