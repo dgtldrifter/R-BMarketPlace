@@ -24,44 +24,44 @@ export default class Navbar extends React.Component {
                       <li className="drop-down"><a href="/">For Sale</a>
                         <ul>
                           <li>
-                          <Link to='/Category/For Sale/Apartments'>Apartments</Link>
+                            <Link to='/Category/For Sale/Apartments'>Apartments</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Sale/Homes'>Homes</Link>
+                            <Link to='/Category/For Sale/Homes'>Homes</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Sale/Office - Commercial Space'>Office / Commercial Space</Link>
+                            <Link to='/Category/For Sale/Office - Commercial Space'>Office / Commercial Space</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Sale/Cooking'>Cooking</Link>
+                           <Link to='/Category/For Sale/Cooking'>Cooking</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Sale/Transportation'>Transportation</Link>
+                            <Link to='/Category/For Sale/Transportation'>Transportation</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Sale/Furniture'>Furniture</Link>
+                            <Link to='/Category/For Sale/Furniture'>Furniture</Link>
                           </li>
                         </ul>
                       </li>
                       <li className="drop-down"><a href="/">For Rent</a>
                         <ul>
-                        <li>
-                          <Link to='/Category/For Rent/Apartments'>Apartments</Link>
+                          <li>
+                            <Link to='/Category/For Rent/Apartments'>Apartments</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Rent/Homes'>Homes</Link>
+                            <Link to='/Category/For Rent/Homes'>Homes</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Rent/Office - Commercial Space'>Office / Commercial Space</Link>
+                           <Link to='/Category/For Rent/Office - Commercial Space'>Office / Commercial Space</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Rent/Cooking'>Cooking</Link>
+                           <Link to='/Category/For Rent/Cooking'>Cooking</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Rent/Transportation'>Transportation</Link>
+                            <Link to='/Category/For Rent/Transportation'>Transportation</Link>
                           </li>
                           <li>
-                          <Link to='/Category/For Rent/Furniture'>Furniture</Link>
+                            <Link to='/Category/For Rent/Furniture'>Furniture</Link>
                           </li>
                         </ul>
                       </li>
