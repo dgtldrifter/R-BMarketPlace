@@ -3,6 +3,7 @@ const express =         require('express');
 const path =            require('path');
 const cors =            require('cors');
 const mongoose =        require('mongoose');
+const bodyParser =      require('body-parser');
 const userRouter =      require('./routes/users');
 const postRouter =      require('./routes/posts');
 const connection =      mongoose.connection;
@@ -13,16 +14,16 @@ const uri = "mongodb+srv://" + process.env.ATLAS_USER + ":" + process.env.ATLAS_
 //serve the static files from the react application
 app.use(express.static(path.join(__dirname, 'marketplace-client/build')));
 
-app.use(cors());
-app.use(express.json());
-app.use("/users", userRouter);
-app.use("/posts", postRouter);
-
 //Catchall handler
 app.get('*', (req, res) => {
    res.sendFile(path.join(__dirname, 'marketplace-client/build/index.html'));
 });
 
+app.use(cors());
+app.use(express.json());
+app.use("/users", userRouter);
+app.use("/posts", postRouter);
+app.use(bodyParser.json());
 
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 connection.once('open', () => {

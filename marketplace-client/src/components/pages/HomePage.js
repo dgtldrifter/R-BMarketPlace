@@ -1,155 +1,136 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 var loadjs = require('loadjs');
 
 class HomePage extends Component {
-    componentDidMount() {
-        loadjs('main.js');
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      posts: []
+    };
+  } 
+
+  componentDidMount() {
+    loadjs('main.js');
+    if(localStorage.getItem('token') !== null) {
+      axios({
+        method: 'POST',
+        url: 'users/authToken',
+        headers: {
+            "Content-Type": "application/json",
+            'token': localStorage.getItem('token')
+        }
+      }).then((response) => {
+        
+      }).catch((error) => {
+          console.log(error);
+      });
+    } else {
+      localStorage.clear();
     }
-    render() {
+    axios({
+      method: 'POST',
+      url: 'posts/getAll',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      this.setState({
+        isLoaded: true,
+        posts: response.data
+      }); 
+    }).catch((error) => {
+      this.setState({
+        isLoaded: true,
+        error
+      });
+    });
+  }
+
+  render() {
+    const { error, isLoaded } = this.state;
+    const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
+    const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
+    const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
+        <div className="portfolio-wrap">
+          <img src={post.image} className="img-fluid" alt={post.name} />
+          <div className="portfolio-info">
+            <h4>{post.name}</h4>
+            <p>${post.price}</p>
+          </div>
+          <div className="portfolio-links">
+            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+          </div>
+        </div>
+      </div>
+    );
+    if(error) {
+      return <div>Error: {error.message}</div>;
+    } else if(!isLoaded) {
+      return <div>Loading ... </div>;
+    } else {
       return (
         <div>
           <main id="main">
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
                 <div className="section-title">
-                  <h2>Hottest Properties and Products</h2>
+                  <h2>Hottest Products</h2>
                 </div>
                 <div className="row">
                   <div className="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
                       <li data-filter="*" className="filter-active">All</li>
-                      <li data-filter=".filter-app">App</li>
-                      <li data-filter=".filter-card">Card</li>
-                      <li data-filter=".filter-web">Web</li>
+                      <li data-filter=".filter-cooking-appliances">Coffee Appliances</li>
+                      <li data-filter=".filter-transportation">Transportation</li>
+                      <li data-filter=".filter-furniture">Furniture</li>
                     </ul>
                   </div>
                 </div>
                 <div className="row portfolio-container">
-                  <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div className="portfolio-wrap">
-                      <img src="img/portfolio/portfolio-1.jpg" className="img-fluid" alt=""/>
-                      <div className="portfolio-info">
-                        <h4>App 1</h4>
-                        <p>App</p>
-                      </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" className="venobox" title="App 1"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Web 3</h4>
-                      <p>Web</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-3.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>App 2</h4>
-                      <p>App</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" className="venobox" title="App 2"><i className="bx bx-plus"></i></a>
-                     {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-4.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Card 2</h4>
-                      <p>Card</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" className="venobox" title="Card 2"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-5.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Web 2</h4>
-                      <p>Web</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" className="venobox" title="Web 2"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-6.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>App 3</h4>
-                      <p>App</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" className="venobox" title="App 3"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-7.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Card 1</h4>
-                      <p>Card</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" className="venobox" title="Card 1"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-8.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Card 3</h4>
-                      <p>Card</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" className="venobox" title="Card 3"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-                  <div className="portfolio-wrap">
-                    <img src="img/portfolio/portfolio-9.jpg" className="img-fluid" alt=""/>
-                    <div className="portfolio-info">
-                      <h4>Web 3</h4>
-                      <p>Web</p>
-                    </div>
-                    <div className="portfolio-links">
-                      <a href="img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" className="venobox" title="Web 3"><i className="bx bx-plus"></i></a>
-                      {/* <a title="More Details"><i className="bx bx-link"></i></a> */}
-                    </div>
-                  </div>
+                  {postItemsCooking}
+                  {postItemsTransportation}
+                  {postItemsFurniture}
                 </div>
               </div>
-            </div>
-          </section>
-        </main>
-        <a href="#" className="back-to-top"><i className="icofont-simple-up"></i></a>
-      </div>
-    );
+            </section>
+          </main>
+        </div>
+      );
+    }
   }
 }
 

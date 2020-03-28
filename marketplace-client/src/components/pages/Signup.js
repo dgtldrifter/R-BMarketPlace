@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import SignupModal from './../modals/SignupModal';
+import SignupError from './../modals/SignupError';
 
 var loadjs = require('loadjs');
 
@@ -8,6 +9,7 @@ class signup extends React.Component {
     componentDidMount() {
         loadjs('main.js');
     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,37 +18,82 @@ class signup extends React.Component {
             email: '',
             password: '',
             errorMessage: '',
-            isOpen: false
+            isOpenSuccess: false,
+            isOpenError: false,
+            token: ''
         };
     }
 
     toggleModal = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpenSuccess: !this.state.isOpenSuccess
+        });
+    }
+
+    toggleModalError = () => {
+        this.setState({
+            isOpenError: !this.state.isOpenError
         });
     }
 
     onChangeErrorHandling = (event) => {
         event.preventDefault();
-        let name      = event.target.name;
-        let val       = event.target.value;
-        let err       = '';
-        if(name === "firstname"){
-            if(Number(val)) {
+        let name = event.target.name;
+        let val = event.target.value;
+        let err = '';
+        if (name === "firstname") {
+            if (Number(val)) {
                 err = <p className="pt-2">There can't be a number for first name. </p>;
             }
-        } else if(name === "lastname") {
-            if(Number(val)) {
+        } else if (name === "lastname") {
+            if (Number(val)) {
                 err = <p className="pt-2">There can't be a number for last name.</p>;
             }
         }
 
-        this.setState({errorMessage: err});
-        this.setState({[name]: val});
+        this.setState({ errorMessage: err });
+        this.setState({ [name]: val });
     }
+
+    onLoginHandle = e => {
+        e.preventDefault();
+        this.login();
+    }
+
     mySubmitHandlerSignUp = e => {
         e.preventDefault();
         this.register();
+    }
+
+    async login() {
+        let userToken;
+        let fullName;
+
+        axios({
+            method: 'POST',
+            url: 'users/login',
+            data: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                userToken = response.data.token;
+                fullName = response.data.fullName;
+
+                this.setState({ token: userToken });
+                localStorage.setItem('token', userToken);
+                localStorage.setItem('fullName', fullName);
+                window.location.href = './';
+            }
+        }, error => {
+            if (error.response.data === "unverified") {
+                localStorage.setItem('verificationEmail', this.state.email);
+                window.location.href = './VerifyEmail';
+            }
+            else
+                alert(error.response.data);
+        });
     }
 
     async register() {
@@ -60,80 +107,80 @@ class signup extends React.Component {
                 password: this.state.password
             }
         }).then((response) => {
-            //console.log(response);
-            //Add code here to handle a successful signup
+            console.log(response);
+            if (response.status === 200) {
+                this.toggleModal();
+            }
         }, error => {
-            //window.alert(error);
-            //console.log(error);
-            //Add code here to handle an unsuccessful signup
+            this.toggleModalError();
         });
     }
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
-                    <SignupModal show={this.state.isOpen} onClose={this.toggleModal}>
-                        Here's some content for the modal
+                    <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
+                        You successfully created an account.
                     </SignupModal>
-                    <button onClick={this.toggleModal}>
-                        Open the modal
-                    </button>
+                    <SignupError show={this.state.isOpenError} onCloseError={this.toggleModalError}>
+                        Your account was not created. The email address / user already exists in the system.
+                    </SignupError>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}
                         <ul className="nav nav-tabs" role="tablist">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#SignUp">Create Account</a>
+                                <a className="nav-link active" data-toggle="tab" href="#Login">Login</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#Login">Login</a>
+                                <a className="nav-link" data-toggle="tab" href="#SignUp">Create Account</a>
                             </li>
                         </ul>
                         {/* Tab Panes */}
                         <div className="tab-content">
-                            <div id="SignUp" className="container tab-pane active">
+                            <div id="Login" className="container tab-pane active">
+                                <form method="post" className="form-horizontal mt-4" onSubmit={this.onLoginHandle}>
+                                    <div className="row mt-2">
+                                        <div className="col-sm-12 col-md-6 mt-2">
+                                            <label className="lead">Email</label>
+                                            <input type="email" name="email" id="loginEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required />
+                                        </div>
+                                        <div className="col-sm-12 col-md-6 mt-2">
+                                            <label className="lead">Password</label>
+                                            <input type="password" name="password" id="loginPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required />
+                                        </div>
+                                    </div>
+                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
+                                    <button type="button" style={forgotPassword} onClick={() => { window.location.href = './ForgotPassword'; }} className="btn btn-block mt-3">Forgot your password?</button>
+                                </form>
+                            </div>
+                            <div id="SignUp" className="container tab-pane">
                                 <form method="post" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
-                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required/>
+                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Last Name</label>
-                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required/>
+                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required/>
+                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required/>
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required />
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Create Account</button>
                                 </form>
                             </div>
-                            <div id="Login" className="container tab-pane">
-                                <form method="post" className="form-horizontal mt-4">
-                                    <div className="row mt-2">
-                                        <div className="col-sm-12 col-md-6 mt-2">
-                                            <label className="lead">Email</label>
-                                            <input type="email" id="loginEmail" className="form-control" placeholder="Enter an email" required/>
-                                        </div>
-                                        <div className="col-sm-12 col-md-6 mt-2">
-                                            <label className="lead">Password</label>
-                                            <input type="password" id="loginPassword" className="form-control" placeholder="Enter a password" required/>
-                                        </div>
-                                    </div>
-                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Login</button>
-                                    <button type="button" style={forgotPassword} className="btn btn-block mt-3">Forgot your password?</button>
-                                </form>
-                            </div>
-                            <hr/>
+                            <hr />
                         </div>
                     </div>
                 </div>

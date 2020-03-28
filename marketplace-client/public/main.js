@@ -3,10 +3,31 @@ $(document).ready(function(){
   $("#header").sticky({topSpacing:0, zIndex: '50'});
   //scroll to top on route
   window.scrollTo(0, 0);
+  clock();
 });
+
+function clock() {
+  var d        = new Date();
+  var date     = d.getDate();
+  var year     = d.getFullYear();
+  var month    = d.getMonth();
+  var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
+  month        = monthArr[month];
+  $("#currentDate").val(date + " " + month + ", " + year);
+}
 
 !(function($) {
   "use strict";
+
+
+  //signout on click clear localstorage, reload page
+  $(document).on('click', '#signout', function(e) {
+    if(localStorage.getItem('token') !== null){
+      localStorage.clear();
+      window.location.reload()
+      window.scrollTo(0, 0);
+    }
+  });
   
   // Smooth scroll for the navigation menu and links with .scrollto classes
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
@@ -62,6 +83,7 @@ $(document).ready(function(){
       $('.mobile-nav-overly').toggle();
     });
 
+    //mobile drop downs 
     $(document).on('click', '.drop-down > a', function(e) {
       e.preventDefault();
       $(this).next().slideToggle(300);
@@ -105,10 +127,10 @@ $(document).ready(function(){
     }, 1500, 'easeInOutExpo');
     return false;
   });
+
+  
   // Porfolio isotope and filter
   $(window).on('load', function() {
-
-
     var portfolioIsotope = $('.portfolio-container').isotope({
       itemSelector: '.portfolio-item',
       layoutMode: 'fitRows'
@@ -127,10 +149,8 @@ $(document).ready(function(){
     $(document).ready(function() {
       $('.venobox').venobox();
     });
-
-
-
   });
+  
 
 })(jQuery);
 
@@ -155,5 +175,4 @@ $(document).ready(function(){
   $(document).ready(function() {
     $('.venobox').venobox();
   });
-
 });

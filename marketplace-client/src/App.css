@@ -43,12 +43,47 @@ body {
   background-position: bottom;
 }
 
-/* User Nav Bar */
+/* ADD Product Page*/
 
+.add-product {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
 
+/* Search Box */
+
+#searchBox input {
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px #354a90;
+  border: 1px solid #354a90;
+  font-size: 20px;
+  background-color: white;
+  background-image: url('search.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 5px 20px 5px 50px;
+}
 
 
 /* Desktop Nav Bar */
+
+#welcome {
+  display: block;
+  position: relative;
+  color: #4557A4;
+  padding: 14px 15px;
+  transition: 0.3s;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.mobile-nav #welcome {
+  color: #A4B1E5;
+}
 
 .nav-menu, .nav-menu * {
   margin: 0;
@@ -114,7 +149,7 @@ body {
 }
 
 .nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
-  color: #1bbca3;
+  color: #79AFE3;
 }
 
 .nav-menu .drop-down > a:after {
@@ -185,6 +220,8 @@ body {
   font-weight: 500;
   transition: ease-in-out 0.3s;
 }
+
+
 
 .mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
   color: #79AFE3;
@@ -435,6 +472,7 @@ body {
 
 .portfolio .portfolio-wrap .portfolio-links a:hover {
   color: #56e7d0;
+  margin-top: 20px;
 }
 
 .portfolio .portfolio-wrap:hover::before {
@@ -456,7 +494,6 @@ body {
 }
 
 /* Section for Homepage Product Isotope */
-
 
 section {
   padding: 60px 0;
