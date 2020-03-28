@@ -48,18 +48,13 @@ class Category extends Component {
   componentDidUpdate() {
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
-
-      
-
-      //Don't want to reload the page....
-      //window.location.reload();
       this.setState({
         category: this.props.category,
         categoryExtra: this.props.categoryExtra
       });
 
 
-      //Now that User has changed page, call fiterPosts again
+      //Now that User has changed page, call filterPost again
       axios({
         method: 'POST',
         url: '../../posts/filterPosts',
