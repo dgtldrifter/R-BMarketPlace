@@ -149,10 +149,13 @@ function clock() {
     $(document).ready(function() {
       $('.venobox').venobox();
     });
+    
   });
+
   
 
 })(jQuery);
+
 
 //isotope fixed for react routing
 $(document).ready(function(){
