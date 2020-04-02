@@ -1,7 +1,5 @@
 # R&B Marketplace
 
-Application can be found at https://rbmarketplace.herokuapp.com/
-
 ### Instructions For Setting Up the Project
 
 Included inside this project is a batch file with the name init.bat. Run this, and the script will run `npm install` in all 
