@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Button, Modal} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 
@@ -18,12 +18,17 @@ class signup extends React.Component {
             password: '',
             errorMessage: '',
             token: '',
-            show: false
+            show: false,
+            showError: false
         };
     }
 
     handleModal() {
         this.setState({show: !this.state.show});
+    }
+
+    handleModalError() {
+        this.setState({showError: !this.state.showError});
     }
 
     onChangeErrorHandling = (event) => {
@@ -92,9 +97,9 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName: this.state.lastname,
-                email: this.state.email,
-                password: this.state.password
+                lastName:  this.state.lastname,
+                email:     this.state.email,
+                password:  this.state.password
             }
         }).then((response) => {
             console.log(response);
@@ -102,22 +107,37 @@ class signup extends React.Component {
                 this.handleModal();
             }
         }, error => {
-            alert("Your account was not created. The email address / user already exists in the system.");
+            this.handleModalError();
         });
     }
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
+                    <Modal show={this.state.showError}>
+                        <Modal.Header className="bg-danger">
+                            Error                            
+                        </Modal.Header>
+                        <Modal.Body>
+                            Your account was not created. The email address / user already exists in the system.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                                Close
+                            </button> 
+                        </Modal.Footer>
+                    </Modal>
                     <Modal show={this.state.show}>
-                        <Modal.Header>Modal Header Part</Modal.Header>
+                        <Modal.Header className="bg-success">
+                            Success
+                        </Modal.Header>
                         <Modal.Body>
                             You successfully created an account.
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={()=>{this.handleModal()}}>
-                                Close Modal
-                            </Button>
+                            <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                                Close
+                            </button>
                         </Modal.Footer>
                     </Modal>
                     <h1 style={title}>R&amp;B Market Place</h1>
@@ -172,7 +192,7 @@ class signup extends React.Component {
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
-                                    <button type="submit" style={loginButton} className="btn btn-block mt-3" onClick={()=>{this.handleModal()}}>Create Account</button>
+                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Create Account</button>
                                 </form>
                             </div>
                             <hr />
