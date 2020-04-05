@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import SignupModal from './../modals/SignupModal';
 import SignupError from './../modals/SignupError';
+import {Button, Modal} from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 
@@ -20,8 +21,13 @@ class signup extends React.Component {
             errorMessage: '',
             isOpenSuccess: false,
             isOpenError: false,
-            token: ''
+            token: '',
+            show: false
         };
+    }
+
+    handleModal() {
+        this.setState({show: !this.state.show});
     }
 
     toggleModal = () => {
@@ -119,6 +125,18 @@ class signup extends React.Component {
         return (
             <React.Fragment>
                 <div style={background}>
+                    <Button onClick={()=>{this.handleModal()}}>Open Modal</Button>
+                    <Modal show={this.state.show}>
+                        <Modal.Header>Modal Header Part</Modal.Header>
+                        <Modal.Body>
+                            Hi, React modal is here
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={()=>{this.handleModal()}}>
+                                Close Modal
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                     <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
                         You successfully created an account.
                     </SignupModal>
