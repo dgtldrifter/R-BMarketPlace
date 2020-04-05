@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import SignupModal from './../modals/SignupModal';
-import SignupError from './../modals/SignupError';
 import {Button, Modal} from 'react-bootstrap';
 
 var loadjs = require('loadjs');
@@ -19,8 +17,6 @@ class signup extends React.Component {
             email: '',
             password: '',
             errorMessage: '',
-            isOpenSuccess: false,
-            isOpenError: false,
             token: '',
             show: false
         };
@@ -28,18 +24,6 @@ class signup extends React.Component {
 
     handleModal() {
         this.setState({show: !this.state.show});
-    }
-
-    toggleModal = () => {
-        this.setState({
-            isOpenSuccess: !this.state.isOpenSuccess
-        });
-    }
-
-    toggleModalError = () => {
-        this.setState({
-            isOpenError: !this.state.isOpenError
-        });
     }
 
     onChangeErrorHandling = (event) => {
@@ -115,21 +99,20 @@ class signup extends React.Component {
         }).then((response) => {
             console.log(response);
             if (response.status === 200) {
-                this.toggleModal();
+                this.handleModal();
             }
         }, error => {
-            this.toggleModalError();
+            alert("Your account was not created. The email address / user already exists in the system.");
         });
     }
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
-                    <Button onClick={()=>{this.handleModal()}}>Open Modal</Button>
                     <Modal show={this.state.show}>
                         <Modal.Header>Modal Header Part</Modal.Header>
                         <Modal.Body>
-                            Hi, React modal is here
+                            You successfully created an account.
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={()=>{this.handleModal()}}>
@@ -137,12 +120,6 @@ class signup extends React.Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
-                        You successfully created an account.
-                    </SignupModal>
-                    <SignupError show={this.state.isOpenError} onCloseError={this.toggleModalError}>
-                        Your account was not created. The email address / user already exists in the system.
-                    </SignupError>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}
@@ -195,7 +172,7 @@ class signup extends React.Component {
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
-                                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Create Account</button>
+                                    <button type="submit" style={loginButton} className="btn btn-block mt-3" onClick={()=>{this.handleModal()}}>Create Account</button>
                                 </form>
                             </div>
                             <hr />
