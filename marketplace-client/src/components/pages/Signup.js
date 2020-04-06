@@ -86,8 +86,9 @@ class signup extends React.Component {
                 localStorage.setItem('verificationEmail', this.state.email);
                 window.location.href = './VerifyEmail';
             }
-            else
+            else {
                 alert(error.response.data);
+            }
         });
     }
 
@@ -105,6 +106,7 @@ class signup extends React.Component {
             console.log(response);
             if (response.status === 200) {
                 this.handleModal();
+                window.location.href = "./signup";
             }
         }, error => {
             this.handleModalError();
