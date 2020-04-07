@@ -1,4 +1,5 @@
 const router = require('express').Router();
+let ObjectId = require('mongodb').ObjectId;
 let Post     = require('../models/post.model');
 let User     = require('../models/user.model');
 
@@ -54,11 +55,10 @@ router.route('/filterPosts').post((req, res) => {
 
 // route that updates post by id
 router.route('/updatePost').post((req, res) => {
-    let id = req.body.id;
+    let id = ObjectId(req.body.id);
 
-    Post.find({id: id})
-        .populate('')
-        .then(posts => res.json(posts))
+    Post.findOneAndUpdate({_id: id}, req.body)
+        .then(() => res.json("Post Updated!"))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -76,9 +76,15 @@ router.route('/deletePost').post((req, res) => {
 router.route('/ownerPosts').post((req, res) => {
     const email = req.body.email;
 
-    Post.find({email: email}) 
-        .populate('')
-        .then(posts => res.json(posts))
+    User.findOne({email: email})
+        .then(user => {
+            let ownerId = user._id;
+
+            Post.find({ownerId: ownerId})
+                .populate('ownerId', 'firstName lastName email -_id')
+                .then(posts => res.json(posts))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
