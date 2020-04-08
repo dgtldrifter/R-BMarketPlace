@@ -112,7 +112,17 @@ function EditPostPage(props) {
       )} />
     )
   } else {
-    return <React.Fragment></React.Fragment>
+    return (
+      <Route exact path="/" render={props => (
+        <div>
+          <Header />
+          <Navbar />
+          <HomePage />
+          <ScrollToTop />
+          <Footer />
+        </div>
+      )} />
+    )
   }
 }
 
