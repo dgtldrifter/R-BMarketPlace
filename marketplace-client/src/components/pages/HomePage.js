@@ -62,7 +62,8 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+            <a style={{textDecoration: 'none'}} href="/EditPost">Edit</a>
           </div>
         </div>
       </div>
@@ -77,7 +78,8 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+            <a style={{textDecoration: 'none'}}href="/EditPost">Edit</a>
           </div>
         </div>
       </div>
@@ -92,7 +94,8 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
+            <a style={{textDecoration: 'none'}} href="/EditPost">Edit</a> 
           </div>
         </div>
       </div>

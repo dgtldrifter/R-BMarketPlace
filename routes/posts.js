@@ -66,7 +66,7 @@ router.route('/updatePost').post((req, res) => {
 router.route('/deletePost').post((req, res) => {
     let id = req.body.id;
 
-    Post.find({id: id})
+    Post.findOneAndDelete({id: id})
         .populate('')
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));

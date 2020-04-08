@@ -6,6 +6,7 @@ import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
+import EditPost from './components/pages/EditPost';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Category from './components/pages/Category';
@@ -34,6 +35,7 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
+        <EditPostPage />
         <Route path="/Category/:category/:categoryExtra" render={props => (
           <div>
             <Navbar />
@@ -84,6 +86,25 @@ function AddProductPage(props) {
           <Navbar />
           <div style={outerStyle}>
             <AddProduct />
+          </div>
+          <ScrollToTop />
+          <Footer />
+        </div>
+      )} />
+    )
+  } else {
+    return <React.Fragment></React.Fragment>
+  }
+}
+
+function EditPostPage(props) {
+  if(localStorage.getItem('token') !== null) {
+    return (
+      <Route path="/EditPost" render={props => (
+        <div>
+          <Navbar />
+          <div style={outerStyle}>
+            <EditPost />
           </div>
           <ScrollToTop />
           <Footer />
