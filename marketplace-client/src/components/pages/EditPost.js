@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 var email = "";
@@ -75,14 +76,26 @@ class EditPost extends React.Component {
             _id: '',
             name: '',
             description: '',
-            saletype: '',
             categoryid: '',
             price: '',
             city: '',
             location: '',
             address: '',
-            image: ''
+            saletype: '',
+            errorMessage: '',
+            image: null,
+            show: false,
+            showError: false,
+            imageModal: false
         }
+    }
+
+    handleModalError = e => {
+        this.setState({showError: !this.state.showError});
+    }
+
+    handleModal = e => {
+        this.setState({show: !this.state.show});
     }
 
     onChangeHandlerImage = e => {
@@ -91,6 +104,18 @@ class EditPost extends React.Component {
 
     onChangeHandler = e => {
         e.preventDefault();
+        let name = e.target.name;
+        let val = e.target.value;
+        let err = '';
+
+        if (name === "price") {
+            if (!Number(val)) {
+                err = <p className="pt-2">Price has to be a number.</p>;
+            }
+        }
+
+        this.setState({ errorMessage: err });
+        this.setState({ [name]: val });
     }
 
     onSubmitHandler = e => {
@@ -103,12 +128,24 @@ class EditPost extends React.Component {
             method: 'POST',
             url: 'posts/updatePost',
             data: {
-                _id: this._id.value
+                _id:         this._id.value,
+                name:        this.state.name,
+                description: this.state.description,
+                categoryid:  this.state.categoryid,
+                price:       this.state.price,
+                city:        this.state.city,
+                location:    this.state.location,
+                address:     this.state.address,
+                saletype:    this.state.saletype
             }
         }).then((response) => {
-            console.log(response);
+            if(response.status === 200) {
+                this.handleModal();
+                console.log(response);
+                window.location.href = "./";
+            }
         }).catch((error) => {
-            console.log(error);
+            this.handleModalError();
         });
     }
 
@@ -116,9 +153,35 @@ class EditPost extends React.Component {
         return (
             <div>
                 <div className="container pb-3">
+                    <Modal show={this.state.show}>
+                        <Modal.Header className="bg-success">
+                            Success
+                        </Modal.Header>
+                        <Modal.Body>
+                            You successfully updated a product.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={this.state.showError}>
+                        <Modal.Header className="bg-danger">
+                            Error
+                        </Modal.Header>
+                        <Modal.Body>
+                            The product could not be updated.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                     <h1 className='text-center pt-3'>Edit Post</h1>
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.onSubmitHandler}>
-                        <input type="hidden" name="_id" ref={(input) => { this._id = input }} value="5e76bff69c983c3d6815b0c4" />
+                        <input type="hidden" name="_id" value="5e76bff69c983c3d6815b0c4" ref={(input) => { this._id = input }} />
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
@@ -166,13 +229,7 @@ class EditPost extends React.Component {
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-12 mt-3">
-                                <label>Image</label>
-                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
-                            </div>
-                        </div>
-                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
+                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>
                     </form>
                 </div>
             </div>

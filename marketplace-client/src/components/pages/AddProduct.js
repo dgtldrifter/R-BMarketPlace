@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 var email = "";
@@ -157,17 +157,17 @@ class AddProduct extends React.Component {
                                 method: 'POST',
                                 url: 'posts/create',
                                 data: {
-                                    name: this.state.name,
+                                    name:        this.state.name,
                                     description: this.state.description,
-                                    categoryid: this.state.categoryid,
-                                    price: this.state.price,
-                                    date: this.date.value,
-                                    city: this.state.city,
-                                    location: this.state.location,
-                                    address: this.state.address,
-                                    email: this.email.value,
-                                    image: response.data.data.link,
-                                    saletype: this.state.saletype
+                                    categoryid:  this.state.categoryid,
+                                    price:       this.state.price,
+                                    date:        this.date.value,
+                                    city:        this.state.city,
+                                    location:    this.state.location,
+                                    address:     this.state.address,
+                                    email:       this.email.value,
+                                    image:       response.data.data.link,
+                                    saletype:    this.state.saletype
                                 }
                             }).then((response) => {
                                 if (response.status === 200) {
