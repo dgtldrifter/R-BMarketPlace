@@ -62,9 +62,9 @@ router.route('/filterPosts').post((req, res) => {
 
 // route that updates post by id
 router.route('/updatePost').post((req, res) => {
-    let id = ObjectId(req.body.id);
+    let id = req.get('ObjectID');
 
-    Post.findOneAndUpdate({_id: id}, req.body)
+    Post.findOneAndUpdate({_id: id}, req.body, {upsert: true})
         .then(() => res.json("Post Updated!"))
         .catch(err => res.status(400).json('Error: ' + err));
 });
