@@ -44,7 +44,7 @@ router.route('/getAll').post((req, res) => {
 });
 
 router.route('/getOne').post((req, res) => {
-    Post.findOne({_id: req.body._id})
+    Post.findOne({_id: req.get('ObjectID')})
        .populate('ownerId', 'firstName lastName email _id')
        .then(post => res.json(post))
        .catch(err => res.status(400).json('Error: ' + err));
