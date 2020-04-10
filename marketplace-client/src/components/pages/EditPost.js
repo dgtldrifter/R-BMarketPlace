@@ -6,6 +6,26 @@ var loadjs = require('loadjs');
 var email = "";
 
 class EditPost extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            _id: '',
+            name: '',
+            description: '',
+            categoryid: '',
+            price: '',
+            city: '',
+            location: '',
+            address: '',
+            saletype: '',
+            errorMessage: '',
+            image: null,
+            show: false,
+            showError: false,
+            imageModal: false
+        }
+    }
+
     componentDidMount() {
         loadjs("main.js");
         if(localStorage.getItem('token') !== null) {
@@ -24,6 +44,30 @@ class EditPost extends React.Component {
         } else {
             window.location.href = "./";
         }
+
+        axios({
+            method: 'POST',
+            url: 'posts/getOne',
+            headers: {
+                "Content-Type": "application/json",
+                ObjectID: '5e76bff69c983c3d6815b0c4'
+            }
+        }).then((response) => {
+            if(response.status === 200) {
+                this.setState({
+                    name:        response.data.name,
+                    description: response.data.description,
+                    saletype:    response.data.saletype,
+                    categoryid:  response.data.categoryid,
+                    price:       response.data.price,
+                    city:        response.data.city,
+                    location:    response.data.location,
+                    address:     response.data.address
+                });
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     buildStateOptions() {
@@ -70,26 +114,6 @@ class EditPost extends React.Component {
         return arr;
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            _id: '',
-            name: '',
-            description: '',
-            categoryid: '',
-            price: '',
-            city: '',
-            location: '',
-            address: '',
-            saletype: '',
-            errorMessage: '',
-            image: null,
-            show: false,
-            showError: false,
-            imageModal: false
-        }
-    }
-
     handleModalError = e => {
         this.setState({showError: !this.state.showError});
     }
@@ -127,8 +151,10 @@ class EditPost extends React.Component {
         axios({
             method: 'POST',
             url: 'posts/updatePost',
+            headers: {
+                ObjectID:    '5e76bff69c983c3d6815b0c4'
+            },
             data: {
-                _id:         this._id.value,
                 name:        this.state.name,
                 description: this.state.description,
                 categoryid:  this.state.categoryid,
@@ -141,8 +167,8 @@ class EditPost extends React.Component {
         }).then((response) => {
             if(response.status === 200) {
                 this.handleModal();
-                console.log(response);
-                window.location.href = "./";
+                console.log(response.data);
+                //window.location.href = "./";
             }
         }).catch((error) => {
             this.handleModalError();
@@ -181,52 +207,51 @@ class EditPost extends React.Component {
                     </Modal>
                     <h1 className='text-center pt-3'>Edit Post</h1>
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.onSubmitHandler}>
-                        <input type="hidden" name="_id" value="5e76bff69c983c3d6815b0c4" ref={(input) => { this._id = input }} />
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
-                                <input type="text" className="form-control" onChange={this.onChangeHandler} name="name" required autoComplete="off" />
+                                <input type="text" className="form-control" onChange={this.onChangeHandler} name="name" value={this.state.name} required autoComplete="off" />
                             </div>
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
-                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" value={this.state.description} required></textarea>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Sale Type</label>
-                                <select className="form-control" name="saletype" onChange={this.onChangeHandler} required>
+                                <select className="form-control" name="saletype" onChange={this.onChangeHandler} value={this.state.saletype} required>
                                     <option value="0">Choose a Sale Type</option>
                                     {this.buildSaleTypeOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Product Category</label>
-                                <select name="categoryid" className="form-control" onChange={this.onChangeHandler} required>
+                                <select name="categoryid" className="form-control" onChange={this.onChangeHandler} value={this.state.categoryid} required>
                                     <option value="0">Choose a Category</option>
                                     {this.buildCategoryTypeOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Price</label>
-                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
+                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" value={this.state.price} autoComplete="off" required />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" value={this.state.city} name="city" required />
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>State</label>
-                                <select onChange={this.onChangeHandler} className="form-control" name="location" required>
+                                <select onChange={this.onChangeHandler} className="form-control" name="location" value={this.state.location} required>
                                     <option value="0">Choose a State</option>
                                     {this.buildStateOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Address</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" value={this.state.address} name="address" required />
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>

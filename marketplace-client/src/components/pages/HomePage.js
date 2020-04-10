@@ -64,7 +64,7 @@ class HomePage extends Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link to="/EditPost">Edit</Link>
+            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@ class HomePage extends Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link to="/EditPost">Edit</Link>
+            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ class HomePage extends Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link to="/EditPost">Edit</Link>
+            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
           </div>
         </div>
       </div>
@@ -113,6 +113,16 @@ class HomePage extends Component {
               <div className="container">
                 <div className="section-title">
                   <h2>Hottest Products</h2>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                      <li data-filter="*" className="filter-active">All</li>
+                      <li data-filter=".filter-cooking-appliances">Coffee Appliances</li>
+                      <li data-filter=".filter-transportation">Transportation</li>
+                      <li data-filter=".filter-furniture">Furniture</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="row portfolio-container">
                   {postItemsCooking}
