@@ -43,6 +43,13 @@ router.route('/getAll').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/getOne').post((req, res) => {
+    Post.findOne({_id: req.body._id})
+       .populate('ownerId', 'firstName lastName email _id')
+       .then(post => res.json(post))
+       .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/filterPosts').post((req, res) => {
    let category = req.body.categoryid;
    let saleType = req.body.saletype;
