@@ -48,8 +48,21 @@ router.route('/filterPosts').post((req, res) => {
 
     Post.find({categoryid: category, saletype: saleType})
         .populate('ownerId', 'firstName lastName email -_id')
-        .then(posts => res.json(posts))
+        .then(posts => {
+
+            if(posts.length == 0){
+                return res.status(404).json('FAIL')
+            }
+            else{
+                return res.status(200).json(posts)
+            }
+            
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
+
+function isEmpty(obj) {
+    return !Object.keys(obj).length > 0;
+  }

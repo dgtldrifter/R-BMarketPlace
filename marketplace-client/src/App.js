@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/layouts/Header';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
@@ -16,6 +16,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
+        
         <Route exact path="/" render={props => (
           <div>
             <Header />
@@ -60,6 +61,7 @@ class App extends React.Component {
             <Footer />
           </div>
         )} />
+        
       </Router>
     );
   }

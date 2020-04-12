@@ -51,9 +51,10 @@ class HomePage extends Component {
   }
 
   render() {
+    loadjs('main.js');
     const { error, isLoaded } = this.state;
     const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
@@ -68,7 +69,7 @@ class HomePage extends Component {
       </div>
     );
     const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
         <div className="portfolio-wrap">
           <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
@@ -109,6 +110,16 @@ class HomePage extends Component {
               <div className="container">
                 <div className="section-title">
                   <h2>Hottest Products</h2>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                      <li data-filter="*" className="filter-active">All</li>
+                      <li data-filter=".filter-cooking-appliances">Coffee Appliances</li>
+                      <li data-filter=".filter-transportation">Transportation</li>
+                      <li data-filter=".filter-furniture">Furniture</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="row portfolio-container">
                   {postItemsCooking}
