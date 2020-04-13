@@ -61,6 +61,36 @@ router.route('/filterPosts').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// route that updates post by id
+router.route('/updatePost').post((req, res) => {
+    let id = req.body.id;
+
+    Post.find({id: id})
+        .populate('')
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// route that deletes post by id
+router.route('/deletePost').post((req, res) => {
+    let id = req.body.id;
+
+    Post.find({id: id})
+        .populate('')
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// route that filters posts by ownerId
+router.route('/ownerPosts').post((req, res) => {
+    const email = req.body.email;
+
+    Post.find({email: email}) 
+        .populate('')
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
 
 function isEmpty(obj) {

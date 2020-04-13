@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import SignupModal from './../modals/SignupModal';
-import SignupError from './../modals/SignupError';
+import {Modal} from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 
@@ -18,22 +17,18 @@ class signup extends React.Component {
             email: '',
             password: '',
             errorMessage: '',
-            isOpenSuccess: false,
-            isOpenError: false,
-            token: ''
+            token: '',
+            show: false,
+            showError: false
         };
     }
 
-    toggleModal = () => {
-        this.setState({
-            isOpenSuccess: !this.state.isOpenSuccess
-        });
+    handleModal() {
+        this.setState({show: !this.state.show});
     }
 
-    toggleModalError = () => {
-        this.setState({
-            isOpenError: !this.state.isOpenError
-        });
+    handleModalError() {
+        this.setState({showError: !this.state.showError});
     }
 
     onChangeErrorHandling = (event) => {
@@ -91,8 +86,9 @@ class signup extends React.Component {
                 localStorage.setItem('verificationEmail', this.state.email);
                 window.location.href = './VerifyEmail';
             }
-            else
+            else {
                 alert(error.response.data);
+            }
         });
     }
 
@@ -102,29 +98,50 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName: this.state.lastname,
-                email: this.state.email,
-                password: this.state.password
+                lastName:  this.state.lastname,
+                email:     this.state.email,
+                password:  this.state.password
             }
         }).then((response) => {
             console.log(response);
             if (response.status === 200) {
-                this.toggleModal();
+                this.handleModal();
+                window.location.href = "./signup";
             }
         }, error => {
-            this.toggleModalError();
+            this.handleModalError();
         });
     }
     render() {
         return (
             <React.Fragment>
                 <div style={background}>
-                    <SignupModal show={this.state.isOpenSuccess} onClose={this.toggleModal}>
-                        You successfully created an account.
-                    </SignupModal>
-                    <SignupError show={this.state.isOpenError} onCloseError={this.toggleModalError}>
-                        Your account was not created. The email address / user already exists in the system.
-                    </SignupError>
+                    <Modal show={this.state.showError}>
+                        <Modal.Header className="bg-danger">
+                            Error                            
+                        </Modal.Header>
+                        <Modal.Body>
+                            Your account was not created. The email address / user already exists in the system.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                                Close
+                            </button> 
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={this.state.show}>
+                        <Modal.Header className="bg-success">
+                            Success
+                        </Modal.Header>
+                        <Modal.Body>
+                            You successfully created an account.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                     <h1 style={title}>R&amp;B Market Place</h1>
                     <div style={container} className="container mt-2">
                         {/* Nav Tabs */}

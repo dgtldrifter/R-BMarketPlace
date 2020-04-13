@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Modal} from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 var email = "";
@@ -37,8 +38,23 @@ class AddProduct extends React.Component {
             address: '',
             saletype: '',
             errorMessage: '',
-            image: null
+            image: null,
+            show: false,
+            showError: false,
+            imageModal: false
         }
+    }
+
+    handleModal() {
+        this.setState({show: !this.state.show});
+    }
+
+    handleModalError() {
+        this.setState({showError: !this.state.showError});
+    }
+
+    handleImageModal() {
+        this.setState({imageModal: !this.state.imageModal});
     }
 
 
@@ -155,17 +171,15 @@ class AddProduct extends React.Component {
                                 }
                             }).then((response) => {
                                 if (response.status === 200) {
-                                    alert("You successfully added a product. ");
+                                    this.handleModal();
                                     window.location.href = "./";
                                 }
                             }, error => {
-                                console.log(error);
-                                alert('The product could not be added.');
+                                this.handleModalError();
                             });
                         }
                     }, error => {
-                        console.log(error);
-                        alert('Error:  The image could not be submitted!');
+                        this.handleImageModal();
                     });
                 }
             }
@@ -176,69 +190,108 @@ class AddProduct extends React.Component {
 
     render() {
         return (
-        <div className="add-product">
-            <div className="container">
-                <h1 className='text-center'>Add Product</h1>
-                <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
-                    <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
-                    <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
-                    <div className="row">
-                        <div className="col-12 col-sm-6 mt-3">
-                            <label>Product Name</label>
-                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
+            <div className="add-product">
+                <Modal show={this.state.show}>
+                    <Modal.Header className="bg-success">
+                        Success
+                    </Modal.Header>
+                    <Modal.Body>
+                        You successfully added a product.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.showError}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        The product could not be added.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.imageModal}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        Image could not be uploaded. 
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleImageModal()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <div className="container">
+                    <h1 className='text-center'>Add Product</h1>
+                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                        <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
+                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
+                        <div className="row">
+                            <div className="col-12 col-sm-6 mt-3">
+                                <label>Product Name</label>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
+                            </div>
+                            <div className="col-12 col-sm-6 mt-3">
+                                <label>Description</label>
+                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                            </div>
                         </div>
-                        <div className="col-12 col-sm-6 mt-3">
-                            <label>Description</label>
-                            <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                        <div className="row">
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>Sale Type</label>
+                                <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
+                                    <option value="0">Choose a Sale Type</option>
+                                    {this.buildSaleTypeOptions()}
+                                </select>
+                            </div>
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>Product Category</label>
+                                <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
+                                    <option value="0">Choose a Category</option>
+                                    {this.buildCategoryTypeOptions()}
+                                </select>
+                            </div>
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>Price</label>
+                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>Sale Type</label>
-                            <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
-                                <option value="0">Choose a Sale Type</option>
-                                {this.buildSaleTypeOptions()}
-                            </select>
+                        <div className="row">
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>City</label>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
+                            </div>
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>State</label>
+                                <select onChange={this.onChangeHandler} className="form-control" name="location" required>
+                                    <option value="0">Choose a State</option>
+                                    {this.buildStateOptions()}
+                                </select>
+                            </div>
+                            <div className="col-12 col-sm-4 mt-3">
+                                <label>Address</label>
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
+                            </div>
                         </div>
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>Product Category</label>
-                            <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
-                                <option value="0">Choose a Category</option>
-                                {this.buildCategoryTypeOptions()}
-                            </select>
+                        <div className="row">
+                            <div className="col-12 mt-3">
+                                <label>Image</label>
+                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
+                            </div>
                         </div>
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>Price</label>
-                            <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>City</label>
-                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
-                        </div>
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>State</label>
-                            <select onChange={this.onChangeHandler} className="form-control" name="location" required>
-                                <option value="0">Choose a State</option>
-                                {this.buildStateOptions()}
-                            </select>
-                        </div>
-                        <div className="col-12 col-sm-4 mt-3">
-                            <label>Address</label>
-                            <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 mt-3">
-                            <label>Image</label>
-                            <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
-                        </div>
-                    </div>
-                    <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
-                </form>
+                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
+                    </form>
+                </div>
             </div>
-        </div>
         );
     }
 }
