@@ -9,6 +9,7 @@ class EditPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+           // _id: this.props._id,
             _id: '',
             name: '',
             description: '',
@@ -24,6 +25,16 @@ class EditPost extends React.Component {
             showError: false,
             imageModal: false
         }
+    }
+
+    componentDidUpdate() {
+        /*
+        if(this.state._id !== this.props._id) {
+            this.setState({
+                
+            });
+        }
+        */
     }
 
     componentDidMount() {

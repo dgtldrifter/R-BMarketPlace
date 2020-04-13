@@ -43,6 +43,14 @@ router.route('/getAll').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// route that deletes post by id
+router.route('/deletePost').post((req, res) => {
+    Post.findOneAndDelete({_id: req.get('ObjectID')})
+        .populate('ownerId', 'firstName lastName email _id')
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/getOne').post((req, res) => {
     Post.findOne({_id: req.get('ObjectID')})
        .populate('ownerId', 'firstName lastName email _id')
@@ -66,16 +74,6 @@ router.route('/updatePost').post((req, res) => {
 
     Post.findOneAndUpdate({_id: id}, req.body, {upsert: true})
         .then(() => res.json("Post Updated!"))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// route that deletes post by id
-router.route('/deletePost').post((req, res) => {
-    let id = req.body.id;
-
-    Post.findOneAndDelete({id: id})
-        .populate('')
-        .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

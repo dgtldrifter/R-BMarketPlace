@@ -100,11 +100,11 @@ function AddProductPage(props) {
 function EditPostPage(props) {
   if(localStorage.getItem('token') !== null) {
     return (
-      <Route path="/EditPost" render={props => (
+      <Route path="/EditPost" /*path="/EditPost/:_id"*/ render={props => (
         <div>
           <Navbar />
           <div style={outerStyle}>
-            <EditPost />
+            <EditPost /*_id={props.match.params._id}*/ />
           </div>
           <ScrollToTop />
           <Footer />

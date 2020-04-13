@@ -32,6 +32,7 @@ class HomePage extends Component {
     } else {
       localStorage.clear();
     }
+
     axios({
       method: 'POST',
       url: 'posts/getAll',
@@ -48,6 +49,17 @@ class HomePage extends Component {
         isLoaded: true,
         error
       });
+    });
+  }
+
+  onDeleteClick = e => {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'deletePost',
+      headers: {
+
+      }
     });
   }
 
