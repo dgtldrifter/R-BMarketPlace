@@ -20,9 +20,8 @@ class Category extends React.Component {
     this.setState({search: event.target.value});
   }
 
-  componentDidMount() {
-    loadjs('../../main.js');
-    
+  axiosRequest(){
+
     axios({
       method: 'POST',
       url: '../../posts/filterPosts',
@@ -39,47 +38,38 @@ class Category extends React.Component {
         posts: response.data
       }); 
     }).catch((error) => {
+      //RE-Direct home if Error is thrown
+      window.location.href = '/';
       this.setState({
         isLoaded: true,
         error
       });
     });
+
+  }
+
+  componentDidMount() {
+    loadjs('../../main.js');
+    this.axiosRequest();
+    
   }
 
   componentDidUpdate() {
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
+
       this.setState({
         category: this.props.category,
         categoryExtra: this.props.categoryExtra
       });
-
-
-      //Now that User has changed page, call filterPost again
-      axios({
-        method: 'POST',
-        url: '../../posts/filterPosts',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        data: {
-          categoryid: this.props.categoryExtra,
-          saletype: this.props.category
-        }
-      }).then((response) => {
-        this.setState({
-          isLoaded: true,
-          posts: response.data
-        }); 
-      }).catch((error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      });
+      
+      //Now that User has changed page, call fiterPosts again
+      this.axiosRequest();
 
     }
   }
+
+  
 
   render() {
     const { error, isLoaded } = this.state;
