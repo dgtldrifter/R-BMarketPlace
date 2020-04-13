@@ -62,7 +62,8 @@ class EditPost extends React.Component {
                     price:       response.data.price,
                     city:        response.data.city,
                     location:    response.data.location,
-                    address:     response.data.address
+                    address:     response.data.address,
+                    image:       response.data.image
                 });
             }
         }).catch((err) => {
@@ -124,6 +125,8 @@ class EditPost extends React.Component {
 
     onChangeHandlerImage = e => {
         e.preventDefault();
+        let image = e.target.files[0];
+        this.setState({ image: image});
     }
 
     onChangeHandler = e => {
@@ -148,30 +151,61 @@ class EditPost extends React.Component {
     }
 
     editPost() {
+        // getting imgur key
         axios({
             method: 'POST',
-            url: 'posts/updatePost',
-            headers: {
-                ObjectID:    '5e76bff69c983c3d6815b0c4'
-            },
-            data: {
-                name:        this.state.name,
-                description: this.state.description,
-                categoryid:  this.state.categoryid,
-                price:       this.state.price,
-                city:        this.state.city,
-                location:    this.state.location,
-                address:     this.state.address,
-                saletype:    this.state.saletype
+            url: 'posts/getAPIKey',
+        }).then((api_token) => {
+            if(api_token.status === 200) {
+                //saving the image to imgur first
+                let reader = new FileReader();
+                reader.readAsDataURL(this.state.image);
+                reader.onloadend = () => {
+                    axios({
+                        method: 'POST',
+                        url: 'https://api.imgur.com/3/image',
+                        crossDomain: true,
+                        headers: {
+                            Authorization: `Client-ID ${api_token.data}`
+                        },
+                        data: {
+                            image: reader.result.split(",")[1]
+                        }
+                    }).then((response) => {
+                        if(response.status === 200) {
+                            //If image is updated successfully, update the product.
+                            axios({
+                                method: 'POST',
+                                url: 'posts/updatePost',
+                                headers: {
+                                    ObjectID:    '5e76bff69c983c3d6815b0c4'
+                                },
+                                data: {
+                                    name:        this.state.name,
+                                    description: this.state.description,
+                                    categoryid:  this.state.categoryid,
+                                    price:       this.state.price,
+                                    city:        this.state.city,
+                                    location:    this.state.location,
+                                    address:     this.state.address,
+                                    saletype:    this.state.saletype,
+                                    image:       response.data.data.link
+                                }
+                            }).then((response) => {
+                                if(response.status === 200) {
+                                    this.handleModal();
+                                    console.log(response.data);
+                                    //window.location.href = "./";
+                                }
+                            }).catch((error) => {
+                                this.handleModalError();
+                            });
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                }
             }
-        }).then((response) => {
-            if(response.status === 200) {
-                this.handleModal();
-                console.log(response.data);
-                //window.location.href = "./";
-            }
-        }).catch((error) => {
-            this.handleModalError();
         });
     }
 
@@ -252,6 +286,12 @@ class EditPost extends React.Component {
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Address</label>
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" value={this.state.address} name="address" required />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12 mt-3">
+                                <label>Image</label>
+                                <input type="file" placeholder={this.state.image} onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>
