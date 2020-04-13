@@ -63,8 +63,9 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
+            <Link style={editButton} to="/EditPost">Edit</Link>
+            <Link style={deleteButton} to="/EditPost">Delete</Link>
           </div>
         </div>
       </div>
@@ -79,8 +80,9 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
+            <Link style={editButton} to="/EditPost">Edit</Link>
+            <Link style={deleteButton} to="/EditPost">Delete</Link>
           </div>
         </div>
       </div>
@@ -95,8 +97,9 @@ class HomePage extends Component {
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            {/*<a href="/" title="More Details"><i className="bx bx-link"></i></a> */}
-            <Link style={{textDecoration: 'none'}} to="/EditPost">Edit</Link>
+            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
+            <Link style={editButton} to="/EditPost">Edit</Link>
+            <Link style={deleteButton} to="/EditPost">Delete</Link>
           </div>
         </div>
       </div>
@@ -136,6 +139,16 @@ class HomePage extends Component {
       );
     }
   }
+}
+
+const editButton = {
+  textDecoration: 'none', 
+  fontSize: '20px'
+}
+
+const deleteButton = {
+  textDecoration: 'none', 
+  fontSize: '20px'
 }
 
 export default HomePage;
