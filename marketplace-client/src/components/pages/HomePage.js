@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 var loadjs = require('loadjs');
 
-class HomePage extends Component {
+class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      _id: '',
       error: null,
       isLoaded: false,
       posts: []
@@ -52,14 +53,17 @@ class HomePage extends Component {
     });
   }
 
-  onDeleteClick = e => {
-    e.preventDefault();
+  onDeleteClick(e) {
     axios({
       method: 'POST',
       url: 'deletePost',
       headers: {
-
+        ObjectID: e.target.value
       }
+    }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      
     });
   }
 
@@ -77,7 +81,7 @@ class HomePage extends Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to="/EditPost">Edit</Link>
-            <Link style={deleteButton} to="/EditPost">Delete</Link>
+            <button value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -94,7 +98,7 @@ class HomePage extends Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to="/EditPost">Edit</Link>
-            <Link style={deleteButton} to="/EditPost">Delete</Link>
+            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -111,7 +115,7 @@ class HomePage extends Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to="/EditPost">Edit</Link>
-            <Link style={deleteButton} to="/EditPost">Delete</Link>
+            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -160,7 +164,8 @@ const editButton = {
 
 const deleteButton = {
   textDecoration: 'none', 
-  fontSize: '20px'
+  fontSize: '20px',
+  border: 'none'
 }
 
 export default HomePage;
