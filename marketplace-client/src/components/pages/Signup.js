@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 
@@ -19,16 +19,17 @@ class signup extends React.Component {
             errorMessage: '',
             token: '',
             show: false,
-            showError: false
+            showError: false,
+            signUpError: ''
         };
     }
 
     handleModal() {
-        this.setState({show: !this.state.show});
+        this.setState({ show: !this.state.show });
     }
 
     handleModalError() {
-        this.setState({showError: !this.state.showError});
+        this.setState({ showError: !this.state.showError });
     }
 
     onChangeErrorHandling = (event) => {
@@ -98,9 +99,9 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName:  this.state.lastname,
-                email:     this.state.email,
-                password:  this.state.password
+                lastName: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
             }
         }).then((response) => {
             console.log(response);
@@ -109,6 +110,7 @@ class signup extends React.Component {
                 window.location.href = "./signup";
             }
         }, error => {
+            this.setState({ signUpError: error.response.data });
             this.handleModalError();
         });
     }
@@ -118,15 +120,15 @@ class signup extends React.Component {
                 <div style={background}>
                     <Modal show={this.state.showError}>
                         <Modal.Header className="bg-danger">
-                            Error                            
+                            Error
                         </Modal.Header>
                         <Modal.Body>
-                            Your account was not created. The email address / user already exists in the system.
+                            {this.state.signUpError}
                         </Modal.Body>
                         <Modal.Footer>
-                            <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                            <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
                                 Close
-                            </button> 
+                            </button>
                         </Modal.Footer>
                     </Modal>
                     <Modal show={this.state.show}>
@@ -137,7 +139,7 @@ class signup extends React.Component {
                             You successfully created an account.
                         </Modal.Body>
                         <Modal.Footer>
-                            <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                            <button className="btn btn-success" onClick={() => { this.handleModal() }}>
                                 Close
                             </button>
                         </Modal.Footer>

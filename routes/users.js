@@ -21,7 +21,8 @@ router.route('/add').post((req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
-    const password = SHA256(req.body.password + passwordSalt);
+    const unencryptedPassword = req.body.password;
+    const password = SHA256(unencryptedPassword + passwordSalt);
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
     //the first 5 characters of the token is the actual token, the rest is timestamp
@@ -29,25 +30,23 @@ router.route('/add').post((req, res) => {
 
     if (!firstName) {
         res.status(401);
-        res.send("Error: Please fill out the first name.");
+        res.send("Please fill out the first name.");
     }
     else if (!lastName) {
         res.status(401);
-        res.send("Error: Please fill out the last name.");
+        res.send("Please fill out the last name.");
     }
     else if (!validateEmail(email)) {
         res.status(401);
-        res.send("Error: Email is not valid.");
+        res.send("Email address is not valid.");
     }
-    else if (req.body.password) {
-        if (req.body.password.length < 6) {
-            res.status(400);
-            res.send("Error: The password has to be at least 6 characters.");
-        }
-    }
-    else if (!req.body.password) {
+    else if (!unencryptedPassword) {
         res.status(400);
-        res.send("Error: Please fill out the password.");
+        res.send("Please fill out the password.");
+    }
+    else if (unencryptedPassword.length < 6) {
+        res.status(400);
+        res.send("The password has to be at least 6 characters.");
     }
     else {
         const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
@@ -70,7 +69,17 @@ router.route('/add').post((req, res) => {
 
                 mailer.sendEmail(subject, email, emailContent);
             })
-            .catch(err => res.status(400).json('Error: ' + err));
+            .catch(err => {
+                if (err.toString().includes("E11000")) {
+                    res.status(400);
+                    res.send("Email address is already registered!");
+                }
+                else {
+                    res.status(400);
+                    res.send("Something went wrong during the registration process.");
+                    console.log("Error: " + err);
+                }
+            });
     }
 });
 
