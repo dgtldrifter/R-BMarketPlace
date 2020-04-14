@@ -63,7 +63,7 @@ class HomePage extends React.Component {
     }).then((response) => {
       
     }).catch((error) => {
-      console.log(error);
+      
     });
   }
 
