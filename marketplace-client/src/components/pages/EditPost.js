@@ -9,8 +9,7 @@ class EditPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           // _id: this.props._id,
-            _id: '',
+            id: this.props.id,
             name: '',
             description: '',
             categoryid: '',
@@ -28,21 +27,19 @@ class EditPost extends React.Component {
     }
 
     componentDidUpdate() {
-        /*
-        if(this.state._id !== this.props._id) {
+        if(this.state.id !== this.props.id) {
             this.setState({
-                
+                id: this.props.id
             });
         }
-        */
     }
 
     componentDidMount() {
-        loadjs("main.js");
+        loadjs("../../main.js");
         if(localStorage.getItem('token') !== null) {
             axios({
                 method: 'POST',
-                url: 'users/authToken',
+                url: '../../users/authToken',
                 headers: {
                     "Content-Type": "application/json",
                     'token': localStorage.getItem('token')
@@ -58,10 +55,10 @@ class EditPost extends React.Component {
 
         axios({
             method: 'POST',
-            url: 'posts/getOne',
+            url: '../../posts/getOne',
             headers: {
                 "Content-Type": "application/json",
-                ObjectID: '5e76bff69c983c3d6815b0c4'
+                ObjectID: this.props.id
             }
         }).then((response) => {
             if(response.status === 200) {
@@ -165,7 +162,7 @@ class EditPost extends React.Component {
         // getting imgur key
         axios({
             method: 'POST',
-            url: 'posts/getAPIKey',
+            url: '../../posts/getAPIKey',
         }).then((api_token) => {
             if(api_token.status === 200) {
                 //saving the image to imgur first
@@ -187,9 +184,9 @@ class EditPost extends React.Component {
                             //If image is updated successfully, update the product.
                             axios({
                                 method: 'POST',
-                                url: 'posts/updatePost',
+                                url: '../../posts/updatePost',
                                 headers: {
-                                    ObjectID:    '5e76bff69c983c3d6815b0c4'
+                                    ObjectID:    this.props.id
                                 },
                                 data: {
                                     name:        this.state.name,
@@ -205,8 +202,7 @@ class EditPost extends React.Component {
                             }).then((response) => {
                                 if(response.status === 200) {
                                     this.handleModal();
-                                    console.log(response.data);
-                                    //window.location.href = "./";
+                                    window.location.href = "../.././";
                                 }
                             }).catch((error) => {
                                 this.handleModalError();
