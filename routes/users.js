@@ -17,7 +17,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
@@ -84,7 +84,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route("/login").post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
 
     User.findOne({ email: email })
         .then(user => {
@@ -119,7 +119,7 @@ router.route("/login").post((req, res) => {
 });
 
 router.route("/verify").post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
@@ -153,7 +153,7 @@ router.route("/verify").post((req, res) => {
 });
 
 router.route('/reemail').post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
 
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
