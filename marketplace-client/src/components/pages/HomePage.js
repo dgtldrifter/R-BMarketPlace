@@ -61,7 +61,7 @@ class HomePage extends React.Component {
         ObjectID: e.target.value
       }
     }).then((response) => {
-      console.log(response);
+      
     }).catch((error) => {
       
     });
