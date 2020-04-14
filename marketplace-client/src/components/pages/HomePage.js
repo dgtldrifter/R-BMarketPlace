@@ -58,12 +58,13 @@ class HomePage extends React.Component {
       method: 'POST',
       url: 'deletePost',
       headers: {
+        "Content-Type": "application/json",
         ObjectID: e.target.value
       }
     }).then((response) => {
       console.log(response);
     }).catch((error) => {
-      
+      console.log(error);
     });
   }
 
@@ -81,7 +82,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <a value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
           </div>
         </div>
       </div>
@@ -98,7 +99,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <a value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
           </div>
         </div>
       </div>
@@ -115,7 +116,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <a value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
           </div>
         </div>
       </div>
@@ -164,7 +165,7 @@ const editButton = {
 
 const deleteButton = {
   textDecoration: 'none', 
-  fontSize: '20px',
+  fontSize: '15px',
   border: 'none'
 }
 
