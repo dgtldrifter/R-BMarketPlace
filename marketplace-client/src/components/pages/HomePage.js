@@ -8,7 +8,6 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: '',
       error: null,
       isLoaded: false,
       posts: []
@@ -56,14 +55,15 @@ class HomePage extends React.Component {
   onDeleteClick(e) {
     axios({
       method: 'POST',
-      url: 'deletePost',
+      url: 'posts/deletePost',
       headers: {
+        "Content-Type": "application/json",
         ObjectID: e.target.value
       }
     }).then((response) => {
       
     }).catch((error) => {
-      
+      console.log(error);
     });
   }
 
@@ -82,7 +82,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <button className="btn btn-danger" value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <button className="btn btn-danger" value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ class HomePage extends React.Component {
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <a href="/" title="More Details"><i className="bx bx-link"></i></a>
             <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+            <button className="btn btn-danger" value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -164,9 +164,7 @@ const editButton = {
 }
 
 const deleteButton = {
-  textDecoration: 'none', 
-  fontSize: '20px',
-  border: 'none'
+  textDecoration: 'none'
 }
 
 export default HomePage;

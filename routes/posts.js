@@ -46,8 +46,7 @@ router.route('/getAll').post((req, res) => {
 // route that deletes post by id
 router.route('/deletePost').post((req, res) => {
     Post.findOneAndDelete({_id: req.get('ObjectID')})
-        .populate('ownerId', 'firstName lastName email _id')
-        .then(posts => res.json(posts))
+        .then(() => res.json("Post Deleted!"))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
