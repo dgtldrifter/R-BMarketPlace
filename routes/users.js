@@ -5,6 +5,11 @@ const randomString = require("randomstring");
 let User = require('../models/user.model');
 const mailer = require('../mailer/mailer');
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 router.route('/').get((req, res) => {
     User.find()
         .then(users => res.json(users))
@@ -22,27 +27,51 @@ router.route('/add').post((req, res) => {
     //the first 5 characters of the token is the actual token, the rest is timestamp
     emailToken = emailToken + tokenTime;
 
-    const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
-    newUser.save()
-        .then(user => {
-            const payload = { user: { id: user.email } };
+    if (!firstName) {
+        res.status(401);
+        res.send("Error: Please fill out the first name.");
+    }
+    else if (!lastName) {
+        res.status(401);
+        res.send("Error: Please fill out the last name.");
+    }
+    else if (!validateEmail(email)) {
+        res.status(401);
+        res.send("Error: Email is not valid.");
+    }
+    else if (req.body.password) {
+        if (req.body.password.length < 6) {
+            res.status(400);
+            res.send("Error: The password has to be at least 6 characters.");
+        }
+    }
+    else if (!req.body.password) {
+        res.status(400);
+        res.send("Error: Please fill out the password.");
+    }
+    else {
+        const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
+        newUser.save()
+            .then(user => {
+                const payload = { user: { id: user.email } };
 
-            jwt.sign(
-                payload,
-                "thisisasecretkey", { expiresIn: 10000 },
-                (err, token) => {
-                    if (err) throw err;
-                    res.status(200).json({ token });
-                }
-            );
-            const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
-                '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
-                '<b>' + emailToken.substring(0, 5) + '</b>';
-            const subject = "R&B Marketplace Account Confirmation";
+                jwt.sign(
+                    payload,
+                    "thisisasecretkey", { expiresIn: 10000 },
+                    (err, token) => {
+                        if (err) throw err;
+                        res.status(200).json({ token });
+                    }
+                );
+                const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
+                    '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
+                    '<b>' + emailToken.substring(0, 5) + '</b>';
+                const subject = "R&B Marketplace Account Confirmation";
 
-            mailer.sendEmail(subject, email, emailContent);
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+                mailer.sendEmail(subject, email, emailContent);
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
 });
 
 router.route("/login").post((req, res) => {
