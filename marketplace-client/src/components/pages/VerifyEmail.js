@@ -79,8 +79,8 @@ class VerifyEmail extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <h1 className='text-center'>Verify email address</h1>
+            <div className="container pb-5 pt-5">
+                <h1 className='text-center'>Verify Email Address</h1>
                 <div className="wrapper">
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
                         <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
