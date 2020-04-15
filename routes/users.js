@@ -6,8 +6,18 @@ let User = require('../models/user.model');
 const mailer = require('../mailer/mailer');
 
 function validateEmail(email) {
+    //Checks if an email address is valid
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+}
+function validatePassword(password) {
+    //Checks the following requirements:
+    // 8 characters
+    // 1 number
+    // 1 uppercase letter
+    // 1 lowercase letter
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    return re.test(String(password));
 }
 
 router.route('/').get((req, res) => {
@@ -40,13 +50,25 @@ router.route('/add').post((req, res) => {
         res.status(401);
         res.send("Email address is not valid.");
     }
-    else if (!unencryptedPassword) {
+    else if (!validatePassword(unencryptedPassword)) {
         res.status(400);
-        res.send("Please fill out the password.");
-    }
-    else if (unencryptedPassword.length < 6) {
-        res.status(400);
-        res.send("The password has to be at least 6 characters.");
+        let characters = "✖";
+        let upper = "✖";
+        let lower = "✖";
+        let numbers = "✖";
+        if (unencryptedPassword.length > 8)
+            characters = "✔";
+        if (/\d/.test(unencryptedPassword))
+            numbers = "✔";
+        if (/[a-z]/.test(unencryptedPassword))
+            lower = "✔";
+        if (/[A-Z]/.test(unencryptedPassword))
+            upper = "✔";
+        res.send("The password needs to meet the following requirements: "
+            + "\n8 characters long - " + characters
+            + "\n1 upper-case - " + upper
+            + "\n1 lower-case letter - " + lower
+            + "\n1 number - " + numbers);
     }
     else {
         const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });

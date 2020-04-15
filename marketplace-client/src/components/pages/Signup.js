@@ -110,7 +110,10 @@ class signup extends React.Component {
                 window.location.href = "./signup";
             }
         }, error => {
-            this.setState({ signUpError: error.response.data });
+            let errorMsg = error.response.data.split('\n').map((item, i) => {
+                return <p key={i}>{item}</p>;
+            })
+            this.setState({ signUpError: errorMsg });
             this.handleModalError();
         });
     }
@@ -192,7 +195,7 @@ class signup extends React.Component {
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required />
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" autoComplete="off" required />
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
