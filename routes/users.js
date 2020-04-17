@@ -5,6 +5,12 @@ const randomString = require("randomstring");
 let User = require('../models/user.model');
 const mailer = require('../mailer/mailer');
 
+function validateEmail(email) {
+    //Checks if an email address is valid
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 router.route('/').get((req, res) => {
     User.find()
         .then(users => res.json(users))
@@ -12,41 +18,87 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
-    const password = SHA256(req.body.password + passwordSalt);
+    const unencryptedPassword = req.body.password;
+    const password = SHA256(unencryptedPassword + passwordSalt);
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
     //the first 5 characters of the token is the actual token, the rest is timestamp
     emailToken = emailToken + tokenTime;
 
-    const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
-    newUser.save()
-        .then(user => {
-            const payload = { user: { id: user.email } };
+    if (!firstName) {
+        res.status(401);
+        res.send("Please fill out the first name.");
+    }
+    else if (!lastName) {
+        res.status(401);
+        res.send("Please fill out the last name.");
+    }
+    else if (!validateEmail(email)) {
+        res.status(401);
+        res.send("Email address is not valid.");
+    }
+    else if (unencryptedPassword.length < 8 || /\d/.test(unencryptedPassword) == false
+        || /[a-z]/.test(unencryptedPassword) == false || /[A-Z]/.test(unencryptedPassword) == false) {
+        res.status(400);
+        let characters = "✖";
+        let upper = "✖";
+        let lower = "✖";
+        let numbers = "✖";
+        if (unencryptedPassword.length > 8)
+            characters = "✔";
+        if (/\d/.test(unencryptedPassword))
+            numbers = "✔";
+        if (/[a-z]/.test(unencryptedPassword))
+            lower = "✔";
+        if (/[A-Z]/.test(unencryptedPassword))
+            upper = "✔";
+        res.send("The password needs to meet the following requirements: "
+            + "\n8 characters long - " + characters
+            + "\n1 upper-case - " + upper
+            + "\n1 lower-case letter - " + lower
+            + "\n1 number - " + numbers);
+    }
+    else {
+        const newUser = new User({ email, firstName, lastName, passwordSalt, password, emailToken });
+        newUser.save()
+            .then(user => {
+                const payload = { user: { id: user.email } };
 
-            jwt.sign(
-                payload,
-                "thisisasecretkey", { expiresIn: 10000 },
-                (err, token) => {
-                    if (err) throw err;
-                    res.status(200).json({ token });
+                jwt.sign(
+                    payload,
+                    "thisisasecretkey", { expiresIn: 10000 },
+                    (err, token) => {
+                        if (err) throw err;
+                        res.status(200).json({ token });
+                    }
+                );
+                const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
+                    '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
+                    '<b>' + emailToken.substring(0, 5) + '</b>';
+                const subject = "R&B Marketplace Account Confirmation";
+
+                mailer.sendEmail(subject, email, emailContent);
+            })
+            .catch(err => {
+                if (err.toString().includes("E11000")) {
+                    res.status(400);
+                    res.send("Email address is already registered!");
                 }
-            );
-            const emailContent = '<h2> Welcome to R&B Marketplace! </h2>' +
-                '<br/><br/> Please verify your email with the following token the next time you login: <br/>' +
-                '<b>' + emailToken.substring(0, 5) + '</b>';
-            const subject = "R&B Marketplace Account Confirmation";
-
-            mailer.sendEmail(subject, email, emailContent);
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+                else {
+                    res.status(400);
+                    res.send("Something went wrong during the registration process.");
+                    console.log("Error: " + err);
+                }
+            });
+    }
 });
 
 router.route("/login").post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
 
     User.findOne({ email: email })
         .then(user => {
@@ -81,7 +133,7 @@ router.route("/login").post((req, res) => {
 });
 
 router.route("/verify").post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
@@ -115,7 +167,7 @@ router.route("/verify").post((req, res) => {
 });
 
 router.route('/reemail').post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
 
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
