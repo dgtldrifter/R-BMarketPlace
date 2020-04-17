@@ -60,26 +60,6 @@ class AddProduct extends React.Component {
         this.setState({ imageModal: !this.state.imageModal });
     }
 
-
-    buildStateOptions() {
-        var arr = [];
-
-        const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
-            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
-            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-            'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-            'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina',
-            'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-            'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
-            'West Virginia', 'Wisconsin', 'Wyoming'];
-
-        for (let i = 0; i <= states.length - 1; i++) {
-            arr.push(<option key={i} value={states[i]}>{states[i]}</option>);
-        }
-
-        return arr;
-    }
-
     buildSaleTypeOptions() {
         var arr = [];
 
@@ -196,6 +176,7 @@ class AddProduct extends React.Component {
             .then((latLng) => {
                 this.setState({ latitude: latLng.lat })
                 this.setState({ longitude: latLng.lng })
+                this.setState({ address: address })
             })
             .catch(error => console.error('Error', error));
     };
