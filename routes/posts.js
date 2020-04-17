@@ -82,14 +82,24 @@ router.route('/ownerPosts').post((req, res) => {
 
     User.findOne({email: email})
         .then(user => {
-            let ownerId = user._id;
+            if(returnIsEmpty(user)) res.json("No user data found.");
+            else{
+                let ownerId = user._id;
 
-            Post.find({ownerId: ownerId})
-                .populate('ownerId', 'firstName lastName email -_id')
-                .then(posts => res.json(posts))
-                .catch(err => res.status(400).json('Error: ' + err))
+                Post.find({ownerId: ownerId})
+                    .populate('ownerId', 'firstName lastName email -_id')
+                    .then(posts => {
+                        if(returnIsEmpty(posts)) res.json("User has no posts.");
+                        else res.json(posts)
+                    })
+                    .catch(err => res.status(400).json('Error: ' + err))
+            }
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
+
+function returnIsEmpty(data) {
+    if(!data || data.length === 0) return true;
+}

@@ -5,7 +5,7 @@ const randomString = require("randomstring");
 let User = require('../models/user.model');
 const mailer = require('../mailer/mailer');
 
-router.route('/').get((req, res) => {
+router.route('/getAll').post((req, res) => {
     User.find()
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
