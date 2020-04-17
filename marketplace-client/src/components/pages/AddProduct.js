@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
-
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete';
 var loadjs = require('loadjs');
 var email = "";
 
@@ -33,8 +36,8 @@ class AddProduct extends React.Component {
             description: '',
             categoryid: '',
             price: '',
-            city: '',
-            location: '',
+            latitude: '',
+            longitude: '',
             address: '',
             saletype: '',
             errorMessage: '',
@@ -46,15 +49,15 @@ class AddProduct extends React.Component {
     }
 
     handleModal() {
-        this.setState({show: !this.state.show});
+        this.setState({ show: !this.state.show });
     }
 
     handleModalError() {
-        this.setState({showError: !this.state.showError});
+        this.setState({ showError: !this.state.showError });
     }
 
     handleImageModal() {
-        this.setState({imageModal: !this.state.imageModal});
+        this.setState({ imageModal: !this.state.imageModal });
     }
 
 
@@ -157,17 +160,17 @@ class AddProduct extends React.Component {
                                 method: 'POST',
                                 url: 'posts/create',
                                 data: {
-                                    name:        this.state.name,
+                                    name: this.state.name,
                                     description: this.state.description,
-                                    categoryid:  this.state.categoryid,
-                                    price:       this.state.price,
-                                    date:        this.date.value,
-                                    city:        this.state.city,
-                                    location:    this.state.location,
-                                    address:     this.state.address,
-                                    email:       this.email.value,
-                                    image:       response.data.data.link,
-                                    saletype:    this.state.saletype
+                                    categoryid: this.state.categoryid,
+                                    price: this.state.price,
+                                    date: this.date.value,
+                                    city: this.state.city,
+                                    location: this.state.location,
+                                    address: this.state.address,
+                                    email: this.email.value,
+                                    image: response.data.data.link,
+                                    saletype: this.state.saletype
                                 }
                             }).then((response) => {
                                 if (response.status === 200) {
@@ -187,7 +190,18 @@ class AddProduct extends React.Component {
             console.log(error);
         })
     }
-
+    handleSelect = address => {
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then((latLng) => {
+                this.setState({ latitude: latLng.lat })
+                this.setState({ longitude: latLng.lng })
+            })
+            .catch(error => console.error('Error', error));
+    };
+    handleChange = address => {
+        this.setState({ address });
+    };
     render() {
         return (
             <div className="add-product">
@@ -199,7 +213,7 @@ class AddProduct extends React.Component {
                         You successfully added a product.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                        <button className="btn btn-success" onClick={() => { this.handleModal() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -212,7 +226,7 @@ class AddProduct extends React.Component {
                         The product could not be added.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                        <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -222,10 +236,10 @@ class AddProduct extends React.Component {
                         Error
                     </Modal.Header>
                     <Modal.Body>
-                        Image could not be uploaded. 
+                        Image could not be uploaded.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-danger" onClick={()=>{this.handleImageModal()}}>
+                        <button className="btn btn-danger" onClick={() => { this.handleImageModal() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -267,20 +281,48 @@ class AddProduct extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-4 mt-3">
-                                <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
+                                <PlacesAutocomplete
+                                    value={this.state.address}
+                                    onChange={this.handleChange}
+                                    onSelect={this.handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <label>Address</label>
+                                            <input required
+                                                {...getInputProps({
+                                                    placeholder: 'Type in your address...',
+                                                    className: 'location-search-input',
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
                             </div>
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>State</label>
-                                <select onChange={this.onChangeHandler} className="form-control" name="location" required>
-                                    <option value="0">Choose a State</option>
-                                    {this.buildStateOptions()}
-                                </select>
-                            </div>
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>Address</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
-                            </div>
+
+
                         </div>
                         <div className="row">
                             <div className="col-12 mt-3">
