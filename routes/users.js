@@ -10,15 +10,6 @@ function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
-function validatePassword(password) {
-    //Checks the following requirements:
-    // 8 characters
-    // 1 number
-    // 1 uppercase letter
-    // 1 lowercase letter
-    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-    return re.test(String(password));
-}
 
 router.route('/').get((req, res) => {
     User.find()
@@ -50,7 +41,8 @@ router.route('/add').post((req, res) => {
         res.status(401);
         res.send("Email address is not valid.");
     }
-    else if (!validatePassword(unencryptedPassword)) {
+    else if (unencryptedPassword.length < 8 || /\d/.test(unencryptedPassword) == false
+        || /[a-z]/.test(unencryptedPassword) == false || /[A-Z]/.test(unencryptedPassword) == false) {
         res.status(400);
         let characters = "✖";
         let upper = "✖";
