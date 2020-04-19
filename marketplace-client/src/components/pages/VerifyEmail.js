@@ -58,6 +58,14 @@ class VerifyEmail extends React.Component {
         this.setState({errorToken: !this.state.errorToken});
     }
 
+    handleResendSuccess() {
+        this.setState({resendSuccess: !this.state.resendSuccess});
+    }
+
+    handleResendError2() {
+        this.setState({resendError2: !this.state.resendError2});
+    }
+
     submitToken() {
         if (this.state.emailToken !== undefined || this.state.emailToken !== "") {
             axios({
@@ -92,10 +100,12 @@ class VerifyEmail extends React.Component {
                 }
             }).then((response) => {
                 if (response.status === 200) {
-                    alert(response.data);
+                    this.setState({successMessage: response.data});
+                    this.handleResendSuccess();
                 }
             }, error => {
-                alert(error.response.data);
+                this.setState({errorMessage: error.response.data});
+                this.handleResendError2();
             });
         } else {
             this.handleResendError();
@@ -107,14 +117,30 @@ class VerifyEmail extends React.Component {
         return (
             <div className="container pb-5 pt-5">
                 <Modal show={this.state.resendSuccess}>
+                    <Modal.Header className="bg-success">
+                        Success
+                    </Modal.Header>
                     <Modal.Body>
-                        Successfully sent the token to the email address
+                        {this.state.successMessage}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={()=>{this.handleResendSuccess()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
                 </Modal>
                 <Modal show={this.state.resendError2}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
                     <Modal.Body>
-
+                        {this.state.errorMessage}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleResendError2()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
                 </Modal>
                 <Modal show={this.state.successShow}>
                     <Modal.Header className="bg-success">
@@ -122,7 +148,6 @@ class VerifyEmail extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         {this.state.successMessage}
-                        Email address verified successfully!
                     </Modal.Body>
                     <Modal.Footer>
                         <button className="btn btn-success" onClick={()=>{this.handleSuccessModal()}}>
@@ -179,7 +204,7 @@ class VerifyEmail extends React.Component {
                             </div>
                         </div>
                         <button type="submit" style={verifyButton} className="btn btn-block mt-3">Verify</button>
-                        <button type="button" style={resendButton} onClick={this.resendToken} className="btn btn-block mt-3">Resend Token?</button>
+                        <button type="button" style={resendButton} onClick={()=>{this.resendToken()}} className="btn btn-block mt-3">Resend Token?</button>
                     </form>
                 </div>
             </div>

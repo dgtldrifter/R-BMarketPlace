@@ -12,11 +12,11 @@ class signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            errorMessage: '',
             firstname: '',
             lastname: '',
             email: '',
             password: '',
-            errorMessage: '',
             token: '',
             show: false,
             showError: false,
@@ -92,6 +92,7 @@ class signup extends React.Component {
                 window.location.href = './VerifyEmail';
             }
             else {
+                this.setState({errorMessage: error.response.data});
                 this.handleRegistered();
             }
         });
@@ -126,7 +127,7 @@ class signup extends React.Component {
                             Error
                         </Modal.Header>
                         <Modal.Body>
-                            Email address has not been registered
+                            {this.state.errorMessage}
                         </Modal.Body>
                         <Modal.Footer>
                             <button className="btn btn-danger" onClick={()=>{this.handleRegistered()}}>
