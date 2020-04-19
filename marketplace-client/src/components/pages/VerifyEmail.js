@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
+
 var loadjs = require('loadjs');
 class VerifyEmail extends React.Component {
     componentDidMount() {
@@ -12,8 +14,16 @@ class VerifyEmail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            successMessage: '',
+            errorMessage: '',
             userEmail: '',
-            emailToken: ''
+            emailToken: '',
+            successShow: false,
+            errorShow: false,
+            resendError: false,
+            errorToken: false,
+            resendSuccess: false,
+            resendError2: false
         }
     }
 
@@ -32,6 +42,22 @@ class VerifyEmail extends React.Component {
         this.submitToken();
     }
 
+    handleSuccessModal() {
+        this.setState({successShow: !this.state.successShow});
+    }
+
+    handleErrorModal() {
+        this.setState({errorShow: !this.state.errorShow});
+    }
+
+    handleResendError() {
+        this.setState({resendError: !this.state.resendError});
+    }
+
+    handleErrorToken() {
+        this.setState({errorToken: !this.state.errorToken});
+    }
+
     submitToken() {
         if (this.state.emailToken !== undefined || this.state.emailToken !== "") {
             axios({
@@ -43,15 +69,16 @@ class VerifyEmail extends React.Component {
                 }
             }).then((response) => {
                 if (response.status === 200) {
-                    alert("Email address verified successfully!");
+                    this.setState({successMessage: response.data});
+                    this.handleSuccessModal();
                     window.location.href = "./";
                 }
             }, error => {
-                alert(error.response.data);
+                this.setState({errorMessage: error.response.data});
+                this.handleErrorToken();
             });
-        }
-        else {
-            window.alert("Error: Couldn't get the user's email.");
+        } else {
+            this.handleErrorModal();
             window.location.href = '/';
         }
     }
@@ -70,9 +97,8 @@ class VerifyEmail extends React.Component {
             }, error => {
                 alert(error.response.data);
             });
-        }
-        else {
-            window.alert("Error: Couldn't get the user's email.");
+        } else {
+            this.handleResendError();
             window.location.href = '/';
         }
     }
@@ -80,6 +106,69 @@ class VerifyEmail extends React.Component {
     render() {
         return (
             <div className="container pb-5 pt-5">
+                <Modal show={this.state.resendSuccess}>
+                    <Modal.Body>
+                        Successfully sent the token to the email address
+                    </Modal.Body>
+                </Modal>
+                <Modal show={this.state.resendError2}>
+                    <Modal.Body>
+
+                    </Modal.Body>
+                </Modal>
+                <Modal show={this.state.successShow}>
+                    <Modal.Header className="bg-success">
+                        Success
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.state.successMessage}
+                        Email address verified successfully!
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={()=>{this.handleSuccessModal()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.errorShow}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        Couldn't get the user's email.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleErrorModal()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.resendError}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        Couldn't get the user's email.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleResendError()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.errorToken}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.state.errorMessage}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={()=>{this.handleErrorToken()}}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
                 <h1 className='text-center'>Verify Email Address</h1>
                 <div className="wrapper">
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
