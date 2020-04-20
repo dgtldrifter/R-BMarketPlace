@@ -1,5 +1,5 @@
-const mongoose   = require('mongoose');
-const Schema     = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const postSchema = new Schema({
     categoryid: {
         type: String,
@@ -20,16 +20,16 @@ const postSchema = new Schema({
         trim: true
     },
     price: {
-        type:String,
+        type: String,
         required: true,
         unique: false,
         trim: true
     },
-    description:{
-        type:String,
-        required:true,
-        unique:false,
-        trim:true
+    description: {
+        type: String,
+        required: true,
+        unique: false,
+        trim: true
     },
     ownerId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -44,13 +44,13 @@ const postSchema = new Schema({
         unique: false,
         trim: true
     },
-    city: {
+    latitude: {
         type: String,
         required: true,
         unique: false,
         trim: true
     },
-    location: {
+    longitude: {
         type: String,
         required: true,
         unique: false,
@@ -69,8 +69,8 @@ const postSchema = new Schema({
         trim: true
     }
 }, {
-    timestamps:true,
+    timestamps: true,
     collection: "posts"
 });
-const Post     = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema);
 module.exports = Post;

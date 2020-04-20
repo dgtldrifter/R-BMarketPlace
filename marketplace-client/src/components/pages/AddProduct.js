@@ -1,12 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
+import GoogleMapReact from 'google-map-react';
+
 var loadjs = require('loadjs');
 var email = "";
+
+const renderMarkers = (map, maps, latitude, longitude) => {
+    let marker = new maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map,
+        title: ''
+    });
+    return marker;
+}
 
 class AddProduct extends React.Component {
     componentDidMount() {
@@ -36,15 +48,17 @@ class AddProduct extends React.Component {
             description: '',
             categoryid: '',
             price: '',
-            latitude: '',
-            longitude: '',
+            latitude: 39.0997265,
+            longitude: -94.5785667,
             address: '',
             saletype: '',
             errorMessage: '',
             image: null,
             show: false,
             showError: false,
-            imageModal: false
+            imageModal: false,
+            googleMap1: null,
+            googleMap2: null
         }
     }
 
@@ -178,12 +192,14 @@ class AddProduct extends React.Component {
                 this.setState({ latitude: latLng.lat })
                 this.setState({ longitude: latLng.lng })
                 this.setState({ address: address })
+                renderMarkers(this.state.googleMap1, this.state.googleMap2, this.state.latitude, this.state.longitude)
             })
             .catch(error => console.error('Error', error));
     };
     handleChange = address => {
         this.setState({ address });
     };
+
     render() {
         return (
             <div className="add-product">
@@ -303,9 +319,18 @@ class AddProduct extends React.Component {
                                     )}
                                 </PlacesAutocomplete>
                             </div>
-
-
                         </div>
+                        <React.Fragment>
+                            <div style={{ height: '50vh', width: '100%' }}>
+                                <GoogleMapReact
+                                    center={{ lat: this.state.latitude, lng: this.state.longitude }}
+                                    defaultZoom={10}
+                                    yesIWantToUseGoogleMapApiInternals
+                                    onGoogleApiLoaded={({ map, maps }) => this.setState({ googleMap1: map, googleMap2: maps })}
+                                >
+                                </GoogleMapReact>
+                            </div>
+                        </React.Fragment>
                         <div className="row">
                             <div className="col-12 mt-3">
                                 <label>Image</label>
@@ -315,7 +340,7 @@ class AddProduct extends React.Component {
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
                     </form>
                 </div>
-            </div>
+            </div >
         );
     }
 }
