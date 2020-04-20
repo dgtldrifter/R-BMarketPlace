@@ -12,14 +12,15 @@ class signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            errorMessage: '',
             firstname: '',
             lastname: '',
             email: '',
             password: '',
-            errorMessage: '',
             token: '',
             show: false,
             showError: false,
+            register: false,
             signUpError: ''
         };
     }
@@ -30,6 +31,10 @@ class signup extends React.Component {
 
     handleModalError() {
         this.setState({ showError: !this.state.showError });
+    }
+
+    handleRegistered() {
+        this.setState({register: !this.state.register});
     }
 
     onChangeErrorHandling = (event) => {
@@ -88,7 +93,8 @@ class signup extends React.Component {
                 window.location.href = './VerifyEmail';
             }
             else {
-                alert(error.response.data);
+                this.setState({errorMessage: error.response.data});
+                this.handleRegistered();
             }
         });
     }
@@ -121,6 +127,19 @@ class signup extends React.Component {
         return (
             <React.Fragment>
                 <div style={background}>
+                    <Modal show={this.state.register}>
+                        <Modal.Header className="bg-danger">
+                            Error
+                        </Modal.Header>
+                        <Modal.Body>
+                            {this.state.errorMessage}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={()=>{this.handleRegistered()}}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                     <Modal show={this.state.showError}>
                         <Modal.Header className="bg-danger">
                             Error
