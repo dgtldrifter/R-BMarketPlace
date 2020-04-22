@@ -245,12 +245,13 @@ class AddProduct extends React.Component {
                 <div className="container">
                     <h1 className='text-center'>Add Product</h1>
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                        <input type="hidden" value="something" />
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="nope" />
                             </div>
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
@@ -290,9 +291,9 @@ class AddProduct extends React.Component {
                                             <input required
                                                 {...getInputProps({
                                                     placeholder: 'Type in your address...',
-                                                    className: 'location-search-input',
+                                                    className: 'form-control mb-3 location-search-input',
                                                 })}
-                                            />
+                                                autoComplete="nope"/>
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
                                                 {suggestions.map(suggestion => {
