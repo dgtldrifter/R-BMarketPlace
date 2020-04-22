@@ -10,6 +10,7 @@ import EditPost from './components/pages/EditPost';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Category from './components/pages/Category';
+import Product from './components/pages/Product';
 
 import './App.css';
 
@@ -36,6 +37,14 @@ class App extends React.Component {
         )} />
         <AddProductPage />
         <EditPostPage />
+        <Route path="/Product/:productid" render={props => (
+          <div>
+            <Navbar />
+            <Product productid={props.match.params.productid}/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
         <Route path="/Category/:category/:categoryExtra" render={props => (
           <div>
             <Navbar />

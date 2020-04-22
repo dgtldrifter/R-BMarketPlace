@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 var loadjs = require('loadjs');
 
 class Category extends React.Component {
@@ -15,10 +16,6 @@ class Category extends React.Component {
       posts: []
     };
   } 
-
-  myChangeHandler = (event) => {
-    this.setState({search: event.target.value});
-  }
 
   axiosRequest(){
 
@@ -88,7 +85,7 @@ class Category extends React.Component {
             </div>
             <div className="portfolio-links">
               <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-              <a href="/" title="More Details"><i className="bx bx-link"></i></a> 
+              <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
             </div>
           </div>
         </div>
@@ -99,18 +96,7 @@ class Category extends React.Component {
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
                 <div className="section-title">
-                    <h2>{this.state.category} Page</h2>
-                    <h2>{this.state.categoryExtra}</h2>
-                </div>
-                <div id="searchBox">
-                <input
-                  type='text'
-                  placeholder="Search Here..."
-                  className="form-control"
-                  onChange={this.myChangeHandler}
-                />
-                <br></br><br></br>
-                <h2>Search Bar User Input ->  {this.state.search}</h2>
+                    <h1>{this.state.category}   <i className="bx bx-link"></i>  {this.state.categoryExtra}</h1>
                 </div>
                 <div className="row portfolio-container" style={{paddingTop: "50px"}}>
                   {posts}
