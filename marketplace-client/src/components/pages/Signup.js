@@ -197,26 +197,26 @@ class signup extends React.Component {
                                 </form>
                             </div>
                             <div id="SignUp" className="container tab-pane">
-                                <form method="post" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
+                                <form autoComplete="nope" method="post" encType="multipart/form-data" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
                                     <input type="hidden" value="something" />
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
-                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" required autoComplete="nope" />
+                                            <input type="text" onChange={this.onChangeErrorHandling} id="first_name" placeholder="Enter a first name" className="form-control" name="firstname" required autoComplete="off" />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Last Name</label>
-                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" required autoComplete="nope" />
+                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" placeholder="Enter a last name" className="form-control" required autoComplete="nope" />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" required autoComplete="nope" />
+                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} placeholder="Enter an email" className="form-control" required autoComplete="nope" />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter a password" required autoComplete="nope" />
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} placeholder="Enter a password" className="form-control" required autoComplete="nope" />
                                         </div>
                                     </div>
                                     {this.state.errorMessage}
