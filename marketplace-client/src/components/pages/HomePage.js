@@ -73,7 +73,7 @@ class HomePage extends React.Component {
     const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
@@ -90,7 +90,7 @@ class HomePage extends React.Component {
     const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
@@ -107,7 +107,7 @@ class HomePage extends React.Component {
     const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
@@ -165,6 +165,11 @@ const editButton = {
 
 const deleteButton = {
   textDecoration: 'none'
+}
+
+const sameSize = {
+  height: '250px', 
+  overflow: 'hidden'
 }
 
 export default HomePage;

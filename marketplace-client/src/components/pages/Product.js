@@ -3,7 +3,6 @@ import axios from 'axios';
 var loadjs = require('loadjs');
 
 class Product extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,8 +22,7 @@ class Product extends React.Component {
     };
   } 
 
-  axiosRequest(){
-
+  axiosRequest() {
     axios({
       method: 'POST',
       url: '../posts/getOne',
@@ -52,21 +50,16 @@ class Product extends React.Component {
         window.location.href = '/';
         console.log(err);
     });
-
   }
 
   componentDidMount() {
     loadjs('../../main.js');
-
     this.axiosRequest();
-    
   }
 
   componentDidUpdate() {
     
   }
-
-  
 
   render() {
     const { error, isLoaded } = this.state;
@@ -75,13 +68,8 @@ class Product extends React.Component {
     } else if(!isLoaded) {
       return <div>Loading ... </div>;
     } else {
-
-      
-
       return (
         <div style={{paddingBottom: "100px", paddingTop: "100px", backgroundColor: "#fcfcfc"}}>
-          
-          
           <div className="row">
             <div className="column" style={{ backgroundColor: "#eee"}}>
               <div style={{padding: "50px"}}>
@@ -90,32 +78,17 @@ class Product extends React.Component {
             </div>
             <div className="column" style={{ backgroundColor: "#eee"}}>
             <div style={{padding: "50px 50px 50px 100px"}}>
-              
-              
               <div style={{ fontSize: "60px", paddingBottom: "50px"}}>{this.state.name}   -   ${this.state.price}.00</div>
               <div className="productHeading">Description: <p>{this.state.description}</p></div>
               <div className="productHeading">Address: <p>{this.state.address}</p></div>
               <div className="productHeading">State: <p>{this.state.location}</p></div>
               <div className="productHeading">City: <p>{this.state.city}</p></div>
               <div className="productHeading">Product Type: <p>{this.state.saletype}</p></div>
-              
-              
-              
             </div>
             </div>
           </div>
-
-          
-          
-          
-          
         </div>        
       );
-
-
-
-
-
     }
   }
 }
