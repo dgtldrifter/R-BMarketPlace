@@ -31,8 +31,6 @@ class UserPage extends React.Component {
         userPosts: response.data
       }); 
     }).catch((error) => {
-
-
       //RE-Direct home if you don't exist
       window.location.href = '/';
       this.setState({
@@ -40,8 +38,6 @@ class UserPage extends React.Component {
         error
       });
     });
-
-    
   }
 
   componentDidMount() {
@@ -51,11 +47,9 @@ class UserPage extends React.Component {
     this.setState({
       fullName: localStorage.getItem('fullName'),
       email: localStorage.getItem('userEmail')
-
-    })
+    });
 
     this.axiosRequest();
-    
   }
 
   componentDidUpdate() {
@@ -77,7 +71,6 @@ class UserPage extends React.Component {
       
     });
   }
-  
 
   render() {
     const { error, isLoaded } = this.state;
@@ -86,7 +79,6 @@ class UserPage extends React.Component {
     } else if(!isLoaded) {
       return <div>Loading ... </div>;
     } else {
-
       const posts = this.state.userPosts.map((post) => 
         <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
           <div className="portfolio-wrap">
@@ -107,7 +99,6 @@ class UserPage extends React.Component {
 
       return (
         <div>
-          
           <main id="main">
             <section id="portfolio" className="portfolio section-bg">
               <div className="container">
@@ -126,11 +117,6 @@ class UserPage extends React.Component {
           </main>
         </div>        
       );
-
-
-
-
-
     }
   }
 }
