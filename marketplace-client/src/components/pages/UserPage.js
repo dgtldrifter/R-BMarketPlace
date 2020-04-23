@@ -15,7 +15,6 @@ class UserPage extends React.Component {
   } 
 
   axiosRequest(){
-
     axios({
       method: 'POST',
       url: '../../posts/ownerPosts',
@@ -42,13 +41,10 @@ class UserPage extends React.Component {
 
   componentDidMount() {
     loadjs('../../main.js');
-
-
     this.setState({
       fullName: localStorage.getItem('fullName'),
       email: localStorage.getItem('userEmail')
     });
-
     this.axiosRequest();
   }
 
@@ -91,7 +87,7 @@ class UserPage extends React.Component {
               <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
               <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
               <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-              <button className="btn btn-danger" value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
+              <button value={post._id} className="deleteButton" onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
             </div>
           </div>
         </div>
@@ -124,10 +120,6 @@ class UserPage extends React.Component {
 const editButton = {
   textDecoration: 'none', 
   fontSize: '20px'
-}
-
-const deleteButton = {
-  textDecoration: 'none'
 }
 
 export default UserPage;
