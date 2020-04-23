@@ -595,3 +595,13 @@ section {
   font-family: 'Lucida Sans';
   display: inline;
 }
+
+#welcome:hover {
+  color: gainsboro;
+  cursor: pointer;
+}
+
+.nav-menu #userPage a:hover {
+  color: gainsboro;
+  cursor: pointer;
+}

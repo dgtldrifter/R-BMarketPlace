@@ -81,8 +81,6 @@ class HomePage extends React.Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button className="btn btn-danger" value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -98,8 +96,6 @@ class HomePage extends React.Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button className="btn btn-danger" value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>
@@ -115,8 +111,6 @@ class HomePage extends React.Component {
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
             <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <button className="btn btn-danger" value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</button>
           </div>
         </div>
       </div>

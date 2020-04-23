@@ -97,7 +97,7 @@ function AddProduct(props) {
 
 function WelcomeUser(props) {
   if (localStorage.getItem('fullName') !== null) {
-  return <React.Fragment><li><div id="welcome">Welcome {localStorage.getItem('fullName')}</div></li></React.Fragment>;
+  return <React.Fragment><li><Link to="/UserPage" id="welcome" style={{color: "#2B4097", fontWeight: "bold", fontSize: "15px"}}>Welcome {localStorage.getItem('fullName')}</Link></li></React.Fragment>;
   } else{
   return <li><Link to="/signup">Create Account / Login</Link></li>; 
   }
@@ -109,4 +109,9 @@ function SignoutUser(props) {
   } else {
     return <React.Fragment></React.Fragment>
   }
+}
+
+function userpage() {
+  //route to User Page
+  window.location.href = '/UserPage';
 }

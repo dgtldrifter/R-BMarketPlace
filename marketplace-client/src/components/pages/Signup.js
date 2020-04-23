@@ -85,6 +85,8 @@ class signup extends React.Component {
                 this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
                 localStorage.setItem('fullName', fullName);
+                localStorage.setItem('userEmail', this.state.email);
+
                 window.location.href = './';
             }
         }, error => {
