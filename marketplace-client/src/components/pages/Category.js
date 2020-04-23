@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 var loadjs = require('loadjs');
 
 class Category extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +17,6 @@ class Category extends React.Component {
   } 
 
   axiosRequest(){
-
     axios({
       method: 'POST',
       url: '../../posts/filterPosts',
@@ -48,25 +46,19 @@ class Category extends React.Component {
   componentDidMount() {
     
     this.axiosRequest();
-    
   }
 
   componentDidUpdate() {
     //Update Category State on Page Change
     if(this.state.category !== this.props.category || this.state.categoryExtra !== this.props.categoryExtra){
-
       this.setState({
         category: this.props.category,
         categoryExtra: this.props.categoryExtra
       });
-      
       //Now that User has changed page, call fiterPosts again
       this.axiosRequest();
-
     }
   }
-
-  
 
   render() {
     loadjs('../../main.js');
@@ -79,7 +71,7 @@ class Category extends React.Component {
       const posts = this.state.posts.map((post) => 
         <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
           <div className="portfolio-wrap">
-            <img src={post.image} className="img-fluid" alt={post.name} />
+            <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
             <div className="portfolio-info">
               <h4>{post.name}</h4>
               <p>${post.price}</p>
@@ -109,6 +101,11 @@ class Category extends React.Component {
       );
     }
   }
+}
+
+const sameSize = {
+  height: '250px', 
+  overflow: 'hidden'
 }
 
 export default Category;
