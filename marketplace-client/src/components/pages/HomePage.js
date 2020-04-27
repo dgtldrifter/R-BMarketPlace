@@ -152,15 +152,6 @@ class HomePage extends React.Component {
   }
 }
 
-const editButton = {
-  textDecoration: 'none', 
-  fontSize: '20px'
-}
-
-const deleteButton = {
-  textDecoration: 'none'
-}
-
 const sameSize = {
   height: '250px', 
   overflow: 'hidden'
