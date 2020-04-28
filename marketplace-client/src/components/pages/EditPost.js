@@ -22,7 +22,8 @@ class EditPost extends React.Component {
             image: null,
             show: false,
             showError: false,
-            imageModal: false
+            imageModal: false,
+            imageAdded: false
         }
     }
 
@@ -134,7 +135,8 @@ class EditPost extends React.Component {
     onChangeHandlerImage = e => {
         e.preventDefault();
         let image = e.target.files[0];
-        this.setState({ image: image});
+        this.setState({ image: image,
+                        imageAdded: true});
     }
 
     onChangeHandler = e => {
@@ -167,7 +169,9 @@ class EditPost extends React.Component {
             if(api_token.status === 200) {
                 //saving the image to imgur first
                 let reader = new FileReader();
+                if(imageAdded){
                 reader.readAsDataURL(this.state.image);
+                }
                 reader.onloadend = () => {
                     axios({
                         method: 'POST',
