@@ -114,7 +114,7 @@ class EditPost extends React.Component {
         var arr = [];
 
         const categories = ['Artists', 'Apartments', 'Homes',
-            'Office', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
+            'Office / Commercial Space', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
 
         for (let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
@@ -279,17 +279,7 @@ class EditPost extends React.Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" value={this.state.city} name="city" required />
-                            </div>
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>State</label>
-                                <select onChange={this.onChangeHandler} className="form-control" name="location" value={this.state.location} required>
-                                    <option value="0">Choose a State</option>
-                                    {this.buildStateOptions()}
-                                </select>
-                            </div>
+                            
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Address</label>
                                 <input type="text" onChange={this.onChangeHandler} className="form-control" value={this.state.address} name="address" required />
@@ -298,7 +288,7 @@ class EditPost extends React.Component {
                         <div className="row">
                             <div className="col-12 mt-3">
                                 <label>Image</label>
-                                <input type="file" placeholder={this.state.image} onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
+                                <input type="file" placeholder={this.state.image} onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image"/>
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>
