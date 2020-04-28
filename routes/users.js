@@ -22,8 +22,8 @@ router.route('/add').post((req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
-    const unencryptedPassword = req.body.password;
-    const password = SHA256(unencryptedPassword + passwordSalt);
+    const unhashedPassword = req.body.password;
+    const password = SHA256(unhashedPassword + passwordSalt);
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
     //the first 5 characters of the token is the actual token, the rest is timestamp
@@ -41,20 +41,20 @@ router.route('/add').post((req, res) => {
         res.status(401);
         res.send("Email address is not valid.");
     }
-    else if (unencryptedPassword.length < 8 || /\d/.test(unencryptedPassword) == false
-        || /[a-z]/.test(unencryptedPassword) == false || /[A-Z]/.test(unencryptedPassword) == false) {
+    else if (unhashedPassword.length < 8 || /\d/.test(unhashedPassword) == false
+        || /[a-z]/.test(unhashedPassword) == false || /[A-Z]/.test(unhashedPassword) == false) {
         res.status(400);
         let characters = "✖";
         let upper = "✖";
         let lower = "✖";
         let numbers = "✖";
-        if (unencryptedPassword.length > 8)
+        if (unhashedPassword.length > 8)
             characters = "✔";
-        if (/\d/.test(unencryptedPassword))
+        if (/\d/.test(unhashedPassword))
             numbers = "✔";
-        if (/[a-z]/.test(unencryptedPassword))
+        if (/[a-z]/.test(unhashedPassword))
             lower = "✔";
-        if (/[A-Z]/.test(unencryptedPassword))
+        if (/[A-Z]/.test(unhashedPassword))
             upper = "✔";
         res.send("The password needs to meet the following requirements: "
             + "\n8 characters long - " + characters
