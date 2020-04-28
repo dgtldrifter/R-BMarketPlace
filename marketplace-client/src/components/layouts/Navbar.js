@@ -12,7 +12,7 @@ export default class Navbar extends React.Component {
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
-                  <li className="active"><Link to="/">Home</Link></li>
+                  <li><Link to="/">Home</Link></li>
                   <AddProduct />
                   <li className="drop-down"><a href="/">Postings</a>
                     <ul>
