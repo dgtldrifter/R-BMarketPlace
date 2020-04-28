@@ -298,7 +298,7 @@ class EditPost extends React.Component {
                         <div className="row">
                             <div className="col-12 mt-3">
                                 <label>Image</label>
-                                <input type="file" placeholder={this.state.image} onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
+                                <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
                         </div>
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>
