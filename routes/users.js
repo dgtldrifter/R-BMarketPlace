@@ -200,7 +200,7 @@ router.route('/reemail').post((req, res) => {
 });
 
 router.route('/resetpassword').post((req, res) => {
-    const resetEmail = req.body.email;
+    const resetEmail = req.body.email.toUpperCase();
     const resetToken = req.body.emailToken;
     const resetSalt = randomString.generate(32);
     const resetPassword = SHA256(req.body.newPassword + resetSalt);
@@ -216,6 +216,8 @@ router.route('/resetpassword').post((req, res) => {
                 res.send("Error: Invalid email!");
             }
             else if (resetToken !== user.emailToken.substring(0, 5)) {
+                console.log(resetToken);
+                console.log(user.emailToken);
                 res.status(403);
                 res.send("Error: Invalid token!");
             }
