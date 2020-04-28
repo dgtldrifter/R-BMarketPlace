@@ -169,7 +169,7 @@ class EditPost extends React.Component {
             if(api_token.status === 200) {
                 //saving the image to imgur first
                 let reader = new FileReader();
-                if(imageAdded){
+                if(this.state.imageAdded){
                 reader.readAsDataURL(this.state.image);
                 }
                 reader.onloadend = () => {
