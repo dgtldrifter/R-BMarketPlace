@@ -221,7 +221,6 @@ class signup extends React.Component {
                                             <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} placeholder="Enter a password" className="form-control" required autoComplete="nope" />
                                         </div>
                                     </div>
-                                    {this.state.errorMessage}
                                     <button type="submit" style={loginButton} className="btn btn-block mt-3">Create Account</button>
                                 </form>
                             </div>
