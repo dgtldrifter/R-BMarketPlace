@@ -22,8 +22,8 @@ router.route('/add').post((req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const passwordSalt = randomString.generate(32);
-    const unencryptedPassword = req.body.password;
-    const password = SHA256(unencryptedPassword + passwordSalt);
+    const unhashedPassword = req.body.password;
+    const password = SHA256(unhashedPassword + passwordSalt);
     var emailToken = randomString.generate(5);
     const tokenTime = Date.now().toString().slice(0, -3); //generating a timestamp to attach to the email token
     //the first 5 characters of the token is the actual token, the rest is timestamp
@@ -41,20 +41,20 @@ router.route('/add').post((req, res) => {
         res.status(401);
         res.send("Email address is not valid.");
     }
-    else if (unencryptedPassword.length < 8 || /\d/.test(unencryptedPassword) == false
-        || /[a-z]/.test(unencryptedPassword) == false || /[A-Z]/.test(unencryptedPassword) == false) {
+    else if (unhashedPassword.length < 8 || /\d/.test(unhashedPassword) == false
+        || /[a-z]/.test(unhashedPassword) == false || /[A-Z]/.test(unhashedPassword) == false) {
         res.status(400);
         let characters = "✖";
         let upper = "✖";
         let lower = "✖";
         let numbers = "✖";
-        if (unencryptedPassword.length > 8)
+        if (unhashedPassword.length > 8)
             characters = "✔";
-        if (/\d/.test(unencryptedPassword))
+        if (/\d/.test(unhashedPassword))
             numbers = "✔";
-        if (/[a-z]/.test(unencryptedPassword))
+        if (/[a-z]/.test(unhashedPassword))
             lower = "✔";
-        if (/[A-Z]/.test(unencryptedPassword))
+        if (/[A-Z]/.test(unhashedPassword))
             upper = "✔";
         res.send("The password needs to meet the following requirements: "
             + "\n8 characters long - " + characters
@@ -200,44 +200,66 @@ router.route('/reemail').post((req, res) => {
 });
 
 router.route('/resetpassword').post((req, res) => {
-    const resetEmail = req.body.email;
+    const resetEmail = req.body.email.toUpperCase();
     const resetToken = req.body.emailToken;
     const resetSalt = randomString.generate(32);
-    const resetPassword = SHA256(req.body.newPassword + resetSalt);
+    const unhashedPassword = req.body.newPassword;
+    const resetPassword = SHA256(unhashedPassword + resetSalt);
 
-    User.findOne({ email: resetEmail })
-        .then(user => {
-            if (req.body.newPassword.length < 6) {
-                res.status(400);
-                res.send("Error: The password has to be at least 6 characters.");
-            }
-            else if (!user) {
-                res.status(404);
-                res.send("Error: Invalid email!");
-            }
-            else if (resetToken !== user.emailToken.substring(0, 5)) {
-                res.status(403);
-                res.send("Error: Invalid token!");
-            }
-            else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
-                res.status(403);
-                res.send("Eror: The token is expired!");
-            }
-            else {
-                user.passwordSalt = resetSalt;
-                user.password = resetPassword;
-                user.emailToken = '';
-                user.save();
-                const emailContent = '<h2> R&B Marketplace </h2>' +
-                    '<br/><br/> This email is being sent to notify you that your R&B Marketplace account\'s password was changed. <br/>' +
-                    'Time of change: ' + new Date().toString(); + '<br/>';
-                const subject = "R&B Marketplace Account Changed";
+    if (unhashedPassword.length < 8 || /\d/.test(unhashedPassword) == false
+        || /[a-z]/.test(unhashedPassword) == false || /[A-Z]/.test(unhashedPassword) == false) {
+        res.status(400);
+        let characters = "✖";
+        let upper = "✖";
+        let lower = "✖";
+        let numbers = "✖";
+        if (unhashedPassword.length > 8)
+            characters = "✔";
+        if (/\d/.test(unhashedPassword))
+            numbers = "✔";
+        if (/[a-z]/.test(unhashedPassword))
+            lower = "✔";
+        if (/[A-Z]/.test(unhashedPassword))
+            upper = "✔";
+        res.send("The password needs to meet the following requirements: "
+            + "\n8 characters long - " + characters
+            + "\n1 upper-case - " + upper
+            + "\n1 lower-case letter - " + lower
+            + "\n1 number - " + numbers);
+    }
+    else {
+        User.findOne({ email: resetEmail })
+            .then(user => {
+                if (!user) {
+                    res.status(404);
+                    res.send("Error: Invalid email!");
+                }
+                else if (resetToken !== user.emailToken.substring(0, 5)) {
+                    console.log(resetToken);
+                    console.log(user.emailToken);
+                    res.status(403);
+                    res.send("Error: Invalid token!");
+                }
+                else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
+                    res.status(403);
+                    res.send("Eror: The token is expired!");
+                }
+                else {
+                    user.passwordSalt = resetSalt;
+                    user.password = resetPassword;
+                    user.emailToken = '';
+                    user.save();
+                    const emailContent = '<h2> R&B Marketplace </h2>' +
+                        '<br/><br/> This email is being sent to notify you that your R&B Marketplace account\'s password was changed. <br/>' +
+                        'Time of change: ' + new Date().toString(); + '<br/>';
+                    const subject = "R&B Marketplace Account Changed";
 
-                mailer.sendEmail(subject, resetEmail, emailContent);
-                res.status(200);
-                res.send("Successfully reset password!");
-            }
-        })
+                    mailer.sendEmail(subject, resetEmail, emailContent);
+                    res.status(200);
+                    res.send("Successfully reset password!");
+                }
+            })
+    }
 });
 
 router.route("/authToken").post((req, res) => {
@@ -248,7 +270,7 @@ router.route("/authToken").post((req, res) => {
 
         try {
             const decoded = jwt.verify(token, "thisisasecretkey");
-            email = decoded.user.email;
+            email = decoded.user.email.toUpperCase();
         } catch (e) {
             console.error(e);
             res.status(401).send({ message: "Invalid Token" })
