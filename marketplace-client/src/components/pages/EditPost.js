@@ -157,10 +157,43 @@ class EditPost extends React.Component {
 
     onSubmitHandler = e => {
         e.preventDefault();
-        this.editPost();
+
+        if(this.state.imageAdded){
+        this.editPostwithImage();
+        }
+        else{
+            this.editPostwithoutImage();
+        }
     }
 
-    editPost() {
+    editPostwithoutImage() {
+        axios({
+            method: 'POST',
+            url: '../../posts/updatePost',
+            headers: {
+                ObjectID:    this.props.id
+            },
+            data: {
+                name:        this.state.name,
+                description: this.state.description,
+                categoryid:  this.state.categoryid,
+                price:       this.state.price,
+                city:        this.state.city,
+                location:    this.state.location,
+                address:     this.state.address,
+                saletype:    this.state.saletype
+            }
+        }).then((response) => {
+            if(response.status === 200) {
+                this.handleModal();
+                window.location.href = "../.././";
+            }
+        }).catch((error) => {
+            this.handleModalError();
+        });
+    }
+
+    editPostwithImage() {
         // getting imgur key
         axios({
             method: 'POST',
@@ -169,9 +202,7 @@ class EditPost extends React.Component {
             if(api_token.status === 200) {
                 //saving the image to imgur first
                 let reader = new FileReader();
-                if(this.state.imageAdded){
                 reader.readAsDataURL(this.state.image);
-                }
                 reader.onloadend = () => {
                     axios({
                         method: 'POST',
