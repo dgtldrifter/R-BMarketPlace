@@ -10,13 +10,16 @@ import GoogleMapReact from 'google-map-react';
 
 var loadjs = require('loadjs');
 var email = "";
-
+var previousMarker = null;
 const renderMarkers = (map, maps, latitude, longitude) => {
+    if (previousMarker != null)
+        previousMarker.setMap(null);
     let marker = new maps.Marker({
         position: { lat: latitude, lng: longitude },
         map,
         title: ''
     });
+    previousMarker = marker;
     return marker;
 }
 
@@ -251,7 +254,7 @@ class AddProduct extends React.Component {
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" placeholder="Enter a post name"  required autoComplete="nope" />
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" placeholder="Enter a post name" required autoComplete="nope" />
                             </div>
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
@@ -293,7 +296,7 @@ class AddProduct extends React.Component {
                                                     placeholder: 'Type in your address...',
                                                     className: 'form-control mb-3 location-search-input',
                                                 })}
-                                                autoComplete="nope"/>
+                                                autoComplete="nope" />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
                                                 {suggestions.map(suggestion => {
