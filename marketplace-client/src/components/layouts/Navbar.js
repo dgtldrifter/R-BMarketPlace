@@ -30,7 +30,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Sale/Homes'>Homes</Link>
                           </li>
                           <li>
-                            <Link to='/Category/For Sale/Office - Commercial Space'>Office / Commercial Space</Link>
+                            <Link to='/Category/For Sale/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Sale/Cooking'>Cooking</Link>
@@ -52,7 +52,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Rent/Homes'>Homes</Link>
                           </li>
                           <li>
-                           <Link to='/Category/For Rent/Office - Commercial Space'>Office / Commercial Space</Link>
+                           <Link to='/Category/For Rent/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Rent/Cooking'>Cooking</Link>
