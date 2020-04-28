@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 var loadjs = require('loadjs');
 
@@ -12,23 +12,29 @@ class signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            errorMessage: '',
             firstname: '',
             lastname: '',
             email: '',
             password: '',
-            errorMessage: '',
             token: '',
             show: false,
-            showError: false
+            showError: false,
+            register: false,
+            signUpError: ''
         };
     }
 
     handleModal() {
-        this.setState({show: !this.state.show});
+        this.setState({ show: !this.state.show });
     }
 
     handleModalError() {
-        this.setState({showError: !this.state.showError});
+        this.setState({ showError: !this.state.showError });
+    }
+
+    handleRegistered() {
+        this.setState({register: !this.state.register});
     }
 
     onChangeErrorHandling = (event) => {
@@ -79,6 +85,8 @@ class signup extends React.Component {
                 this.setState({ token: userToken });
                 localStorage.setItem('token', userToken);
                 localStorage.setItem('fullName', fullName);
+                localStorage.setItem('userEmail', this.state.email);
+
                 window.location.href = './';
             }
         }, error => {
@@ -87,7 +95,8 @@ class signup extends React.Component {
                 window.location.href = './VerifyEmail';
             }
             else {
-                alert(error.response.data);
+                this.setState({errorMessage: error.response.data});
+                this.handleRegistered();
             }
         });
     }
@@ -98,9 +107,9 @@ class signup extends React.Component {
             url: 'users/add',
             data: {
                 firstName: this.state.firstname,
-                lastName:  this.state.lastname,
-                email:     this.state.email,
-                password:  this.state.password
+                lastName: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
             }
         }).then((response) => {
             console.log(response);
@@ -109,6 +118,10 @@ class signup extends React.Component {
                 window.location.href = "./signup";
             }
         }, error => {
+            let errorMsg = error.response.data.split('\n').map((item, i) => {
+                return <p key={i}>{item}</p>;
+            })
+            this.setState({ signUpError: errorMsg });
             this.handleModalError();
         });
     }
@@ -116,17 +129,30 @@ class signup extends React.Component {
         return (
             <React.Fragment>
                 <div style={background}>
-                    <Modal show={this.state.showError}>
+                    <Modal show={this.state.register}>
                         <Modal.Header className="bg-danger">
-                            Error                            
+                            Error
                         </Modal.Header>
                         <Modal.Body>
-                            Your account was not created. The email address / user already exists in the system.
+                            {this.state.errorMessage}
                         </Modal.Body>
                         <Modal.Footer>
-                            <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                            <button className="btn btn-danger" onClick={()=>{this.handleRegistered()}}>
                                 Close
-                            </button> 
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={this.state.showError}>
+                        <Modal.Header className="bg-danger">
+                            Error
+                        </Modal.Header>
+                        <Modal.Body>
+                            {this.state.signUpError}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
+                                Close
+                            </button>
                         </Modal.Footer>
                     </Modal>
                     <Modal show={this.state.show}>
@@ -137,7 +163,7 @@ class signup extends React.Component {
                             You successfully created an account.
                         </Modal.Body>
                         <Modal.Footer>
-                            <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                            <button className="btn btn-success" onClick={() => { this.handleModal() }}>
                                 Close
                             </button>
                         </Modal.Footer>
@@ -157,6 +183,7 @@ class signup extends React.Component {
                         <div className="tab-content">
                             <div id="Login" className="container tab-pane active">
                                 <form method="post" className="form-horizontal mt-4" onSubmit={this.onLoginHandle}>
+                                    <input type="hidden" value="something" />
                                     <div className="row mt-2">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
@@ -172,25 +199,26 @@ class signup extends React.Component {
                                 </form>
                             </div>
                             <div id="SignUp" className="container tab-pane">
-                                <form method="post" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
+                                <form autoComplete="nope" method="post" encType="multipart/form-data" className="form-horizontal mt-4" onSubmit={this.mySubmitHandlerSignUp}>
+                                    <input type="hidden" value="something" />
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">First Name</label>
-                                            <input type="text" name="firstname" onChange={this.onChangeErrorHandling} id="first_name" className="form-control" placeholder="Enter a first name" autoComplete="off" required />
+                                            <input type="text" onChange={this.onChangeErrorHandling} id="first_name" placeholder="Enter a first name" className="form-control" name="firstname" required autoComplete="off" />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Last Name</label>
-                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" className="form-control" placeholder="Enter a last name" autoComplete="off" required />
+                                            <input type="text" name="lastname" onChange={this.onChangeErrorHandling} id="last_name" placeholder="Enter a last name" className="form-control" required autoComplete="nope" />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Email</label>
-                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} className="form-control" placeholder="Enter an email" autoComplete="off" required />
+                                            <input type="email" name="email" id="signUpEmail" onChange={this.onChangeErrorHandling} placeholder="Enter an email" className="form-control" required autoComplete="nope" />
                                         </div>
                                         <div className="col-sm-12 col-md-6 mt-2">
                                             <label className="lead">Password</label>
-                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} minLength="5" className="form-control" placeholder="Enter a password" autoComplete="off" required />
+                                            <input type="password" name="password" id="signUpPassword" onChange={this.onChangeErrorHandling} placeholder="Enter a password" className="form-control" required autoComplete="nope" />
                                         </div>
                                     </div>
                                     {this.state.errorMessage}

@@ -2,8 +2,23 @@ import React from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete';
+import GoogleMapReact from 'google-map-react';
+
 var loadjs = require('loadjs');
 var email = "";
+
+const renderMarkers = (map, maps, latitude, longitude) => {
+    let marker = new maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map,
+        title: ''
+    });
+    return marker;
+}
 
 class AddProduct extends React.Component {
     componentDidMount() {
@@ -33,48 +48,30 @@ class AddProduct extends React.Component {
             description: '',
             categoryid: '',
             price: '',
-            city: '',
-            location: '',
+            latitude: 39.0997265,
+            longitude: -94.5785667,
             address: '',
             saletype: '',
             errorMessage: '',
             image: null,
             show: false,
             showError: false,
-            imageModal: false
+            imageModal: false,
+            googleMap1: null,
+            googleMap2: null
         }
     }
 
     handleModal() {
-        this.setState({show: !this.state.show});
+        this.setState({ show: !this.state.show });
     }
 
     handleModalError() {
-        this.setState({showError: !this.state.showError});
+        this.setState({ showError: !this.state.showError });
     }
 
     handleImageModal() {
-        this.setState({imageModal: !this.state.imageModal});
-    }
-
-
-    buildStateOptions() {
-        var arr = [];
-
-        const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
-            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
-            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-            'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-            'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina',
-            'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-            'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
-            'West Virginia', 'Wisconsin', 'Wyoming'];
-
-        for (let i = 0; i <= states.length - 1; i++) {
-            arr.push(<option key={i} value={states[i]}>{states[i]}</option>);
-        }
-
-        return arr;
+        this.setState({ imageModal: !this.state.imageModal });
     }
 
     buildSaleTypeOptions() {
@@ -157,17 +154,18 @@ class AddProduct extends React.Component {
                                 method: 'POST',
                                 url: 'posts/create',
                                 data: {
-                                    name:        this.state.name,
+                                    name: this.state.name,
                                     description: this.state.description,
-                                    categoryid:  this.state.categoryid,
-                                    price:       this.state.price,
-                                    date:        this.date.value,
-                                    city:        this.state.city,
-                                    location:    this.state.location,
-                                    address:     this.state.address,
-                                    email:       this.email.value,
-                                    image:       response.data.data.link,
-                                    saletype:    this.state.saletype
+                                    categoryid: this.state.categoryid,
+                                    price: this.state.price,
+                                    date: this.date.value,
+                                    city: this.state.city,
+                                    latitude: this.state.latitude,
+                                    longitude: this.state.longitude,
+                                    address: this.state.address,
+                                    email: this.email.value,
+                                    image: response.data.data.link,
+                                    saletype: this.state.saletype
                                 }
                             }).then((response) => {
                                 if (response.status === 200) {
@@ -187,6 +185,20 @@ class AddProduct extends React.Component {
             console.log(error);
         })
     }
+    handleSelect = address => {
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then((latLng) => {
+                this.setState({ latitude: latLng.lat })
+                this.setState({ longitude: latLng.lng })
+                this.setState({ address: address })
+                renderMarkers(this.state.googleMap1, this.state.googleMap2, this.state.latitude, this.state.longitude)
+            })
+            .catch(error => console.error('Error', error));
+    };
+    handleChange = address => {
+        this.setState({ address });
+    };
 
     render() {
         return (
@@ -199,7 +211,7 @@ class AddProduct extends React.Component {
                         You successfully added a product.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-success" onClick={()=>{this.handleModal()}}>
+                        <button className="btn btn-success" onClick={() => { this.handleModal() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -212,7 +224,7 @@ class AddProduct extends React.Component {
                         The product could not be added.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-danger" onClick={()=>{this.handleModalError()}}>
+                        <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -222,10 +234,10 @@ class AddProduct extends React.Component {
                         Error
                     </Modal.Header>
                     <Modal.Body>
-                        Image could not be uploaded. 
+                        Image could not be uploaded.
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-danger" onClick={()=>{this.handleImageModal()}}>
+                        <button className="btn btn-danger" onClick={() => { this.handleImageModal() }}>
                             Close
                         </button>
                     </Modal.Footer>
@@ -233,12 +245,13 @@ class AddProduct extends React.Component {
                 <div className="container">
                     <h1 className='text-center'>Add Product</h1>
                     <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
+                        <input type="hidden" value="something" />
                         <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
                         <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" required autoComplete="off" />
+                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" placeholder="Enter a post name"  required autoComplete="nope" />
                             </div>
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
@@ -267,21 +280,58 @@ class AddProduct extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-4 mt-3">
-                                <label>City</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="city" required />
-                            </div>
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>State</label>
-                                <select onChange={this.onChangeHandler} className="form-control" name="location" required>
-                                    <option value="0">Choose a State</option>
-                                    {this.buildStateOptions()}
-                                </select>
-                            </div>
-                            <div className="col-12 col-sm-4 mt-3">
-                                <label>Address</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="address" required />
+                                <PlacesAutocomplete
+                                    value={this.state.address}
+                                    onChange={this.handleChange}
+                                    onSelect={this.handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <label>Address</label>
+                                            <input required
+                                                {...getInputProps({
+                                                    placeholder: 'Type in your address...',
+                                                    className: 'form-control mb-3 location-search-input',
+                                                })}
+                                                autoComplete="nope"/>
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
                             </div>
                         </div>
+                        <React.Fragment>
+                            <div style={{ height: '50vh', width: '100%' }}>
+                                <GoogleMapReact
+                                    center={{ lat: this.state.latitude, lng: this.state.longitude }}
+                                    defaultZoom={10}
+                                    yesIWantToUseGoogleMapApiInternals
+                                    onGoogleApiLoaded={({ map, maps }) => this.setState({ googleMap1: map, googleMap2: maps })}
+                                >
+                                </GoogleMapReact>
+                            </div>
+                        </React.Fragment>
                         <div className="row">
                             <div className="col-12 mt-3">
                                 <label>Image</label>
@@ -291,7 +341,7 @@ class AddProduct extends React.Component {
                         <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
                     </form>
                 </div>
-            </div>
+            </div >
         );
     }
 }
