@@ -22,7 +22,7 @@ router.route('/create').post((req, res) => {
     const longitude   = req.body.longitude;
     const address     = req.body.address;
     const image       = req.body.image;
-    const email       = req.body.email;
+    const email       = req.body.email.toUpperCase();
 
     User.findOne({ email: email })
         .then(user => {
@@ -87,7 +87,7 @@ router.route('/updatePost').post((req, res) => {
 
 // route that filters posts by ownerId
 router.route('/ownerPosts').post((req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toUpperCase();
 
     User.findOne({ email: email })
         .then(user => {
