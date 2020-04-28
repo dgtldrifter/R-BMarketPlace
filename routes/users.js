@@ -250,7 +250,7 @@ router.route("/authToken").post((req, res) => {
 
         try {
             const decoded = jwt.verify(token, "thisisasecretkey");
-            email = decoded.user.email;
+            email = decoded.user.email.toUpperCase();
         } catch (e) {
             console.error(e);
             res.status(401).send({ message: "Invalid Token" })
