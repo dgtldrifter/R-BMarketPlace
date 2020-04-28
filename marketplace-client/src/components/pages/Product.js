@@ -29,6 +29,7 @@ class Product extends React.Component {
       latitude: 39.0997265,
       longitude: -94.5785667,
       address: '',
+      contactEmail: '',
       saletype: '',
       image: '',
     };
@@ -47,6 +48,7 @@ class Product extends React.Component {
         this.setState({
           isLoaded: true,
           name: response.data.name,
+          contactEmail: response.data.ownerId.email,
           description: response.data.description,
           saletype: response.data.saletype,
           categoryid: response.data.categoryid,
@@ -95,6 +97,8 @@ class Product extends React.Component {
                 <div style={{ fontSize: "60px", paddingBottom: "50px" }}>{this.state.name}   -   ${this.state.price}.00</div>
                 <div className="productHeading">Description: <p>{this.state.description}</p></div>
                 <div className="productHeading">Product Type: <p>{this.state.saletype}</p></div>
+                <br />
+                <div className="productHeading">Contact: <p>{this.state.contactEmail}</p></div>
                 <div className="productHeading">Address: <p>{this.state.address}</p></div>
                 <React.Fragment>
                   <div style={{ height: '50vh', width: '100%' }}>
