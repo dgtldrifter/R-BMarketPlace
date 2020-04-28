@@ -12,7 +12,7 @@ export default class Navbar extends React.Component {
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
-                  <li className="active"><Link to="/">Home</Link></li>
+                  <li><Link to="/">Home</Link></li>
                   <AddProduct />
                   <li className="drop-down"><a href="/">Postings</a>
                     <ul>
@@ -30,7 +30,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Sale/Homes'>Homes</Link>
                           </li>
                           <li>
-                            <Link to='/Category/For Sale/Office - Commercial Space'>Office / Commercial Space</Link>
+                            <Link to='/Category/For Sale/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Sale/Cooking'>Cooking</Link>
@@ -52,7 +52,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Rent/Homes'>Homes</Link>
                           </li>
                           <li>
-                           <Link to='/Category/For Rent/Office - Commercial Space'>Office / Commercial Space</Link>
+                           <Link to='/Category/For Rent/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Rent/Cooking'>Cooking</Link>

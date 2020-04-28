@@ -49,8 +49,8 @@ class UserPage extends React.Component {
   }
 
   componentDidUpdate() {
-    //After deleting post the page will updat
-    //this.axiosRequest();
+    //After deleting post the page will update
+    this.axiosRequest();
   }
 
   onDeleteClick(e) {
