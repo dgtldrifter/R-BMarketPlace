@@ -8,7 +8,6 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: '',
       error: null,
       isLoaded: false,
       posts: []
@@ -56,50 +55,47 @@ class HomePage extends React.Component {
   onDeleteClick(e) {
     axios({
       method: 'POST',
-      url: 'deletePost',
+      url: 'posts/deletePost',
       headers: {
         "Content-Type": "application/json",
         ObjectID: e.target.value
       }
     }).then((response) => {
-      console.log(response);
+      
     }).catch((error) => {
-      console.log(error);
+      
     });
   }
 
   render() {
+    loadjs('main.js');
     const { error, isLoaded } = this.state;
     const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <a value={post._id} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
+            <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
           </div>
         </div>
       </div>
     );
     const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <a value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
+            <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
           </div>
         </div>
       </div>
@@ -107,16 +103,14 @@ class HomePage extends React.Component {
     const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
       <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
         <div className="portfolio-wrap">
-          <img src={post.image} className="img-fluid" alt={post.name} />
+          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
           </div>
           <div className="portfolio-links">
             <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <a href="/" title="More Details"><i className="bx bx-link"></i></a>
-            <Link style={editButton} to={"/EditPost/" + post._id}>Edit</Link>
-            <a value={post._id} style={deleteButton} onClick={e => this.onDeleteClick(e, "value")}>Delete</a>
+            <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
           </div>
         </div>
       </div>
@@ -158,15 +152,9 @@ class HomePage extends React.Component {
   }
 }
 
-const editButton = {
-  textDecoration: 'none', 
-  fontSize: '20px'
-}
-
-const deleteButton = {
-  textDecoration: 'none', 
-  fontSize: '15px',
-  border: 'none'
+const sameSize = {
+  height: '250px', 
+  overflow: 'hidden'
 }
 
 export default HomePage;

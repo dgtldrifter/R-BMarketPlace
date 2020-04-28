@@ -10,6 +10,8 @@ import EditPost from './components/pages/EditPost';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Category from './components/pages/Category';
+import Product from './components/pages/Product';
+import UserPage from './components/pages/UserPage';
 
 import './App.css';
 
@@ -36,6 +38,22 @@ class App extends React.Component {
         )} />
         <AddProductPage />
         <EditPostPage />
+        <Route path="/UserPage" render={props => (
+          <div>
+            <Navbar />
+            <UserPage/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
+        <Route path="/Product/:productid" render={props => (
+          <div>
+            <Navbar />
+            <Product productid={props.match.params.productid}/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
         <Route path="/Category/:category/:categoryExtra" render={props => (
           <div>
             <Navbar />
@@ -112,17 +130,7 @@ function EditPostPage(props) {
       )} />
     )
   } else {
-    return (
-      <Route exact path="/" render={props => (
-        <div>
-          <Header />
-          <Navbar />
-          <HomePage />
-          <ScrollToTop />
-          <Footer />
-        </div>
-      )} />
-    )
+    return <React.Fragment></React.Fragment>;
   }
 }
 
