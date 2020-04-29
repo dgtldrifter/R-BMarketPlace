@@ -233,18 +233,15 @@ router.route('/resetpassword').post((req, res) => {
                 if (!user) {
                     res.status(404);
                     res.send("Error: Invalid email!");
-                }
-                else if (resetToken !== user.emailToken.substring(0, 5)) {
+                } else if (resetToken !== user.emailToken.substring(0, 5)) {
                     console.log(resetToken);
                     console.log(user.emailToken);
                     res.status(403);
                     res.send("Error: Invalid token!");
-                }
-                else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
+                } else if (parseInt(Date.now().toString().slice(0, -3)) - parseInt(user.emailToken.substring(5)) >= 3600) { //token expires in 1 hour
                     res.status(403);
                     res.send("Eror: The token is expired!");
-                }
-                else {
+                } else {
                     user.passwordSalt = resetSalt;
                     user.password = resetPassword;
                     user.emailToken = '';
