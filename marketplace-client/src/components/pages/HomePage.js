@@ -52,28 +52,13 @@ class HomePage extends React.Component {
     });
   }
 
-  onDeleteClick(e) {
-    axios({
-      method: 'POST',
-      url: 'posts/deletePost',
-      headers: {
-        "Content-Type": "application/json",
-        ObjectID: e.target.value
-      }
-    }).then((response) => {
-      
-    }).catch((error) => {
-      
-    });
-  }
-
   render() {
     loadjs('main.js');
     const { error, isLoaded } = this.state;
-    const postItemsFurniture = this.state.posts.slice(12, 15).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
+    const other = this.state.posts.slice(0, 3).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-random">
         <div className="portfolio-wrap">
-          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
+          <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
@@ -85,25 +70,10 @@ class HomePage extends React.Component {
         </div>
       </div>
     );
-    const postItemsTransportation = this.state.posts.slice(9, 12).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-furniture">
+    const postItemsRealEstate = this.state.posts.slice(4, 10).map((post) => 
+      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-realestate">
         <div className="portfolio-wrap">
-          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
-          <div className="portfolio-info">
-            <h4>{post.name}</h4>
-            <p>${post.price}</p>
-          </div>
-          <div className="portfolio-links">
-            <a href={post.image} data-gall="portfolioGallery" className="venobox" title={post.name}><i className="bx bx-plus"></i></a>
-            <Link to={"/Product/" + post._id}><i className="bx bx-link"></i></Link>
-          </div>
-        </div>
-      </div>
-    );
-    const postItemsCooking = this.state.posts.slice(1, 4).map((post) => 
-      <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-cooking-appliances">
-        <div className="portfolio-wrap">
-          <img src={post.image} style={sameSize} className="img-fluid" alt={post.name} />
+          <img src={post.image} className="img-fluid" alt={post.name} />
           <div className="portfolio-info">
             <h4>{post.name}</h4>
             <p>${post.price}</p>
@@ -132,16 +102,14 @@ class HomePage extends React.Component {
                   <div className="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
                       <li data-filter="*" className="filter-active">All</li>
-                      <li data-filter=".filter-cooking-appliances">Coffee Appliances</li>
-                      <li data-filter=".filter-transportation">Transportation</li>
-                      <li data-filter=".filter-furniture">Furniture</li>
+                      <li data-filter=".filter-realestate">Real Estate</li>
+                      <li data-filter=".filter-random">Other</li>
                     </ul>
                   </div>
                 </div>
                 <div className="row portfolio-container">
-                  {postItemsCooking}
-                  {postItemsTransportation}
-                  {postItemsFurniture}
+                  {other}
+                  {postItemsRealEstate}
                 </div>
               </div>
             </section>
@@ -150,11 +118,6 @@ class HomePage extends React.Component {
       );
     }
   }
-}
-
-const sameSize = {
-  height: '250px', 
-  overflow: 'hidden'
 }
 
 export default HomePage;
