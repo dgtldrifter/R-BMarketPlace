@@ -12,7 +12,7 @@ export default class Navbar extends React.Component {
               </div>
               <nav className="nav-menu d-none d-lg-block">
                 <ul>
-                  <li className="active"><Link to="/">Home</Link></li>
+                  <li><Link to="/">Home</Link></li>
                   <AddProduct />
                   <li className="drop-down"><a href="/">Postings</a>
                     <ul>
@@ -30,7 +30,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Sale/Homes'>Homes</Link>
                           </li>
                           <li>
-                            <Link to='/Category/For Sale/Office - Commercial Space'>Office / Commercial Space</Link>
+                            <Link to='/Category/For Sale/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Sale/Cooking'>Cooking</Link>
@@ -52,7 +52,7 @@ export default class Navbar extends React.Component {
                             <Link to='/Category/For Rent/Homes'>Homes</Link>
                           </li>
                           <li>
-                           <Link to='/Category/For Rent/Office - Commercial Space'>Office / Commercial Space</Link>
+                           <Link to='/Category/For Rent/Office'>Office / Commercial Space</Link>
                           </li>
                           <li>
                            <Link to='/Category/For Rent/Cooking'>Cooking</Link>
@@ -68,7 +68,7 @@ export default class Navbar extends React.Component {
                       <li className="drop-down"><a href="/">Services</a>
                         <ul>
                           <li>
-                            <Link to='/Category/Services/Cleaning Services'>Cleaning Service</Link>
+                            <Link to='/Category/Services/Cleaning Service'>Cleaning Service</Link>
                           </li>
                         </ul>
                       </li>
@@ -97,7 +97,7 @@ function AddProduct(props) {
 
 function WelcomeUser(props) {
   if (localStorage.getItem('fullName') !== null) {
-  return <React.Fragment><li><div id="welcome">Welcome {localStorage.getItem('fullName')}</div></li></React.Fragment>;
+  return <React.Fragment><li><Link to="/UserPage" id="welcome" style={{color: "#2B4097", fontWeight: "bold", fontSize: "15px"}}>Welcome {localStorage.getItem('fullName')}</Link></li></React.Fragment>;
   } else{
   return <li><Link to="/signup">Create Account / Login</Link></li>; 
   }
@@ -109,4 +109,9 @@ function SignoutUser(props) {
   } else {
     return <React.Fragment></React.Fragment>
   }
+}
+
+function userpage() {
+  //route to User Page
+  window.location.href = '/UserPage';
 }

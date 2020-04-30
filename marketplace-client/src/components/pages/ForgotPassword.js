@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
+
 var loadjs = require('loadjs');
+
 class ForgotPassword extends React.Component {
     componentDidMount() {
         loadjs('main.js');
@@ -13,7 +16,9 @@ class ForgotPassword extends React.Component {
             userToken: '',
             newPassword: '',
             confirmPassword: '',
-            postEmailInput: false
+            postEmailInput: false,
+            showMatch: false,
+            success: false
         }
     }
 
@@ -25,6 +30,14 @@ class ForgotPassword extends React.Component {
 
         this.setState({ errorMessage: err });
         this.setState({ [name]: val });
+    }
+
+    handleMatchModal = e => {
+        this.setState({ showMatch: !this.state.showMatch });
+    }
+
+    handleSuccess = e => {
+        this.setState({ success: !this.state.success });
     }
 
     submitHandler = e => {
@@ -41,9 +54,8 @@ class ForgotPassword extends React.Component {
         if (this.state.userToken !== undefined || this.state.userEmail !== undefined
             || this.state.newPassword !== undefined || this.state.confirmPassword !== undefined) {
             if (this.state.newPassword !== this.state.confirmPassword) {
-                window.alert("Error: The passwords do not match.");
-            }
-            else {
+                this.handleMatchModal();
+            } else {
                 axios({
                     method: 'POST',
                     url: 'users/resetpassword',
@@ -54,7 +66,7 @@ class ForgotPassword extends React.Component {
                     }
                 }).then((response) => {
                     if (response.status === 200) {
-                        alert(response.data);
+                        this.handleSuccess();
                         window.location.href = "./";
                     }
                 }, error => {
@@ -93,6 +105,32 @@ class ForgotPassword extends React.Component {
     render() {
         return (
             <div className="container">
+                <Modal show={this.state.showMatch}>
+                    <Modal.Header className="bg-danger">
+                        Error
+                    </Modal.Header>
+                    <Modal.Body>
+                        The passwords do not match.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={() => { this.handleMatchModal() }}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.success}>
+                    <Modal.Header className="bg-success">
+                        Success
+                    </Modal.Header>
+                    <Modal.Body>
+                        Successfully reset password!
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={() => { this.handleSuccess() }}>
+                            Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
                 <h1 className='text-center'>Forgot your password?</h1>
                 <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
                     <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -101,7 +139,7 @@ class ForgotPassword extends React.Component {
                             <input type="text" onChange={this.onChangeHandler} className="form-control" name="userEmail" required autoComplete="off" />
                         </div>
                     </div>
-                    <button type="submit" style={resendButton} className="btn btn-block mt-3">Get token</button>
+                    <button type="submit" style={resendButton} className="btn btn-block mt-3 mb-3">Get token</button>
                 </form>
                 <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.resetHandler}>
                     {

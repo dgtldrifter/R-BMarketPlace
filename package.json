@@ -14,17 +14,22 @@
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
     "create-react-class": "^15.6.3",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "email-verification": "^0.4.6",
     "express": "^4.17.1",
+    "google-map-react": "^1.1.7",
+    "google-maps-react": "^2.0.6",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
     "randomstring": "^1.1.5",
+    "react-bootstrap": "^1.0.0",
+    "react-places-autocomplete": "^7.2.1",
     "react-search-box": "^2.0.2"
   },
   "devDependencies": {

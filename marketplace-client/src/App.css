@@ -6,6 +6,18 @@ body {
   overflow-y: scroll;
 }
 
+.deleteButton {
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+}
+
+.deleteButton:hover {
+  color: #dc3545;
+}
+
 /* Header */
 .title {
   margin: 0;
@@ -413,7 +425,8 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
-}
+  height: 200px;
+} 
 
 .portfolio .portfolio-wrap::before {
   content: "";
@@ -549,4 +562,59 @@ section {
   color: #fff;
   background: #C8C8C8;
   transition: background 0.2s ease-in-out;
+}
+
+
+/*Creating Product page Side By Side unless mobile*/
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+}
+
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.row {
+  width: 101%;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+
+.productHeading {
+  font-size: 25px;
+  font-weight: bold;
+  font-family: 'Lucida Sans';
+}
+
+.productHeading p {
+  font-size: 20px;
+  font-family: 'Lucida Sans';
+  display: inline;
+}
+
+#welcome:hover {
+  color: gainsboro;
+  cursor: pointer;
+}
+
+.nav-menu #userPage a:hover {
+  color: gainsboro;
+  cursor: pointer;
 }

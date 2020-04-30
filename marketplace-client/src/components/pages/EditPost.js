@@ -23,13 +23,44 @@ const renderMarkers = (map, maps, latitude, longitude) => {
     return marker;
 }
 
-class AddProduct extends React.Component {
+class EditPost extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: this.props.id,
+            name: '',
+            description: '',
+            categoryid: '',
+            price: '',
+            latitude: '',
+            longitude: '',
+            address: '',
+            saletype: '',
+            errorMessage: '',
+            image: null,
+            show: false,
+            showError: false,
+            imageModal: false,
+            imageAdded: false,
+            googleMaps1: null,
+            googleMaps2: null
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.state.id !== this.props.id) {
+            this.setState({
+                id: this.props.id
+            });
+        }
+    }
+
     componentDidMount() {
-        loadjs('main.js');
+        loadjs("../../main.js");
         if (localStorage.getItem('token') !== null) {
             axios({
                 method: 'POST',
-                url: 'users/authToken',
+                url: '../../users/authToken',
                 headers: {
                     "Content-Type": "application/json",
                     'token': localStorage.getItem('token')
@@ -42,40 +73,33 @@ class AddProduct extends React.Component {
         } else {
             window.location.href = "./";
         }
+
+        axios({
+            method: 'POST',
+            url: '../../posts/getOne',
+            headers: {
+                "Content-Type": "application/json",
+                ObjectID: this.props.id
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                this.setState({
+                    name: response.data.name,
+                    description: response.data.description,
+                    saletype: response.data.saletype,
+                    categoryid: response.data.categoryid,
+                    price: response.data.price,
+                    latitude: parseFloat(response.data.latitude),
+                    longitude: parseFloat(response.data.longitude),
+                    address: response.data.address,
+                    image: response.data.image
+                });
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            description: '',
-            categoryid: '',
-            price: '',
-            latitude: 39.0997265,
-            longitude: -94.5785667,
-            address: '',
-            saletype: '',
-            errorMessage: '',
-            image: null,
-            show: false,
-            showError: false,
-            imageModal: false,
-            googleMap1: null,
-            googleMap2: null
-        }
-    }
-
-    handleModal() {
-        this.setState({ show: !this.state.show });
-    }
-
-    handleModalError() {
-        this.setState({ showError: !this.state.showError });
-    }
-
-    handleImageModal() {
-        this.setState({ imageModal: !this.state.imageModal });
-    }
 
     buildSaleTypeOptions() {
         var arr = [];
@@ -93,7 +117,7 @@ class AddProduct extends React.Component {
         var arr = [];
 
         const categories = ['Artists', 'Apartments', 'Homes',
-            'Office', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
+            'Office / Commercial Space', 'Cleaning Service', 'Furniture', 'Cooking', 'Transportation'];
 
         for (let i = 0; i <= categories.length - 1; i++) {
             arr.push(<option key={i} value={categories[i]}>{categories[i]}</option>)
@@ -102,10 +126,21 @@ class AddProduct extends React.Component {
         return arr;
     }
 
+    handleModalError = e => {
+        this.setState({ showError: !this.state.showError });
+    }
+
+    handleModal = e => {
+        this.setState({ show: !this.state.show });
+    }
+
     onChangeHandlerImage = e => {
         e.preventDefault();
         let image = e.target.files[0];
-        this.setState({ image: image });
+        this.setState({
+            image: image,
+            imageAdded: true
+        });
     }
 
     onChangeHandler = e => {
@@ -124,19 +159,52 @@ class AddProduct extends React.Component {
         this.setState({ [name]: val });
     }
 
-    submitHandler = e => {
+    onSubmitHandler = e => {
         e.preventDefault();
-        this.addProduct();
+
+        if (this.state.imageAdded) {
+            this.editPostwithImage();
+        }
+        else {
+            this.editPostwithoutImage();
+        }
     }
 
-    addProduct() {
-        //getting imgur key
+    editPostwithoutImage() {
         axios({
             method: 'POST',
-            url: 'posts/getAPIKey',
+            url: '../../posts/updatePost',
+            headers: {
+                ObjectID: this.props.id
+            },
+            data: {
+                name: this.state.name,
+                description: this.state.description,
+                categoryid: this.state.categoryid,
+                price: this.state.price,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                address: this.state.address,
+                saletype: this.state.saletype
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                this.handleModal();
+                window.location.href = "../.././";
+            }
+        }).catch((error) => {
+            this.handleModalError();
+        });
+    }
+
+    editPostwithImage() {
+        // getting imgur key
+        axios({
+            method: 'POST',
+            url: '../../posts/getAPIKey',
         }).then((api_token) => {
             if (api_token.status === 200) {
-                //Saving the image to imgur first
+                //saving the image to imgur first
                 let reader = new FileReader();
                 reader.readAsDataURL(this.state.image);
                 reader.onloadend = () => {
@@ -152,41 +220,39 @@ class AddProduct extends React.Component {
                         }
                     }).then((response) => {
                         if (response.status === 200) {
-                            //If image is added successfully, add the product.
+                            //If image is updated successfully, update the product.
                             axios({
                                 method: 'POST',
-                                url: 'posts/create',
+                                url: '../../posts/updatePost',
+                                headers: {
+                                    ObjectID: this.props.id
+                                },
                                 data: {
                                     name: this.state.name,
                                     description: this.state.description,
                                     categoryid: this.state.categoryid,
                                     price: this.state.price,
-                                    date: this.date.value,
-                                    city: this.state.city,
                                     latitude: this.state.latitude,
                                     longitude: this.state.longitude,
                                     address: this.state.address,
-                                    email: this.email.value,
-                                    image: response.data.data.link,
-                                    saletype: this.state.saletype
+                                    saletype: this.state.saletype,
+                                    image: response.data.data.link
                                 }
                             }).then((response) => {
                                 if (response.status === 200) {
                                     this.handleModal();
-                                    window.location.href = "./";
+                                    window.location.href = "../.././";
                                 }
-                            }, error => {
+                            }).catch((error) => {
                                 this.handleModalError();
                             });
                         }
-                    }, error => {
-                        this.handleImageModal();
+                    }).catch((error) => {
+                        console.log(error);
                     });
                 }
             }
-        }).catch((error) => {
-            console.log(error);
-        })
+        });
     }
     handleSelect = address => {
         geocodeByAddress(address)
@@ -205,80 +271,64 @@ class AddProduct extends React.Component {
 
     render() {
         return (
-            <div className="add-product">
-                <Modal show={this.state.show}>
-                    <Modal.Header className="bg-success">
-                        Success
-                    </Modal.Header>
-                    <Modal.Body>
-                        You successfully added a product.
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button className="btn btn-success" onClick={() => { this.handleModal() }}>
-                            Close
-                        </button>
-                    </Modal.Footer>
-                </Modal>
-                <Modal show={this.state.showError}>
-                    <Modal.Header className="bg-danger">
-                        Error
-                    </Modal.Header>
-                    <Modal.Body>
-                        The product could not be added.
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
-                            Close
-                        </button>
-                    </Modal.Footer>
-                </Modal>
-                <Modal show={this.state.imageModal}>
-                    <Modal.Header className="bg-danger">
-                        Error
-                    </Modal.Header>
-                    <Modal.Body>
-                        Image could not be uploaded.
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button className="btn btn-danger" onClick={() => { this.handleImageModal() }}>
-                            Close
-                        </button>
-                    </Modal.Footer>
-                </Modal>
-                <div className="container">
-                    <h1 className='text-center'>Add Product</h1>
-                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.submitHandler}>
-                        <input type="hidden" value="something" />
-                        <input type="hidden" className="form-control" id="currentDate" name="date" ref={(input) => { this.date = input }} />
-                        <input type="hidden" className="form-control" name="email" value={email} ref={(input) => { this.email = input }} />
+            <div>
+                <div className="container pb-3">
+                    <Modal show={this.state.show}>
+                        <Modal.Header className="bg-success">
+                            Success
+                        </Modal.Header>
+                        <Modal.Body>
+                            You successfully updated a product.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-success" onClick={() => { this.handleModal() }}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={this.state.showError}>
+                        <Modal.Header className="bg-danger">
+                            Error
+                        </Modal.Header>
+                        <Modal.Body>
+                            The product could not be updated.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={() => { this.handleModalError() }}>
+                                Close
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    <h1 className='text-center pt-3'>Edit Post</h1>
+                    <form method="post" encType="multipart/form-data" className="form-horizontal mt-4 contact-form" onSubmit={this.onSubmitHandler}>
                         <div className="row">
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Product Name</label>
-                                <input type="text" onChange={this.onChangeHandler} className="form-control" name="name" placeholder="Enter a post name" required autoComplete="nope" />
+                                <input type="text" className="form-control" onChange={this.onChangeHandler} name="name" value={this.state.name} required autoComplete="off" />
                             </div>
                             <div className="col-12 col-sm-6 mt-3">
                                 <label>Description</label>
-                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" required></textarea>
+                                <textarea name="description" rows="3" onChange={this.onChangeHandler} className="form-control" value={this.state.description} required></textarea>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Sale Type</label>
-                                <select className="form-control" onChange={this.onChangeHandler} name="saletype" required>
+                                <select className="form-control" name="saletype" onChange={this.onChangeHandler} value={this.state.saletype} required>
                                     <option value="0">Choose a Sale Type</option>
                                     {this.buildSaleTypeOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Product Category</label>
-                                <select name="categoryid" onChange={this.onChangeHandler} className="form-control" required>
+                                <select name="categoryid" className="form-control" onChange={this.onChangeHandler} value={this.state.categoryid} required>
                                     <option value="0">Choose a Category</option>
                                     {this.buildCategoryTypeOptions()}
                                 </select>
                             </div>
                             <div className="col-12 col-sm-4 mt-3">
                                 <label>Price</label>
-                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" autoComplete="off" required />
+                                <input type="number" onChange={this.onChangeHandler} className="form-control" name="price" value={this.state.price} autoComplete="off" required />
                             </div>
                         </div>
                         <div className="row">
@@ -330,7 +380,12 @@ class AddProduct extends React.Component {
                                     center={{ lat: this.state.latitude, lng: this.state.longitude }}
                                     defaultZoom={10}
                                     yesIWantToUseGoogleMapApiInternals
-                                    onGoogleApiLoaded={({ map, maps }) => this.setState({ googleMap1: map, googleMap2: maps })}
+                                    onGoogleApiLoaded={({ map, maps }) => {
+                                        renderMarkers(map, maps, this.state.latitude, this.state.longitude)
+                                        this.setState({ googleMap1: map, googleMap2: maps })
+                                    }
+
+                                    }
                                 >
                                 </GoogleMapReact>
                             </div>
@@ -341,16 +396,16 @@ class AddProduct extends React.Component {
                                 <input type="file" onChange={(e) => this.onChangeHandlerImage(e)} className="form-control" name="image" required />
                             </div>
                         </div>
-                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Add Product</button>
+                        <button type="submit" style={loginButton} className="btn btn-block mt-3">Update Product</button>
                     </form>
                 </div>
-            </div >
+            </div>
         );
     }
 }
 
-export default AddProduct;
-
 const loginButton = {
     backgroundColor: '#ffa64d'
 }
+
+export default EditPost;

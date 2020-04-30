@@ -6,9 +6,12 @@ import Footer from './components/layouts/Footer';
 import SignUp from './components/pages/Signup';
 import HomePage from './components/pages/HomePage';
 import AddProduct from './components/pages/AddProduct';
+import EditPost from './components/pages/EditPost';
 import VerifyEmail from './components/pages/VerifyEmail';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Category from './components/pages/Category';
+import Product from './components/pages/Product';
+import UserPage from './components/pages/UserPage';
 
 import './App.css';
 
@@ -34,6 +37,23 @@ class App extends React.Component {
           </div>
         )} />
         <AddProductPage />
+        <EditPostPage />
+        <Route path="/UserPage" render={props => (
+          <div>
+            <Navbar />
+            <UserPage/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
+        <Route path="/Product/:productid" render={props => (
+          <div>
+            <Navbar />
+            <Product productid={props.match.params.productid}/>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        )} />
         <Route path="/Category/:category/:categoryExtra" render={props => (
           <div>
             <Navbar />
@@ -92,6 +112,25 @@ function AddProductPage(props) {
     )
   } else {
     return <React.Fragment></React.Fragment>
+  }
+}
+
+function EditPostPage(props) {
+  if(localStorage.getItem('token') !== null) {
+    return (
+      <Route path="/EditPost/:id" render={props => (
+        <div>
+          <Navbar />
+          <div style={outerStyle}>
+            <EditPost id={props.match.params.id} />
+          </div>
+          <ScrollToTop />
+          <Footer />
+        </div>
+      )} />
+    )
+  } else {
+    return <React.Fragment></React.Fragment>;
   }
 }
 
