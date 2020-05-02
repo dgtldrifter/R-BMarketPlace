@@ -40,7 +40,6 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
-    loadjs('../../main.js');
     this.setState({
       fullName: localStorage.getItem('fullName'),
       email: localStorage.getItem('userEmail')

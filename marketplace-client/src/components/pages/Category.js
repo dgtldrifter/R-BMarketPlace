@@ -44,8 +44,8 @@ class Category extends React.Component {
   }
 
   componentDidMount() {
-    
     this.axiosRequest();
+    
   }
 
   componentDidUpdate() {
@@ -61,13 +61,13 @@ class Category extends React.Component {
   }
 
   render() {
-    loadjs('../../main.js');
     const { error, isLoaded } = this.state;
     if(error) {
       return <div>Error: {error.message}</div>;
     } else if(!isLoaded) {
       return <div>Loading ... </div>;
     } else {
+      
       const posts = this.state.posts.map((post) => 
         <div key={post._id} className="col-lg-4 col-md-6 portfolio-item filter-transportation">
           <div className="portfolio-wrap">
